@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    Commute Compute iPad Kiosk - full-screen CCDash for iPad Safari
+    Copyright (c) 2025-2026 Angus Bergman
+    SPDX-License-Identifier: AGPL-3.0-or-later
+    Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
+
+    Loads /api/screen at the iPad's exact pixel size and refreshes it on a
+    timer. Script is deliberately ES5 (no arrow functions, let/const, fetch
+    or promises) so it runs on old iPads stuck on iOS 9/10/12 Safari.
+
+    Query params (all optional, remembered in localStorage):
+      token=<device token>   passed through when device auth is enabled
+      interval=<seconds>     refresh period, 30-900 (default 60)
+      night=auto|on|off      invert colours (auto = 9pm-6am local)
+      demo=1                 render a random demo journey (no API keys needed)
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Commute">
+    <meta name="theme-color" content="#000000">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/ipad.webmanifest">
+    <link rel="icon" href="/favicon-32.png">
+    <title>Commute Compute</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-family: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        body.night { background: #000; }
+        /* Two stacked layers so a new frame fades in over the old one */
+        .frame {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            opacity: 0;
+            -webkit-transition: opacity 0.6s ease;
+            transition: opacity 0.6s ease;
+        }
+        .frame.show { opacity: 1; }
+        body.night .frame {
+            -webkit-filter: invert(1);
+            filter: invert(1);
+        }
+        #message {
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            margin-top: -40px;
+            text-align: center;
+            color: #333;
+            font-size: 22px;
+            line-height: 1.5;
+            padding: 0 24px;
+        }
+        body.night #message { color: #ccc; }
+        #message small { display: block; font-size: 15px; color: #888; }
+        /* Stale-data badge: shown when refreshes keep failing */
+        #stale {
+            display: none;
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        body.night #stale { background: #fff; color: #000; }
+        #stale.on { display: block; }
+        /* Settings panel, opened with a tap */
+        #panel {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 340px;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            background: rgba(20, 20, 20, 0.94);
+            color: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        #panel.on { display: block; }
+        #panel h2 { margin: 0 0 4px; font-size: 18px; }
+        #panel .meta { color: #aaa; font-size: 13px; margin-bottom: 14px; }
+        #panel .row { margin-bottom: 12px; }
+        #panel .label { color: #aaa; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        /* inline-block rather than flexbox: flex is buggy on iOS 9 Safari */
+        #panel .seg { font-size: 0; white-space: nowrap; }
+        #panel .seg button { display: inline-block; margin-right: 2%; }
+        #panel .seg button:last-child { margin-right: 0; }
+        #panel .seg-3 button { width: 32%; }
+        #panel .seg-4 button { width: 23.5%; }
+        #panel button {
+            -webkit-appearance: none;
+            appearance: none;
+            background: #333;
+            color: #fff;
+            border: 0;
+            border-radius: 8px;
+            padding: 11px 6px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        #panel button.active { background: #4fb28e; }
+        #panel .wide { display: block; width: 100%; margin-top: 6px; }
+        #panel .hint { color: #888; font-size: 12px; margin-top: 10px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+    <div id="frameA" class="frame"></div>
+    <div id="frameB" class="frame"></div>
+    <div id="message">Loading your commute&hellip;<small>Commute Compute</small></div>
+    <div id="stale"></div>
+
+    <div id="panel" role="dialog" aria-label="Display settings">
+        <h2>Commute Compute</h2>
+        <div class="meta" id="panel-meta">Not loaded yet</div>
+        <div class="row">
+            <div class="label">Night mode</div>
+            <div class="seg seg-3">
+                <button type="button" data-night="auto">Auto</button>
+                <button type="button" data-night="on">On</button>
+                <button type="button" data-night="off">Off</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="label">Refresh every</div>
+            <div class="seg seg-4">
+                <button type="button" data-interval="30">30s</button>
+                <button type="button" data-interval="60">1 min</button>
+                <button type="button" data-interval="120">2 min</button>
+                <button type="button" data-interval="300">5 min</button>
+            </div>
+        </div>
+        <button type="button" class="wide" id="refresh-now">Refresh now</button>
+        <button type="button" class="wide" id="close-panel">Close</button>
+        <div class="hint" id="panel-hint"></div>
+    </div>
+
+<script>
+(function () {
+    'use strict';
+
+    var MIN_INTERVAL = 30, MAX_INTERVAL = 900, DEFAULT_INTERVAL = 60;
+    var NIGHT_START_HOUR = 21, NIGHT_END_HOUR = 6;
+    // Very large frames cost more server time than they gain in sharpness
+    var MAX_PIXEL_SCALE = 2;
+    var STORE_PREFIX = 'cc-ipad-';
+
+    var frames = [document.getElementById('frameA'), document.getElementById('frameB')];
+    var front = 0;
+    var message = document.getElementById('message');
+    var stale = document.getElementById('stale');
+    var panel = document.getElementById('panel');
+    var timer = null;
+    var inFlight = false;
+    var lastSuccess = null;
+    var failures = 0;
+    var wakeLock = null;
+
+    // ---------------------------------------------------------------
+    // Settings: URL params win, then localStorage, then defaults
+    // ---------------------------------------------------------------
+    function store(key, value) {
+        try {
+            if (value === null) localStorage.removeItem(STORE_PREFIX + key);
+            else localStorage.setItem(STORE_PREFIX + key, value);
+        } catch (e) { /* private mode — settings just won't persist */ }
+    }
+
+    function recall(key) {
+        try { return localStorage.getItem(STORE_PREFIX + key); } catch (e) { return null; }
+    }
+
+    function queryParams() {
+        var out = {};
+        var q = window.location.search.replace(/^\?/, '');
+        if (!q) return out;
+        var parts = q.split('&');
+        for (var i = 0; i < parts.length; i++) {
+            var kv = parts[i].split('=');
+            if (kv[0]) out[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' '));
+        }
+        return out;
+    }
+
+    var params = queryParams();
+    var settings = {};
+    var keys = ['token', 'interval', 'night', 'demo'];
+    for (var k = 0; k < keys.length; k++) {
+        var key = keys[k];
+        if (params.hasOwnProperty(key)) {
+            settings[key] = params[key];
+            store(key, params[key] === '' ? null : params[key]);
+        } else {
+            settings[key] = recall(key);
+        }
+    }
+
+    function intervalSeconds() {
+        var n = parseInt(settings.interval, 10);
+        if (isNaN(n)) return DEFAULT_INTERVAL;
+        return Math.min(MAX_INTERVAL, Math.max(MIN_INTERVAL, n));
+    }
+
+    function nightMode() {
+        var mode = settings.night || 'auto';
+        if (mode === 'on') return true;
+        if (mode === 'off') return false;
+        var h = new Date().getHours();
+        return h >= NIGHT_START_HOUR || h < NIGHT_END_HOUR;
+    }
+
+    // ---------------------------------------------------------------
+    // Sizing: ask the server for exactly the pixels we will show.
+    // CCDash is a landscape layout, so in portrait we request a
+    // landscape band at full width and letterbox it.
+    // ---------------------------------------------------------------
+    function targetSize() {
+        var w = window.innerWidth || document.documentElement.clientWidth;
+        var h = window.innerHeight || document.documentElement.clientHeight;
+        var dpr = Math.min(MAX_PIXEL_SCALE, window.devicePixelRatio || 1);
+        if (h > w) h = Math.round(w * 0.6);
+        return { w: Math.round(w * dpr), h: Math.round(h * dpr) };
+    }
+
+    function imageUrl() {
+        var size = targetSize();
+        var url = '/api/screen?format=png&w=' + size.w + '&h=' + size.h;
+        if (settings.token) url += '&token=' + encodeURIComponent(settings.token);
+        if (settings.demo === '1' || settings.demo === 'true') url += '&random=1';
+        // Cache-buster: iOS Safari caches images aggressively
+        return url + '&_=' + new Date().getTime();
+    }
+
+    // ---------------------------------------------------------------
+    // Refresh loop
+    // ---------------------------------------------------------------
+    function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function clockString(d) {
+        var h = d.getHours() % 12 || 12;
+        return h + ':' + pad2(d.getMinutes()) + (d.getHours() >= 12 ? 'pm' : 'am');
+    }
+
+    function refresh() {
+        if (inFlight) return;
+        inFlight = true;
+        document.body.className = nightMode() ? 'night' : '';
+
+        var url = imageUrl();
+        var img = new Image();
+        var done = false;
+        var watchdog = setTimeout(function () { finish(false); }, 30000);
+
+        function finish(ok) {
+            if (done) return;
+            done = true;
+            clearTimeout(watchdog);
+            img.onload = img.onerror = null;
+            inFlight = false;
+            if (ok) {
+                var back = 1 - front;
+                frames[back].style.backgroundImage = 'url("' + url + '")';
+                frames[back].className = 'frame show';
+                frames[front].className = 'frame';
+                front = back;
+                message.style.display = 'none';
+                lastSuccess = new Date();
+                failures = 0;
+                stale.className = '';
+            } else {
+                failures++;
+                if (!lastSuccess) {
+                    message.innerHTML = 'Can&rsquo;t reach your Commute Compute server.' +
+                        '<small>Retrying&hellip; Check Wi-Fi, or that setup is complete.</small>';
+                } else if (failures >= 2) {
+                    stale.innerHTML = 'Offline &mdash; last updated ' + clockString(lastSuccess);
+                    stale.className = 'on';
+                }
+            }
+            updatePanel();
+            schedule(ok);
+        }
+
+        img.onload = function () { finish(true); };
+        img.onerror = function () { finish(false); };
+        img.src = url;
+    }
+
+    function schedule(ok) {
+        clearTimeout(timer);
+        // Back off quickly-but-gently after failures (max 5 min)
+        var secs = ok ? intervalSeconds() : Math.min(300, 15 * Math.pow(2, Math.min(failures - 1, 4)));
+        timer = setTimeout(refresh, secs * 1000);
+    }
+
+    // ---------------------------------------------------------------
+    // Keep the screen on where the browser allows it (iPadOS 16.4+).
+    // Older iPads: Settings > Display & Brightness > Auto-Lock > Never.
+    // ---------------------------------------------------------------
+    function requestWakeLock() {
+        if (!navigator.wakeLock || !navigator.wakeLock.request) return;
+        try {
+            navigator.wakeLock.request('screen').then(function (lock) {
+                wakeLock = lock;
+                lock.addEventListener('release', function () { wakeLock = null; updatePanel(); });
+                updatePanel();
+            }, function () { /* denied — fall back to Auto-Lock setting */ });
+        } catch (e) { /* unsupported */ }
+    }
+
+    // ---------------------------------------------------------------
+    // Settings panel
+    // ---------------------------------------------------------------
+    function updatePanel() {
+        var meta = document.getElementById('panel-meta');
+        var size = targetSize();
+        meta.innerHTML = (lastSuccess ? 'Updated ' + clockString(lastSuccess) : 'Not loaded yet') +
+            ' &middot; ' + size.w + '&times;' + size.h + (settings.demo === '1' ? ' &middot; demo' : '');
+
+        var night = settings.night || 'auto';
+        var interval = '' + intervalSeconds();
+        var buttons = panel.getElementsByTagName('button');
+        for (var i = 0; i < buttons.length; i++) {
+            var b = buttons[i];
+            var n = b.getAttribute('data-night');
+            var iv = b.getAttribute('data-interval');
+            if (n) b.className = n === night ? 'active' : '';
+            if (iv) b.className = iv === interval ? 'active' : '';
+        }
+
+        var standalone = window.navigator.standalone === true ||
+            (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+        var hints = [];
+        if (!standalone) hints.push('Tip: tap Share &rarr; Add to Home Screen for a full-screen app.');
+        if (!wakeLock) hints.push('To keep the screen on, set Auto-Lock to Never and use Guided Access.');
+        document.getElementById('panel-hint').innerHTML = hints.join('<br>');
+    }
+
+    function openPanel() { updatePanel(); panel.className = 'on'; }
+    function closePanel() { panel.className = ''; }
+
+    panel.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var t = e.target;
+        var n = t.getAttribute && t.getAttribute('data-night');
+        var iv = t.getAttribute && t.getAttribute('data-interval');
+        if (n) {
+            settings.night = n;
+            store('night', n);
+            document.body.className = nightMode() ? 'night' : '';
+            updatePanel();
+        } else if (iv) {
+            settings.interval = iv;
+            store('interval', iv);
+            schedule(true);
+            updatePanel();
+        } else if (t.id === 'refresh-now') {
+            closePanel();
+            refresh();
+        } else if (t.id === 'close-panel') {
+            closePanel();
+        }
+    }, false);
+
+    document.addEventListener('click', function () {
+        if (panel.className === 'on') closePanel();
+        else openPanel();
+        // Wake lock needs a user gesture on some iPadOS versions
+        if (!wakeLock) requestWakeLock();
+    }, false);
+
+    // ---------------------------------------------------------------
+    // Lifecycle: re-render on rotation, refresh when brought back
+    // ---------------------------------------------------------------
+    var resizeTimer = null;
+    function onResize() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(refresh, 400);
+    }
+    window.addEventListener('orientationchange', onResize, false);
+    window.addEventListener('resize', onResize, false);
+
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) return;
+        requestWakeLock();
+        refresh();
+    }, false);
+
+    // Stop iOS rubber-band scrolling / pinch exposing the page edges
+    document.addEventListener('touchmove', function (e) {
+        if (panel.className !== 'on') e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('gesturestart', function (e) { e.preventDefault(); }, false);
+
+    requestWakeLock();
+    refresh();
+})();
+</script>
+</body>
+</html>

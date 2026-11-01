@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Platform-TRMNL%20%7C%20Kindle%20%7C%20Inkplate-orange.svg?style=flat-square" alt="Platform: TRMNL | Kindle | Inkplate">
+  <img src="https://img.shields.io/badge/Platform-TRMNL%20%7C%20Kindle%20%7C%20Inkplate%20%7C%20iPad-orange.svg?style=flat-square" alt="Platform: TRMNL | Kindle | Inkplate | iPad">
   &nbsp;
   <img src="https://img.shields.io/badge/VIC%20(Live%20GTFS--RT)%20%7C%20National%20(Static%20Timetable%20Fallback)-yellow.svg?style=flat-square" alt="VIC (Live GTFS-RT) | National (Static Timetable Fallback)">
   &nbsp;
@@ -522,6 +522,7 @@ jobs:
 | Kindle Basic 10/11 | 600 x 800 | Supported -- requires jailbreak |
 | Inkplate 6 | 800 x 600 | Supported |
 | Inkplate 10 | 1200 x 825 | Supported |
+| iPad (any, iOS 9+) | Native (e.g. 2360 x 1640) | Supported -- open `/ipad` in Safari, no flashing. See [iPad Kiosk Guide](docs/hardware/IPAD-KIOSK.md) |
 | Web Browser | Any | Full dashboard via `/api/commutecompute` endpoint |
 
 ### Battery Operation
@@ -539,6 +540,7 @@ are monitored via the Admin Panel.
 | **ESP32-C3 + E-Ink DIY Kit** | [Seeed Studio](https://www.seeedstudio.com) | Build your own TRMNL-compatible display from components. Requires soldering and case assembly. |
 | **Kindle Paperwhite / Basic** | Amazon or second-hand | Requires jailbreak. Older models (PW3/PW4) recommended for jailbreak compatibility. |
 | **Inkplate 6 / 10** | [Soldered Electronics](https://soldered.com) | Open-hardware ESP32 e-ink boards. |
+| **iPad** | Any spare iPad, new or second-hand | No firmware or jailbreak. Older iPads (iPad 2 and later) work well as a mains-powered wall display. |
 
 The TRMNL Display (OG) is the primary supported device and provides the best experience with CCFirm&#8482; firmware and BLE provisioning.
 

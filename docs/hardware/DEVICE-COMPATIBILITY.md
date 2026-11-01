@@ -30,6 +30,7 @@ Commute Compute™ supports multiple e-ink display devices. This guide helps you
 | **Kindle Paperwhite 3/4** | 6" | 758×1024 | Supported | $50-80 USD (used) |
 | **Kindle Paperwhite 5** | 6.8" | 1236×1648 | Supported | $90-120 USD (used) |
 | **Kindle 4/Basic** | 6" | 600×800 | Supported | $20-40 USD (used) |
+| **iPad** (any model, iOS 9+) | 7.9"-13" | Native (e.g. 2360×1640) | Supported | Spare/used iPad — see [iPad Kiosk Guide](IPAD-KIOSK.md) |
 
 ### Experimental (Community Tested)
 

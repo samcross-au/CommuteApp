@@ -2358,6 +2358,11 @@ app.get('/v11', (req, res) => { res.sendFile(path.join(process.cwd(), 'public', 
 app.get('/trmnl-og-v11', (req, res) => { res.sendFile(path.join(process.cwd(), 'public', 'trmnl-og-v11.html')); });  res.sendFile(path.join(process.cwd(), 'public', 'journey-demo.html'));
 });
 
+// iPad kiosk — full-screen CCDash for iPad Safari / Home Screen
+app.get('/ipad', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'ipad.html'));
+});
+
 // Journey display visualization (legacy - kept for compatibility)
 app.get('/journey', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'public', 'journey-display.html'));

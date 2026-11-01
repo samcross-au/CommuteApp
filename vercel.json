@@ -70,6 +70,10 @@
       "destination": "/api/health"
     },
     {
+      "source": "/ipad",
+      "destination": "/ipad.html"
+    },
+    {
       "source": "/api/screen",
       "destination": "/api/commutecompute"
     },

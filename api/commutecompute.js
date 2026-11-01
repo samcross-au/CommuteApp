@@ -21,7 +21,7 @@ import { GTFS_STOP_NAMES, getStopNameById, getStopCoordsById, cleanStopName, MEL
 import { VIC_METRO_STATIONS, VIC_TRAM_STOPS_WITH_COORDS } from '../src/data/vic/gtfs-reference.js';
 import { haversine } from '../src/utils/haversine.js';
 import { getTransitApiKey, getPreferences, setPreferences, getUserState, setDeviceStatus, getClient, getStationOverrides, setStationOverrides, getPreferredTramRoute, setPreferredTramRoute, getPreferredTramStop, setPreferredTramStop, getPreferredTrainLine, setPreferredTrainLine, getPreferredTrainStation, setPreferredTrainStation, getV591MigrationDone, setV591MigrationDone, getV594MigrationDone, setV594MigrationDone, getV596MigrationDone, setV596MigrationDone, getV598HomeCoordMigrationDone, setV598HomeCoordMigrationDone } from '../src/data/kv-preferences.js';
-import { renderFullDashboard, renderFullScreenBMP, DISPLAY_DIMENSIONS } from '../src/services/ccdash-renderer.js';
+import { renderFullDashboard, renderFullScreenBMP, resolveDisplayDimensions } from '../src/services/ccdash-renderer.js';
 import { formatLegTitle } from '../src/services/leg-title-formatter.js';
 import { getScenario, getScenarioNames } from '../src/services/journey-scenarios.js';
 import DepartureConfidence from '../src/engines/departure-confidence.js';
@@ -2604,8 +2604,8 @@ async function handleRandomJourney(req, res, options = {}) {
       return res.status(200).json({ success: true, random: true, ...dashboardData });
     }
 
-    // Render using V13 renderer
-    const pngBuffer = await renderFullDashboard(dashboardData);
+    // Render using V13 renderer (honours ?w=&h=/?device= like the live path)
+    const pngBuffer = await renderFullDashboard(dashboardData, resolveDisplayDimensions(req.query));
 
     res.setHeader('Content-Type', 'image/png');
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -4733,9 +4733,10 @@ export default async function handler(req, res) {
       return res.status(200).json(jsonResponse);
     }
 
-    // Resolve device display dimensions from KV preferences
+    // Resolve display dimensions: ?w=&h= or ?device= (browser displays such
+    // as the iPad kiosk) override the device model from KV preferences
     const deviceModel = kvPrefs?.deviceModel || 'trmnl-og';
-    const displayDims = DISPLAY_DIMENSIONS[deviceModel] || DISPLAY_DIMENSIONS['trmnl-og'];
+    const displayDims = resolveDisplayDimensions(req.query, deviceModel);
 
     if (format && format !== 'bmp' && format !== 'json' && format !== 'png') {
       return res.status(400).json({ error: `Unsupported format: ${format}`, supported: ['json', 'bmp', 'png'] });

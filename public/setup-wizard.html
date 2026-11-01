@@ -562,6 +562,9 @@
                             <option value="kindle-pw4">Kindle Paperwhite 4 (6" - 1072x1448)</option>
                             <option value="kindle-pw5">Kindle Paperwhite 5 (6.8" - 1236x1648)</option>
                         </optgroup>
+                        <optgroup label="Tablets (No Flashing Required)">
+                            <option value="ipad">iPad (Safari full-screen kiosk)</option>
+                        </optgroup>
                     </select>
                     <span id="device-help" class="form-hint">Choose your e-ink display type, or select web-only to use the browser dashboard.</span>
                 </div>
@@ -650,6 +653,17 @@
                 <div id="kindle-info-panel" style="display: none; margin-top: 16px;" class="info-box">
                     <p style="color: #f1f5f9; font-size: 13px; margin: 0;">
                         <strong>Kindle Setup:</strong> Kindle devices connect to WiFi through their own settings. You'll configure the dashboard URL after completing this wizard.
+                    </p>
+                </div>
+
+                <!-- iPad info -->
+                <div id="ipad-info-panel" style="display: none; margin-top: 16px;" class="info-box">
+                    <p style="color: #f1f5f9; font-size: 13px; margin: 0 0 8px;">
+                        <strong>iPad Setup:</strong> No flashing or Bluetooth needed. After finishing this wizard, open this link in Safari on your iPad:
+                    </p>
+                    <p style="margin: 0 0 8px;"><a id="ipad-kiosk-link" href="/ipad" target="_blank" rel="noopener" style="color: #4fb28e; font-weight: 600; word-break: break-all;">/ipad</a></p>
+                    <p style="color: #cbd5e1; font-size: 12px; margin: 0;">
+                        Then tap Share &rarr; <strong>Add to Home Screen</strong> for a full-screen app. Works on any iPad that runs iOS 9 or later. Tap the screen any time for night mode and refresh settings.
                     </p>
                 </div>
 
@@ -1292,6 +1306,7 @@
         var factoryReset = document.getElementById('factory-reset-section');
         var webOnlyInfo = document.getElementById('web-only-info');
         var kindleInfo = document.getElementById('kindle-info-panel');
+        var ipadInfo = document.getElementById('ipad-info-panel');
 
         var trmnlTroubleshooting = document.getElementById('trmnl-troubleshooting');
         deviceInfo.style.display = 'none';
@@ -1300,6 +1315,7 @@
         if (trmnlTroubleshooting) trmnlTroubleshooting.style.display = 'none';
         webOnlyInfo.style.display = 'none';
         kindleInfo.style.display = 'none';
+        ipadInfo.style.display = 'none';
 
         if (device && device.startsWith('trmnl')) {
             deviceInfo.style.display = 'block';
@@ -1309,6 +1325,13 @@
             localStorage.setItem('cc-device', device);
         } else if (device && device.startsWith('kindle')) {
             kindleInfo.style.display = 'block';
+            localStorage.setItem('cc-device', device);
+        } else if (device === 'ipad') {
+            var kioskUrl = window.location.origin + '/ipad';
+            var kioskLink = document.getElementById('ipad-kiosk-link');
+            kioskLink.href = kioskUrl;
+            kioskLink.textContent = kioskUrl;
+            ipadInfo.style.display = 'block';
             localStorage.setItem('cc-device', device);
         } else {
             webOnlyInfo.style.display = 'block';
@@ -1981,6 +2004,21 @@
                 '<span style="color:#cbd5e1;font-size:12px;">Set the dashboard URL on your Kindle to:</span><br>' +
                 '<code style="color:#4fb28e;font-size:14px;font-weight:600;">' + sanitize(dashboardUrl) + '</code></div>' +
                 '<div style="text-align:center;margin-top:20px;"><button type="button" id="go-dashboard-btn" class="btn" style="width:auto;">Go to Dashboard \u2192</button></div>';
+            setTimeout(function() {
+                var btn = document.getElementById('go-dashboard-btn');
+                if (btn) btn.addEventListener('click', function(){ window.location.href = '/admin.html'; });
+            }, 100);
+
+        } else if (device === 'ipad') {
+            // iPad: show kiosk URL to open in Safari
+            var kioskUrl = window.location.origin + '/ipad';
+            container.innerHTML = summaryHtml +
+                '<div class="info-box">' +
+                '<strong style="color:#f1f5f9;">iPad Display</strong><br>' +
+                '<span style="color:#cbd5e1;font-size:12px;">Open this link in Safari on your iPad, then tap Share → Add to Home Screen:</span><br>' +
+                '<code style="color:#4fb28e;font-size:14px;font-weight:600;">' + sanitize(kioskUrl) + '</code><br>' +
+                '<span style="color:#cbd5e1;font-size:12px;">To keep it always on: Settings → Display &amp; Brightness → Auto-Lock → Never.</span></div>' +
+                '<div style="text-align:center;margin-top:20px;"><button type="button" id="go-dashboard-btn" class="btn" style="width:auto;">Go to Dashboard →</button></div>';
             setTimeout(function() {
                 var btn = document.getElementById('go-dashboard-btn');
                 if (btn) btn.addEventListener('click', function(){ window.location.href = '/admin.html'; });
