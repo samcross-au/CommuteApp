@@ -26,6 +26,7 @@ export const ROUTES = [
   ['admin/reset', () => import('./admin/reset.js')],
   ['admin/resolve-stops', () => import('./admin/resolve-stops.js')],
   ['admin/setup-complete', () => import('./admin/setup-complete.js')],
+  ['auth/check', () => import('./auth/check.js')],
   ['attributions', () => import('./attributions.js')],
   ['cafe-details', () => import('./cafe-details.js')],
   ['commutecompute', () => import('./commutecompute.js')],

@@ -22,7 +22,9 @@ import { getTransitApiKey, getSetupComplete, setSetupComplete } from '../data/kv
  * @returns {object|null} Error object with { error, message } or null if authorized
  */
 export function requireAuth(req) {
-  const adminToken = process.env.CC_ADMIN_TOKEN;
+  // Trim: a value pasted into the host's env settings often carries a
+  // trailing newline or space, which would otherwise never match
+  const adminToken = (process.env.CC_ADMIN_TOKEN || '').trim();
 
   if (!adminToken) {
     return {
@@ -41,7 +43,7 @@ export function requireAuth(req) {
     };
   }
 
-  const providedToken = match[1];
+  const providedToken = match[1].trim();
 
   // Timing-safe comparison to prevent timing attacks (Section 17)
   const providedBuf = Buffer.from(providedToken, 'utf8');
@@ -57,7 +59,7 @@ export function requireAuth(req) {
   if (!tokenMatch) {
     return {
       error: 'Forbidden',
-      message: 'Invalid admin token'
+      message: 'Invalid admin token: it does not match CC_ADMIN_TOKEN on the server'
     };
   }
 

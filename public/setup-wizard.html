@@ -1026,6 +1026,39 @@
         return headers;
     }
 
+    // Resolves true when the server accepts the token
+    function checkAdminToken(token) {
+        return fetch('/api/auth/check', { headers: { 'Authorization': 'Bearer ' + token } })
+            .then(function(r) { return r.ok; });
+    }
+
+    // Forget the token and show the token box again with a message
+    function promptForAdminToken(message) {
+        wizardAuthToken = null;
+        localStorage.removeItem('cc-wizard-auth-token');
+        var banner = document.getElementById('auth-token-banner');
+        if (!banner) return;
+        banner.style.display = 'block';
+        document.getElementById('auth-token-saved-section').style.display = 'none';
+        document.getElementById('auth-token-input-section').style.display = 'block';
+        var statusEl = document.getElementById('wizard-token-status');
+        statusEl.style.display = 'block';
+        statusEl.innerHTML = '<span style="color:#ef4444;">' + sanitize(message) + '</span>';
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('wizard-admin-token').focus();
+    }
+
+    // fetch() for authorised calls: a 401 means the token is missing or
+    // wrong, so ask for it again rather than keep sending the bad one
+    function wizardFetch(url, opts) {
+        return fetch(url, opts).then(function(response) {
+            if (response.status === 401) {
+                promptForAdminToken('Your admin token was not accepted. Enter the CC_ADMIN_TOKEN value from your Vercel project settings, then try again.');
+            }
+            return response;
+        });
+    }
+
     function loadFooterVersions() {
         fetch('/api/version').then(function(r){return r.json();}).then(function(v) {
             document.getElementById('cc-footer-commutecompute-version').textContent = v.components?.commutecompute?.version || 'v4.2';
@@ -1515,7 +1548,7 @@
         nextBtn.style.display = 'none';
 
         try {
-            var response = await fetch('/api/save-google-key', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ apiKey: apiKey }) });
+            var response = await wizardFetch('/api/save-google-key', { method: 'POST', headers: getAuthHeaders(), body: JSON.stringify({ apiKey: apiKey }) });
             var result = await response.json();
 
             if (result.success && result.saved) {
@@ -1615,7 +1648,7 @@
     async function resolveStopsFromAddress(address) {
         if (!address || address.length < 5) return;
         try {
-            var response = await fetch(window.location.origin + '/api/admin/resolve-stops', {
+            var response = await wizardFetch(window.location.origin + '/api/admin/resolve-stops', {
                 method: 'POST', headers: getAuthHeaders(),
                 body: JSON.stringify({ address: address })
             });
@@ -1716,7 +1749,7 @@
         try {
             var controller = new AbortController();
             var timeoutId = setTimeout(function(){ controller.abort(); }, 25000);
-            var response = await fetch('/api/save-transit-key', {
+            var response = await wizardFetch('/api/save-transit-key', {
                 method: 'POST', headers: getAuthHeaders(),
                 body: JSON.stringify({ apiKey: apiKey, state: selectedAuthority || 'VIC' }),
                 signal: controller.signal
@@ -1780,7 +1813,7 @@
 
     async function progressiveSave(data) {
         try {
-            await fetch(window.location.origin + '/api/sync-config', {
+            await wizardFetch(window.location.origin + '/api/sync-config', {
                 method: 'POST', headers: getAuthHeaders(),
                 body: JSON.stringify(data)
             });
@@ -1807,7 +1840,7 @@
             };
 
             var baseUrl = window.location.origin;
-            var response = await fetch(baseUrl + '/api/admin/setup-complete', {
+            var response = await wizardFetch(baseUrl + '/api/admin/setup-complete', {
                 method: 'POST', headers: getAuthHeaders(),
                 body: JSON.stringify(config)
             });
@@ -1828,7 +1861,7 @@
             var cafeData = null;
             if (includeCoffee && addresses.cafe && result.locations?.cafe) {
                 try {
-                    var cafeResponse = await fetch(baseUrl + '/api/cafe-details', {
+                    var cafeResponse = await wizardFetch(baseUrl + '/api/cafe-details', {
                         method: 'POST', headers: getAuthHeaders(),
                         body: JSON.stringify({ lat: result.locations.cafe.lat, lon: result.locations.cafe.lon, cafeName: addresses.cafe, googleKey: googleKey })
                     });
@@ -1864,7 +1897,7 @@
             var syncSuccess = false;
             var syncError = '';
             try {
-                var syncResponse = await fetch(baseUrl + '/api/sync-config', {
+                var syncResponse = await wizardFetch(baseUrl + '/api/sync-config', {
                     method: 'POST', headers: getAuthHeaders(),
                     body: JSON.stringify({ transitKey: transitKey, googleKey: gKey, state: selectedAuthority, preferences: fullConfig, markSetupComplete: true })
                 });
@@ -1874,7 +1907,7 @@
                     // Persist preferred tram route to dedicated KV key (non-blocking)
                     var tramRouteVal = fullConfig.preferredTramRoute;
                     if (tramRouteVal !== undefined) {
-                        fetch(baseUrl + '/api/routes', {
+                        wizardFetch(baseUrl + '/api/routes', {
                             method: 'POST', headers: getAuthHeaders(),
                             body: JSON.stringify({ preferredTramRoute: tramRouteVal || null })
                         }).catch(function() {});
@@ -1906,7 +1939,7 @@
 
             // Webhook generation — non-critical (doesn't affect data persistence)
             try {
-                var webhookResponse = await fetch(baseUrl + '/api/admin/generate-webhook', {
+                var webhookResponse = await wizardFetch(baseUrl + '/api/admin/generate-webhook', {
                     method: 'POST', headers: getAuthHeaders(),
                     body: JSON.stringify({ config: fullConfig })
                 });
@@ -2053,7 +2086,7 @@
         setStatus('pairing-status', 'Pairing with your display...', 'info');
 
         try {
-            var response = await fetch(window.location.origin + '/api/pair/' + code, {
+            var response = await wizardFetch(window.location.origin + '/api/pair/' + code, {
                 method: 'POST', headers: getAuthHeaders(),
                 body: JSON.stringify({ webhookUrl: window._webhookUrl, config: window._fullConfig })
             });
@@ -2152,7 +2185,7 @@
             wizardAuthToken = null;
             setStatus('wipe-status', 'Clearing server storage...', 'info');
             try {
-                await fetch('/api/admin/reset?confirm=yes', { method: 'POST', headers: getAuthHeaders() });
+                await wizardFetch('/api/admin/reset?confirm=yes', { method: 'POST', headers: getAuthHeaders() });
             } catch (e) { /* KV clear failed - non-critical */ }
             setStatus('wipe-status', 'All data wiped. Reloading in 3 seconds...', 'success');
             setTimeout(function(){ window.location.reload(); }, 3000);
@@ -2193,7 +2226,7 @@
             wizardAuthToken = null;
 
             try {
-                await fetch('/api/admin/reset?confirm=yes', { method: 'POST', headers: getAuthHeaders() });
+                await wizardFetch('/api/admin/reset?confirm=yes', { method: 'POST', headers: getAuthHeaders() });
             } catch (e) { /* KV API error - non-critical */ }
 
             setStatus('wipe-status', 'Factory reset complete! Reloading in 3 seconds...', 'success');
@@ -2209,7 +2242,9 @@
     // ============================================
     document.addEventListener('DOMContentLoaded', function() {
         // Auth token: detect re-setup, restore from localStorage, bind submit
-        var savedToken = localStorage.getItem('cc-wizard-auth-token');
+        // Reuse the Admin Panel's token if the wizard has none of its own
+        var savedToken = localStorage.getItem('cc-wizard-auth-token') ||
+            sessionStorage.getItem('cc-admin-token') || localStorage.getItem('cc-admin-token');
         if (savedToken) {
             wizardAuthToken = savedToken;
         }
@@ -2220,6 +2255,10 @@
                 if (wizardAuthToken) {
                     document.getElementById('auth-token-input-section').style.display = 'none';
                     document.getElementById('auth-token-saved-section').style.display = 'block';
+                    // A saved token can go stale (CC_ADMIN_TOKEN changed, or a typo)
+                    checkAdminToken(wizardAuthToken).then(function(ok) {
+                        if (!ok) promptForAdminToken('Your saved admin token no longer matches the server. Enter your current CC_ADMIN_TOKEN.');
+                    }).catch(function(){});
                 }
             }
         }).catch(function(){});
@@ -2234,10 +2273,24 @@
                     statusEl.innerHTML = '<span style="color:#ef4444;">Please enter your admin token.</span>';
                     return;
                 }
-                wizardAuthToken = token;
-                localStorage.setItem('cc-wizard-auth-token', token);
-                document.getElementById('auth-token-input-section').style.display = 'none';
-                document.getElementById('auth-token-saved-section').style.display = 'block';
+                tokenSubmitBtn.disabled = true;
+                statusEl.style.display = 'block';
+                statusEl.innerHTML = '<span style="color:#cbd5e1;">Checking token...</span>';
+                checkAdminToken(token).then(function(ok) {
+                    tokenSubmitBtn.disabled = false;
+                    if (!ok) {
+                        statusEl.innerHTML = '<span style="color:#ef4444;">That token does not match CC_ADMIN_TOKEN on the server. Check it in Vercel: Settings &rarr; Environment Variables.</span>';
+                        return;
+                    }
+                    statusEl.style.display = 'none';
+                    wizardAuthToken = token;
+                    localStorage.setItem('cc-wizard-auth-token', token);
+                    document.getElementById('auth-token-input-section').style.display = 'none';
+                    document.getElementById('auth-token-saved-section').style.display = 'block';
+                }).catch(function() {
+                    tokenSubmitBtn.disabled = false;
+                    statusEl.innerHTML = '<span style="color:#ef4444;">Could not reach the server to check the token. Try again.</span>';
+                });
             });
         }
         var tokenChangeLink = document.getElementById('wizard-token-change-link');
