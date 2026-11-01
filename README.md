@@ -409,7 +409,7 @@ This makes Commute Compute&#8482; one of the first commuter tools to fully suppo
 
 ### 1. Deploy to Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://gitlab.com/angusbergman/commute-compute-system)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/samcross-au/CommuteCompute)
 
 ### 2. Add Redis
 
