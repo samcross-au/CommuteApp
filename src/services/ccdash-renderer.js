@@ -250,6 +250,14 @@ export const DEVICE_CONFIGS = {
     colorDepth: 1,
     format: 'bmp'
   },
+  'ipad': {
+    name: 'iPad (Safari kiosk)',
+    width: 2360,
+    height: 1640,
+    orientation: 'landscape',
+    colorDepth: 24,
+    format: 'png'
+  },
   'web': {
     name: 'Web Preview',
     width: 800,
@@ -337,8 +345,41 @@ const REF_H = 480;
  */
 export const DISPLAY_DIMENSIONS = {
   'trmnl-og':   { width: 800, height: 480 },
-  'trmnl-mini': { width: 600, height: 448 }
+  'trmnl-mini': { width: 600, height: 448 },
+  // iPad kiosk (public/ipad.html) — landscape, native-ish pixel sizes.
+  // The kiosk normally sends its exact size via ?w=&h=; these are fallbacks.
+  'ipad':        { width: 2360, height: 1640 },  // iPad 10th gen / Air 11"
+  'ipad-mini':   { width: 2266, height: 1488 },  // iPad mini 6/7
+  'ipad-pro-13': { width: 2752, height: 2064 },  // iPad Pro / Air 13"
+  'ipad-legacy': { width: 1024, height: 768 }    // iPad 2 / mini 1 (iOS 9)
 };
+
+/** Bounds for caller-supplied ?w=&h= (largest iPad panel is 2752x2064) */
+const CUSTOM_DIMS_MIN_W = 400;
+const CUSTOM_DIMS_MIN_H = 240;
+const CUSTOM_DIMS_MAX = 2800;
+
+/**
+ * Resolve render dimensions from a request query.
+ * Priority: ?w=&h= (clamped) > ?device= (known model) > fallback model.
+ * Used by browser-based displays (iPad kiosk) that know their own pixel size.
+ *
+ * @param {Object} [query={}] - Request query params
+ * @param {string} [fallbackModel='trmnl-og'] - Model when query has no override
+ * @returns {{width: number, height: number}}
+ */
+export function resolveDisplayDimensions(query = {}, fallbackModel = 'trmnl-og') {
+  const w = parseInt(query?.w, 10);
+  const h = parseInt(query?.h, 10);
+  if (Number.isFinite(w) && Number.isFinite(h)) {
+    return {
+      width: Math.min(CUSTOM_DIMS_MAX, Math.max(CUSTOM_DIMS_MIN_W, w)),
+      height: Math.min(CUSTOM_DIMS_MAX, Math.max(CUSTOM_DIMS_MIN_H, h))
+    };
+  }
+  const model = DISPLAY_DIMENSIONS[query?.device] ? query.device : fallbackModel;
+  return DISPLAY_DIMENSIONS[model] || DISPLAY_DIMENSIONS['trmnl-og'];
+}
 
 /**
  * Compute zone definitions proportionally for arbitrary display dimensions.
@@ -2983,6 +3024,10 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
   const legCount = legs.length;
   const baseLegs = 5;
   const scale = Math.min(1, Math.max(0.8, baseLegs / Math.max(legCount, 3)));
+  // Box/column geometry must grow with fonts on displays larger than the
+  // 800x480 reference (e.g. iPad), or text overflows the time/depart boxes.
+  // max(1, fs) keeps TRMNL OG/Mini geometry identical to before.
+  const boxScale = scale * Math.max(1, fs);
 
   // V15.1: Significantly increased font sizes for e-ink readability at device scale
   // All font sizes now apply the display font-scale factor (fs) with 11px minimum floor
@@ -3134,7 +3179,7 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
     // v1.42: Stripes cover entire leg EXCEPT time box, text is "carved out" (knocked out)
     // Per Angus 2026-02-01: Pattern covers leg, text has white background knockout
     // v1.81: stripeTimeBoxW must match actual timeBoxW (88*scale) to prevent stripe bleed
-    const stripeTimeBoxW = Math.max(72, Math.round(88 * scale));
+    const stripeTimeBoxW = Math.max(72, Math.round(88 * boxScale));
     const stripeAreaW = zone.w - stripeTimeBoxW;  // Everything except time box
     
     if (isSuspended) {
@@ -3175,7 +3220,7 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
     // v1.81 FIX: timeBoxW must match actual time box (88*scale not 72*scale)
     // v1.81 FIX: Increased padding from 2px to 4px for reliable stripe clearance
     if (isSuspended || isDiverted) {
-      const pad = Math.max(6, Math.round(6 * scale));  // Increased from 4px for reliable stripe clearance
+      const pad = Math.max(6, Math.round(6 * boxScale));  // Increased from 4px for reliable stripe clearance
 
       // Use the SAME eff* sizes as actual element rendering (defined above for this leg)
       // Previously used hardcoded smaller values that didn't match the rendered text sizes
@@ -3185,7 +3230,7 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
       const koSubtitleSize = effSubtitleSize;
       const koDepartLabelSize = effDepartLabelSize;
       const koDepartTimeSize = effDepartTimeSize;
-      const timeBoxW = Math.max(72, Math.round(88 * scale));
+      const timeBoxW = Math.max(72, Math.round(88 * boxScale));
       const departColW = isTransitLeg(leg.type) && leg.departTime ? 55 : 0;
 
       ctx.fillStyle = '#FFF';
@@ -3398,9 +3443,9 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
 
       // B3: Truncate title to available width (Section 7.2-7.3 compliance)
       // Compute inline to avoid referencing timeBoxW/departColW before declaration
-      const titleTimeBoxW = isWalkLeg ? 0 : Math.max(72, Math.round(88 * scale));
-      const titleDepartColW = (['train', 'tram', 'bus', 'vline', 'ferry'].includes(leg.type) && leg.departTime) ? Math.max(40, Math.round(50 * scale)) : 0;
-      const titleMaxWidth = zone.w - textX - titleTimeBoxW - titleDepartColW - Math.round(30 * scale);
+      const titleTimeBoxW = isWalkLeg ? 0 : Math.max(72, Math.round(88 * boxScale));
+      const titleDepartColW = (['train', 'tram', 'bus', 'vline', 'ferry'].includes(leg.type) && leg.departTime) ? Math.max(40, Math.round(50 * boxScale)) : 0;
+      const titleMaxWidth = zone.w - textX - titleTimeBoxW - titleDepartColW - Math.round(30 * boxScale);
       if (ctx.measureText(legTitle).width > titleMaxWidth) {
         const ellipsis = '\u2026';
         const ellipsisW = ctx.measureText(ellipsis).width;
@@ -3581,9 +3626,9 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
     // v1.27: Calculate max width with scaled elements
     // V16.0: DEPART column for transit legs only (coffee no longer has time box/depart)
     const hasDepart = ['train', 'tram', 'bus', 'vline', 'ferry'].includes(leg.type) && leg.departTime;
-    const timeBoxW = (isWalkLeg || leg.type === 'coffee') ? 0 : Math.max(72, Math.round(88 * scale));
-    const departColW = hasDepart ? Math.max(40, Math.round(50 * scale)) : 0;
-    const subtitleMaxWidth = zone.w - textX - timeBoxW - departColW - Math.round(60 * scale);
+    const timeBoxW = (isWalkLeg || leg.type === 'coffee') ? 0 : Math.max(72, Math.round(88 * boxScale));
+    const departColW = hasDepart ? Math.max(40, Math.round(50 * boxScale)) : 0;
+    const subtitleMaxWidth = zone.w - textX - timeBoxW - departColW - Math.round(60 * boxScale);
 
     // If subtitle is too wide, drop "Alight at" first (departure times are more useful)
     ctx.font = `${effSubtitleSize}px Inter, sans-serif`;
@@ -3655,7 +3700,7 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
     // -----------------------------------------------------------------------
     if (hasDepart) {
       // V13.6: DEPART column further left for clear separation from countdown box
-      const departColCenter = zone.x + zone.w - timeBoxW - departColW - Math.round(35 * scale);
+      const departColCenter = zone.x + zone.w - timeBoxW - departColW - Math.round(35 * boxScale);
       const departBlockY = zone.y + (zone.h - effDepartLabelSize - effDepartTimeSize - 1) / 2;
 
       // B1: Canvas clipping region for DEPART column (Section 7.2-7.3 compliance)
@@ -3685,10 +3730,10 @@ function _renderFullScreenCanvas(data, prefs = {}, displayWidth = REF_W, display
     // Transit legs show minutes until departure in black box
     // -----------------------------------------------------------------------
     if (!isWalkLeg && leg.type !== 'coffee') {
-    const timeBoxW2 = Math.max(72, Math.round(88 * scale));
+    const timeBoxW2 = Math.max(72, Math.round(88 * boxScale));
     const timeBoxX = zone.x + zone.w - timeBoxW2;
-    const minOffset = Math.round(6 * scale);
-    const labelOffset = Math.round(16 * scale);
+    const minOffset = Math.round(6 * boxScale);
+    const labelOffset = Math.round(16 * boxScale);
 
     // B1: Canvas clipping region for time box (Section 7.2-7.3 compliance)
     ctx.save();
