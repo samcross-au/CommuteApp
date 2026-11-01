@@ -46,11 +46,13 @@ The system runs serverless on Vercel. The e-ink display simply fetches a pre-ren
 
 ### Deploy in 5 Steps
 
-1. **Deploy to Vercel** — click the Deploy button below (or in Quick Start) to clone and deploy.
+1. **Deploy to Vercel** — import this repository at [vercel.com/new](https://vercel.com/new), or click the Deploy button in Quick Start.
 2. **Add Redis** — install the free Redis integration from the Vercel Marketplace (Sydney region).
 3. **Run the Setup Wizard** — open `/setup-wizard.html` on your deployment and configure your home, work, arrival time, and API keys.
 4. **Flash your display** — use the browser-based flasher at `/flasher/` (Chrome/Edge) or PlatformIO CLI.
 5. **Pair and go** — the device connects via Bluetooth, receives your server URL, and starts displaying your dashboard.
+
+> **Using an iPad or a web browser instead of an e-ink display?** Skip steps 4 and 5. Open `/ipad` on your deployment in Safari on the iPad (or any browser) for a full-screen dashboard that refreshes itself. See the [iPad Kiosk Guide](docs/hardware/IPAD-KIOSK.md).
 
 > A free Transport Victoria OpenData API key is required for live Victorian departures. Registration takes a few minutes but approval can take 24–48 hours — register early.
 
@@ -400,6 +402,7 @@ This makes Commute Compute&#8482; one of the first commuter tools to fully suppo
 ### Prerequisites
 
 - Review [PRIVACY.md](PRIVACY.md) to understand data handling practices
+- A display: a TRMNL or other e-ink device (flashing needs a desktop with Chrome or Edge), **or** an iPad or any web browser (no flashing or extra hardware)
 
 > **Register for your Transport Victoria OpenData API key first.**
 > The API key is required for live departure data and takes **24-48 hours** to be approved.
@@ -409,7 +412,13 @@ This makes Commute Compute&#8482; one of the first commuter tools to fully suppo
 
 ### 1. Deploy to Vercel
 
+**If this repository is already on your GitHub account** (for example, you forked it): go to [vercel.com/new](https://vercel.com/new), choose **Import Git Repository**, pick the repository, and click **Deploy**.
+
+**Otherwise**, click the button. Vercel copies the repository into your GitHub account and deploys it:
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/samcross-au/CommuteCompute)
+
+> **Deploys are manual.** `vercel.json` sets `"git": { "deploymentEnabled": false }`, so pushing to GitHub does not deploy. After pushing changes (or if the first import does not produce a live site), open the project in the Vercel dashboard and choose **Deployments → Redeploy**, or run `vercel --prod` from the repository folder.
 
 ### 2. Add Redis
 
@@ -419,16 +428,24 @@ Vercel Dashboard > Integrations > Browse Marketplace > **Redis** (Upstash) > Ins
 
 Open `https://your-project.vercel.app/setup-wizard.html` and follow the guided configuration (home, work, arrival time, API keys).
 
-### 4. Flash Device (TRMNL Display)
+### 4. Set Up Your Display
 
-**Option A: Browser Flasher (Recommended)**
+**iPad or web browser (no flashing)**
+
+1. Open `https://your-project.vercel.app/ipad` in Safari on your iPad, or in any browser on a computer. Add `?demo=1` to see a sample journey before your API key is approved.
+2. On an iPad, tap **Share → Add to Home Screen** for a full-screen app, and set **Settings → Display & Brightness → Auto-Lock → Never** to keep it on. In a desktop browser, use full-screen mode (Ctrl+Cmd+F on a Mac, F11 on Windows).
+3. Tap or click the screen for night mode and refresh settings.
+
+That's it: skip step 5. See the [iPad Kiosk Guide](docs/hardware/IPAD-KIOSK.md) for wall-mounting tips and troubleshooting.
+
+**TRMNL / e-ink display: Option A: Browser Flasher (Recommended)**
 
 Use the hosted browser flasher at `https://your-project.vercel.app/flasher/` (Chrome/Edge desktop required):
 
 - TRMNL display / ESP32-C3 firmware flashing via Web Serial
 - Kindle package install (jailbroken + KUAL) to `extensions/commute-compute`
 
-**Option B: PlatformIO CLI**
+**TRMNL / e-ink display: Option B: PlatformIO CLI**
 
 ```bash
 cd firmware && pio run -e trmnl -t upload
@@ -446,7 +463,7 @@ Embed snippet for docs pages that support iframes:
 ></iframe>
 ```
 
-### 5. Pair and Go
+### 5. Pair and Go (e-ink displays only)
 
 The device connects via BLE, receives your server URL, and begins displaying your commute dashboard.
 
@@ -523,7 +540,7 @@ jobs:
 | Inkplate 6 | 800 x 600 | Supported |
 | Inkplate 10 | 1200 x 825 | Supported |
 | iPad (any, iOS 9+) | Native (e.g. 2360 x 1640) | Supported -- open `/ipad` in Safari, no flashing. See [iPad Kiosk Guide](docs/hardware/IPAD-KIOSK.md) |
-| Web Browser | Any | Full dashboard via `/api/commutecompute` endpoint |
+| Web Browser | Any (fits the window) | Supported -- open `/ipad` for a full-screen, self-refreshing dashboard; `/api/commutecompute` returns a single PNG |
 
 ### Battery Operation
 
