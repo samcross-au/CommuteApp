@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Kindle Firmware
+# Cross Commute Kindle Firmware
 
 **Version:** 2.0.0  
 **Firmware Compatibility:** TRMNL v6.0  
@@ -88,8 +88,8 @@ chmod +x /mnt/us/extensions/commute-compute/*.sh
 
 5. Safely eject Kindle
 6. Open KUAL on your Kindle
-7. Select "Commute Compute" > "Configure" to set up
-8. Select "Commute Compute" > "Start Dashboard"
+7. Select "Cross Commute" > "Configure" to set up
+8. Select "Cross Commute" > "Start Dashboard"
 
 ### Using Package Script
 
@@ -144,7 +144,7 @@ export CC_REFRESH=60
 ### From KUAL Menu
 
 1. Open KUAL (appears as a book in your library)
-2. Navigate to "Commute Compute"
+2. Navigate to "Cross Commute"
 3. Select an option:
    - **Start Dashboard**: Begin automatic updates
    - **Stop Dashboard**: Stop the background service

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Setup Wizard Architecture
@@ -31,7 +31,7 @@
 
 ## 1. Overview
 
-The Setup Wizard configures Commute Compute without requiring any server-side storage. All configuration is encoded into a **webhook URL token** that contains everything needed to render the dashboard.
+The Setup Wizard configures Cross Commute without requiring any server-side storage. All configuration is encoded into a **webhook URL token** that contains everything needed to render the dashboard.
 
 ### Design Principles
 
@@ -793,7 +793,7 @@ Vercel automatically maps files in `/api/` to endpoints:
 
 ### Persistent Storage via Redis
 
-**As of v1.8, Commute Compute uses Redis for persistent API key storage.**
+**As of v1.8, Cross Commute uses Redis for persistent API key storage.**
 
 | Storage Type | Usage |
 |--------------|-------|
@@ -805,7 +805,7 @@ Vercel automatically maps files in `/api/` to endpoints:
 1. Vercel Dashboard → **Integrations** → **Browse Marketplace** → Search **Redis** → Select Upstash → Install
 2. Create Redis database — Region: **Sydney, Australia**
 3. Plan: **Free** (256MB, 500K commands/month)
-4. Connect to your Commute Compute project
+4. Connect to your Cross Commute project
 5. **Redeploy** after creation
 
 See [DEVELOPMENT-RULES.md Section 3.6](../../DEVELOPMENT-RULES.md#36-vercel-kv-setup-required) for full details.

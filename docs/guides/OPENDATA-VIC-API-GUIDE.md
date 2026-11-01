@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Transport Victoria OpenData API Guide
@@ -15,9 +15,9 @@
 
 ## Overview
 
-Commute Compute uses the **Transport Victoria OpenData API** (GTFS-RT) for real-time departure information. This guide explains how to obtain an API key and how the system uses it.
+Cross Commute uses the **Transport Victoria OpenData API** (GTFS-RT) for real-time departure information. This guide explains how to obtain an API key and how the system uses it.
 
-**Note:** An API key is **optional**. Without one, Commute Compute falls back to timetable data, which is still useful but won't show real-time delays.
+**Note:** An API key is **optional**. Without one, Cross Commute falls back to timetable data, which is still useful but won't show real-time delays.
 
 ---
 
@@ -49,7 +49,7 @@ Commute Compute uses the **Transport Victoria OpenData API** (GTFS-RT) for real-
 1. Log in to your account
 2. Navigate to **My Account** or **API Keys**
 3. Click **Request New API Key**
-4. Enter a description (e.g., "Commute Compute")
+4. Enter a description (e.g., "Cross Commute")
 5. Accept the terms of use
 6. Click **Submit**
 
@@ -86,7 +86,7 @@ Your API key will be displayed or emailed to you.
 
 ### Endpoint Structure
 
-Commute Compute uses the GTFS Realtime API:
+Cross Commute uses the GTFS Realtime API:
 
 ```
 Base URL: https://api.opendata.transport.vic.gov.au
@@ -129,7 +129,7 @@ Value:  your-api-key-here
 |------|-----------------|--------------|
 | Free | 10 | 10,000 |
 
-### Commute Compute Usage
+### Cross Commute Usage
 
 The system is designed to stay well within limits:
 
@@ -146,7 +146,7 @@ The system is designed to stay well within limits:
 
 ### GTFS Realtime
 
-The API returns data in **Protocol Buffer (protobuf)** format, which Commute Compute automatically decodes.
+The API returns data in **Protocol Buffer (protobuf)** format, which Cross Commute automatically decodes.
 
 ### Trip Update Structure
 
@@ -195,7 +195,7 @@ The API returns data in **Protocol Buffer (protobuf)** format, which Commute Com
 
 ### Fallback Behaviour
 
-When the API is unavailable, Commute Compute automatically:
+When the API is unavailable, Cross Commute automatically:
 
 1. Uses cached data (if available)
 2. Falls back to static timetable data
@@ -205,7 +205,7 @@ When the API is unavailable, Commute Compute automatically:
 
 ## Caching Strategy
 
-Commute Compute caches API responses to:
+Cross Commute caches API responses to:
 
 - Reduce API calls
 - Improve response times
@@ -234,7 +234,7 @@ See: [opendata.transport.vic.gov.au/terms](https://opendata.transport.vic.gov.au
 
 ## Attribution
 
-Commute Compute displays the following attribution for transit data:
+Cross Commute displays the following attribution for transit data:
 
 > Data provided by Transport Victoria OpenData  
 > Licensed under CC BY 4.0
@@ -243,7 +243,7 @@ Commute Compute displays the following attribution for transit data:
 
 ## Other States (Coming Soon)
 
-Commute Compute is designed to support multiple Australian states:
+Cross Commute is designed to support multiple Australian states:
 
 | State | Authority | Status |
 |-------|-----------|--------|

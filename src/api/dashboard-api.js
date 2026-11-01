@@ -183,7 +183,7 @@ router.get('/dashboard', identifyDevice, withTimeout(20000), async (req, res) =>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Commute Compute Dashboard Preview</title>
+  <title>Cross Commute Dashboard Preview</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=${deviceConfig.width}, height=${deviceConfig.height}">
   <style>

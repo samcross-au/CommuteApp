@@ -1,6 +1,6 @@
 /**
- * CommuteCompute™ Journey Planner
- * Part of the Commute Compute System™
+ * Cross Commute Journey Planner
+ * Part of Cross Commute
  * 
  * Builds dynamic route segments based on user-configured journey preferences.
  * All routing is derived from user preferences - no hardcoded addresses.

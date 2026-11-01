@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-AU">
 <!--
-    Commute Compute Setup Wizard - Intelligent Configuration
+    Cross Commute Setup Wizard - Intelligent Configuration
     Version: 3.0 (Rebuilt for firmware pairing protocol compliance)
 
     HYBRID PROVISIONING (see DEVELOPMENT-RULES.md Section 21.7):
@@ -23,7 +23,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Setup Wizard - Commute Compute</title>
+    <title>Setup Wizard - Cross Commute</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -441,12 +441,12 @@
     <!-- ========== LEGAL COMPLIANCE GATE (Must be acknowledged before setup) ========== -->
     <div id="compliance-gate" class="compliance-gate" role="dialog" aria-modal="true" aria-labelledby="compliance-title" aria-describedby="compliance-desc">
         <div class="compliance-card">
-            <img src="/assets/brand/cc-logo-512.png" alt="Commute Compute" style="display: block; margin: 0 auto 16px; max-width: min(200px, 70vw); height: auto;">
+            <img src="/assets/brand/cc-logo-512.png" alt="Cross Commute" style="display: block; margin: 0 auto 16px; max-width: min(200px, 70vw); height: auto;">
             <h1 id="compliance-title">Before We Begin</h1>
             <p id="compliance-desc" class="subtitle">A few quick acknowledgements before we set up your dashboard.</p>
 
             <p style="color: #cbd5e1; font-size: 13px; line-height: 1.6; margin-bottom: 20px; text-align: center;">
-                Before we begin, here is what you are agreeing to. Commute Compute&#8482; is self-hosted &mdash; your data stays on your server.
+                Before we begin, here is what you are agreeing to. Cross Commute is self-hosted &mdash; your data stays on your server.
             </p>
 
             <div class="compliance-section">
@@ -489,9 +489,9 @@
     <div class="container" id="wizard-main" role="main">
         <div class="wizard-card">
             <header class="wizard-header">
-                <img src="/assets/brand/cc-logo-512.png" alt="Commute Compute™" style="max-width: min(280px, 80vw); height: auto; margin-bottom: 20px;">
-                <h1>Welcome to Commute Compute&#8482;</h1>
-                <p>Powered by the CommuteCompute&#8482; intelligence engine for smart departure recommendations</p>
+                <img src="/assets/brand/cc-logo-512.png" alt="Cross Commute" style="max-width: min(280px, 80vw); height: auto; margin-bottom: 20px;">
+                <h1>Welcome to Cross Commute</h1>
+                <p>Powered by the Cross Commute intelligence engine for smart departure recommendations</p>
                 <div style="margin-top: 12px;">
                     <a href="/admin.html" id="skip-to-admin-link" style="color: #cbd5e1; font-size: 13px; text-decoration: underline;">Already configured? Skip to Admin Panel &rarr;</a>
                 </div>
@@ -572,7 +572,7 @@
                 <!-- TRMNL device info -->
                 <div id="device-info-panel" style="display: none;" class="info-box" aria-live="polite">
                     <div style="font-size: 12px; color: #fbbf24; margin-bottom: 8px;">
-                        <svg class="icon-sm"><use href="#icon-warning"/></svg> Requires flashing with Commute Compute&#8482; custom firmware (CCFirm&#8482;)
+                        <svg class="icon-sm"><use href="#icon-warning"/></svg> Requires flashing with Cross Commute custom firmware (CCFirm&#8482;)
                     </div>
                     <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #3d5278; border-radius: 8px; padding: 10px; font-size: 12px; color: #cbd5e1;">
                         <strong>Requires Chrome or Edge browser</strong> -- Web Bluetooth is not supported in Safari or Firefox.
@@ -701,7 +701,7 @@
                                 <svg class="icon-sm"><use href="#icon-trash"/></svg> Start Fresh / Wipe All Data
                             </div>
                             <p style="color: #cbd5e1; font-size: 12px; margin-bottom: 12px;">
-                                Completely reset your Commute Compute&#8482; setup including all API keys, addresses, and device pairings.
+                                Completely reset your Cross Commute setup including all API keys, addresses, and device pairings.
                             </p>
                             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                                 <button type="button" id="wipe-all-data-btn" style="padding: 10px 18px; font-size: 13px; font-weight: 600; background: #ef4444; border: none; border-radius: 8px; color: white; cursor: pointer;">
@@ -827,8 +827,8 @@
                 <p style="color: #cbd5e1; margin-bottom: 15px;">Configure your commute preferences and optional real-time transit API.</p>
 
                 <div class="info-box" style="margin-bottom: 20px;">
-                    <strong style="color: #f1f5f9;">CommuteCompute&#8482; Intelligence Engine</strong><br>
-                    Your settings feed into five interconnected engines: <strong>CommuteCompute&#8482;</strong> (orchestration),
+                    <strong style="color: #f1f5f9;">Cross Commute Intelligence Engine</strong><br>
+                    Your settings feed into five interconnected engines: <strong>Cross Commute</strong> (orchestration),
                     <strong>DepartureConfidence&trade;</strong> (reliability scoring), <strong>LifestyleContext&trade;</strong> (pattern analysis),
                     <strong>SleepOptimiser&trade;</strong> (departure timing), and <strong>AltTransit&trade;</strong> (alternative routes).
                 </div>
@@ -963,7 +963,7 @@
             <div class="cc-footer-versions">
                 <div class="cc-footer-version-item">
                     <div class="cc-footer-live-dot"></div>
-                    <span class="cc-footer-version-label">CommuteCompute</span>
+                    <span class="cc-footer-version-label">Cross Commute</span>
                     <span class="cc-footer-version-value" id="cc-footer-commutecompute-version">--</span>
                 </div>
                 <div class="cc-footer-version-item">
@@ -1949,7 +1949,7 @@
         // Configuration summary — shown for ALL device types (one hit)
         var summaryHtml = '<div class="success-box" style="margin-bottom:20px;">' +
             '<h3 style="color:#22c55e;margin-bottom:8px;"><svg class="icon"><use href="#icon-check-circle"/></svg> Setup Complete!</h3>' +
-            '<p style="color:#4fb28e;">Your CommuteCompute\u2122 configuration has been saved to the server.</p></div>' +
+            '<p style="color:#4fb28e;">Your Cross Commute configuration has been saved to the server.</p></div>' +
             '<div class="phase-card phase-card-pair" style="margin-bottom:20px;">' +
             '<h3 style="color:#4fb28e;margin-bottom:16px;"><svg class="icon-sm"><use href="#icon-link"/></svg> Your Configuration</h3>' +
             '<div style="display:grid;gap:12px;">' +
@@ -2163,7 +2163,7 @@
     }
 
     function clearLocalStorageOnly() {
-        if (!confirm('Clear all browser cache for Commute Compute?\n\nServer-side data will remain intact.')) return;
+        if (!confirm('Clear all browser cache for Cross Commute?\n\nServer-side data will remain intact.')) return;
         try {
             var count = localStorage.length;
             localStorage.clear(); sessionStorage.clear();

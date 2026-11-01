@@ -4,9 +4,9 @@
 
 /**
  * CC LiveDash™ — Multi-Device Dashboard Renderer
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
- * Renders CommuteCompute™ output as a live dashboard image
+ * Renders Cross Commute output as a live dashboard image
  * optimised for different e-ink device variants.
  * 
  * Supported devices:

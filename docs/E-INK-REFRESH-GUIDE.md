@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # E-ink Display Refresh Guide
 
-**For Commute Compute(TM) Custom Firmware (CCFirm v8.1.0)**
+**For Cross Commute Custom Firmware (CCFirm v8.1.0)**
 **System Version:** v5.0.0 (CCDashDesignV16.0)
 **Last Updated:** 2026-02-06
 
@@ -308,7 +308,7 @@ screen /dev/cu.usbmodem* 115200
 ---
 
 **Last Updated:** 2026-02-06
-**Applies To:** Commute Compute(TM) v5.0.0+ (CCDashDesignV16.0)
+**Applies To:** Cross Commute v5.0.0+ (CCDashDesignV16.0)
 **Firmware Version:** CCFirm v8.1.0
 
 (c) 2026 Commute Compute(TM) System by Angus Bergman -- AGPL-3.0 Dual Licence

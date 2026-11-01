@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Setup Wizard
+# Cross Commute Setup Wizard
 
 Cross-platform tool for device firmware flashing and deployment setup.
 
@@ -13,7 +13,7 @@ AGPL-3.0 Dual Licence
 
 ## Overview
 
-The Commute Compute Setup Wizard guides you through the complete setup process:
+The Cross Commute Setup Wizard guides you through the complete setup process:
 1. [DONE] Device selection (TRMNL OG, Kindle variants)
 2. [DONE] GitLab repository fork
 3. [DONE] Render deployment
@@ -126,7 +126,7 @@ chmod +x setup-wizard.js
 $ node setup-wizard.js
 
 ╔═══════════════════════════════════════════════╗
-║  Commute Compute Setup Wizard v3.0.0                ║
+║  Cross Commute Setup Wizard v3.0.0                ║
 ║  Copyright © 2026 Angus Bergman               ║
 ╚═══════════════════════════════════════════════╝
 
@@ -186,7 +186,7 @@ esptool.py --port /dev/ttyUSB0 write_flash 0x0 firmware.bin
 
 **Resources**:
 - MobileRead Forums: https://www.mobileread.com/forums/forumdisplay.php?f=150
-- TRMNL Kindle Guide: [See Commute Compute Kindle setup guide]
+- TRMNL Kindle Guide: [See Cross Commute Kindle setup guide]
 
 **[CAUTION] WARNING**: Jailbreaking may void your warranty. Follow instructions carefully.
 

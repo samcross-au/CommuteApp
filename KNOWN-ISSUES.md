@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Known Issues & Hardware Quirks
@@ -161,7 +161,7 @@ These details are relevant for firmware developers only:
 After completing Bluetooth pairing and Wi-Fi configuration through the setup wizard, one or more of the following may occur:
 
 - The TRMNL display cycles back to the setup / pairing screen after rebooting.
-- The device appears stuck on the "Commute Compute™" logo boot screen and does not progress.
+- The device appears stuck on the "Cross Commute" logo boot screen and does not progress.
 - The browser-based firmware flasher completes but the display shows a static or blank screen.
 
 ### Root Causes (Investigated 2026-04-05)

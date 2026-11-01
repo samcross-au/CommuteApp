@@ -131,7 +131,7 @@ async function geocodeAddress(address, googleKey = null) {
     const nominatimController = new AbortController();
     const nominatimTimeoutId = setTimeout(() => nominatimController.abort(), 8000);
     const response = await fetch(nominatimUrl, {
-      headers: { 'User-Agent': 'Commute Compute/1.0 (Setup Wizard)' },
+      headers: { 'User-Agent': 'Cross Commute/1.0 (Setup Wizard)' },
       signal: nominatimController.signal
     });
     clearTimeout(nominatimTimeoutId);

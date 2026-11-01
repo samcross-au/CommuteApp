@@ -14,7 +14,7 @@ import WeatherBOM from '../src/services/weather-bom.js';
 import CoffeeDecision from '../src/core/coffee-decision.js';
 
 console.log('╔══════════════════════════════════════════════════════════════╗');
-console.log('║     Commute Compute DATA PIPELINE VALIDATION REPORT                ║');
+console.log('║     Cross Commute DATA PIPELINE VALIDATION REPORT                ║');
 console.log('╚══════════════════════════════════════════════════════════════╝');
 console.log('');
 console.log('Generated:', new Date().toISOString());

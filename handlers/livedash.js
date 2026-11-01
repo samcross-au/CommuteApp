@@ -1,6 +1,6 @@
 /**
  * CC LiveDash™ API Endpoint
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  *
  * Thin wrapper around src/services/livedash.js (CC LiveDash™ core).
  * Handles config token decoding (via shared src/utils/config-token.js),
@@ -214,7 +214,7 @@ function generateHtmlPreview(device, config) {
   return `<!DOCTYPE html>
 <html lang="en">
 <!--
-    Commute Compute LiveDash - Smart Transit Display
+    Cross Commute LiveDash - Smart Transit Display
     Copyright (c) 2025-2026 Angus Bergman
     SPDX-License-Identifier: AGPL-3.0-or-later
     Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
@@ -223,7 +223,7 @@ function generateHtmlPreview(device, config) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Live transit dashboard preview for ${config.name}">
-    <title>LiveDash - ${config.name} | Commute Compute</title>
+    <title>LiveDash - ${config.name} | Cross Commute</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>CC</text></svg>">
     <style>
         :root {
@@ -483,7 +483,7 @@ function generateHtmlPreview(device, config) {
     <header class="header">
         <a href="/" class="brand">
             <span>CC</span>
-            <span>Commute Compute</span>
+            <span>Cross Commute</span>
         </a>
         <nav class="nav-links">
             <a href="/" class="nav-link">Home</a>
@@ -536,7 +536,7 @@ function generateHtmlPreview(device, config) {
         <div class="footer-legal">
             © 2025-2026 <a href="https://gitlab.com/angusbergman" target="_blank" rel="noopener">Angus Bergman</a> •
             <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0</a> •
-            Commute Compute&#8482; System v5.0.0
+            Cross Commute v5.0.0
         </div>
     </footer>
     

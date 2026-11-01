@@ -55,7 +55,7 @@ export async function geocodeAddress(address, googleKey = null) {
 
   try {
     const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`, {
-      headers: { 'User-Agent': 'Commute Compute/1.0' }
+      headers: { 'User-Agent': 'CrossCommute/1.0' }
     });
     const results = await resp.json();
     if (results?.length > 0) {

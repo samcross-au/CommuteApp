@@ -1,5 +1,5 @@
 /**
- * Commute Compute Logo Drawing Functions
+ * Cross Commute Logo Drawing Functions
  * Header file for logo display on TRMNL devices
  * 
  * Copyright (c) 2026 Angus Bergman

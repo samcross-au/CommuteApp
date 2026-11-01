@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute System™
+# Cross Commute
 ## Complete Project Overview
 
 **Version:** 1.0  
@@ -14,9 +14,9 @@
 
 # Part 1: Vision & Goals
 
-## What is Commute Compute?
+## What is Cross Commute?
 
-**Commute Compute System™** is a fully self-hosted smart transit display for Australian public transport. It delivers real-time journey information to beautiful e-ink displays, helping commuters know exactly when to leave — including whether there's time for coffee.
+**Cross Commute** is a fully self-hosted smart transit display for Australian public transport. It delivers real-time journey information to beautiful e-ink displays, helping commuters know exactly when to leave — including whether there's time for coffee.
 
 ### The Problem We Solve
 
@@ -26,7 +26,7 @@ Every morning, commuters face the same questions:
 - "Do I have time for coffee?"
 - "Should I bring an umbrella?"
 
-Commute Compute answers all of these at a glance on a dedicated e-ink display.
+Cross Commute answers all of these at a glance on a dedicated e-ink display.
 
 ### Core Principles
 
@@ -44,8 +44,8 @@ Commute Compute answers all of these at a glance on a dedicated e-ink display.
 
 | Brand | Purpose |
 |-------|---------|
-| **Commute Compute System™** | Overall system name |
-| **CommuteCompute™** | Journey calculation engine |
+| **Cross Commute** | Overall system name |
+| **Cross Commute** | Journey calculation engine |
 | **CCDash™** | Dashboard rendering specification (V15.0) |
 | **CC LiveDash™** | Multi-device live renderer |
 | **CCFirm™** | Custom firmware family |
@@ -139,7 +139,7 @@ Every user deploys their own complete stack. There is no central server.
            │
            ▼ 30s cache
 ┌─────────────────────┐
-│  CommuteCompute™      │  ← Journey calculation engine
+│  Cross Commute      │  ← Journey calculation engine
 │  Engine             │
 └──────────┬──────────┘
            │
@@ -199,11 +199,11 @@ Every user deploys their own complete stack. There is no central server.
 
 ---
 
-# Part 3: The CommuteCompute™ Engine
+# Part 3: The Cross Commute Engine
 
 ## How It Works
 
-The CommuteCompute™ engine is the brain of Commute Compute. It calculates optimal journeys by:
+The Cross Commute engine is the brain of Cross Commute. It calculates optimal journeys by:
 
 1. **Fetching real-time data** from transit authorities (GTFS-RT)
 2. **Detecting delays and disruptions** from service alerts
@@ -246,7 +246,7 @@ The engine determines whether to include a coffee stop based on:
 
 # Part 4: Dashboard Scenarios
 
-The following images demonstrate how the CommuteCompute™ engine handles various real-world scenarios. Each dashboard is rendered server-side and delivered to the e-ink display.
+The following images demonstrate how the Cross Commute engine handles various real-world scenarios. Each dashboard is rendered server-side and delivered to the e-ink display.
 
 ---
 
@@ -536,7 +536,7 @@ The entire system works on free infrastructure:
 
 - Core server architecture
 - CCDash™ CCDashDesignV16.0 specification
-- CommuteCompute™ engine
+- Cross Commute engine
 - CC LiveDash™ multi-device renderer
 - CCFirm™ custom firmware
 - Victoria, NSW, Queensland support
@@ -560,7 +560,7 @@ The entire system works on free infrastructure:
 
 # Summary
 
-Commute Compute System™ is a privacy-respecting, fully self-hosted smart transit display that:
+Cross Commute is a privacy-respecting, fully self-hosted smart transit display that:
 
 1. **Shows real-time departures** from Australian transit authorities
 2. **Calculates optimal routes** across multiple transport modes

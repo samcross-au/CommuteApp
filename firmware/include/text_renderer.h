@@ -1,6 +1,6 @@
 /**
  * Text Renderer for CCFirm™ — BMP-based text rendering
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  *
  * WORKAROUND: bb_epaper's built-in text functions (setFont/print/drawString)
  * crash on ESP32-C3 in bufferless mode (no allocBuffer). This renderer

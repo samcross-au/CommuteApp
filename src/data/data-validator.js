@@ -1,6 +1,6 @@
 /**
  * Data Validator - Multi-Layer Validation with Confidence Scores
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  *
  * Provides:
  * - Geocoding confidence scores (0-100%)

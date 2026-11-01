@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Multi-Device Rendering Guide
@@ -321,7 +321,7 @@ User Request
      ▼
 ┌─────────────────────────────┐
 │  LiveDash.initialize()      │
-│  - Create CommuteCompute      │
+│  - Create Cross Commute      │
 │  - Load user preferences    │
 └─────────────────────────────┘
      │

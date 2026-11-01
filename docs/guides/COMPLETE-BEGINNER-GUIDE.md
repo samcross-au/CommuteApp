@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™: Complete Beginner's Guide
+# Cross Commute: Complete Beginner's Guide
 
 **A step-by-step guide for first-time users with no technical background.**
 
@@ -19,7 +19,7 @@
 > - **TRMNL display** — Your e-ink display device (the physical screen that sits on your desk or wall), manufactured by TRMNL
 > - **Redis** — The database that stores your settings (set up automatically via Vercel)
 > - **GTFS-RT** — The live departure data feed from Transport Victoria that powers real-time countdown timers
-> - **Vercel** — The free cloud platform that hosts your Commute Compute™ server
+> - **Vercel** — The free cloud platform that hosts your Cross Commute server
 > - **Setup Wizard** — The web page where you configure your addresses and preferences
 > - **CCFirm™** — The custom firmware (device software) that runs on your TRMNL display
 > - **BLE** — Bluetooth Low Energy, used to send WiFi credentials and your server URL to your display during initial setup
@@ -64,10 +64,10 @@ Before starting, confirm you have the following. Gathering everything upfront wi
 
 ## Compatible Display Hardware
 
-Commute Compute™ is compatible with the following e-ink displays:
+Cross Commute is compatible with the following e-ink displays:
 
-- **TRMNL Display (OG)** (800x480, 7.5" e-ink) — A purpose-built e-ink display available from the [TRMNL Shop](https://shop.trmnl.com). The hardware is manufactured by TRMNL; Commute Compute™ runs custom CCFirm™ firmware on it. Commute Compute™ is not affiliated with or endorsed by TRMNL.
-- **Jailbroken Kindle** — Various Kindle models (Paperwhite 3/4/5, Kindle 4) can be repurposed as Commute Compute™ displays. Requires jailbreaking the device.
+- **TRMNL Display (OG)** (800x480, 7.5" e-ink) — A purpose-built e-ink display available from the [TRMNL Shop](https://shop.trmnl.com). The hardware is manufactured by TRMNL; Cross Commute runs custom CCFirm™ firmware on it. Cross Commute is not affiliated with or endorsed by TRMNL.
+- **Jailbroken Kindle** — Various Kindle models (Paperwhite 3/4/5, Kindle 4) can be repurposed as Cross Commute displays. Requires jailbreaking the device.
 
 For detailed specifications, setup instructions, and a full list of supported devices, see the [Device Compatibility Guide](../hardware/DEVICE-COMPATIBILITY.md).
 
@@ -133,7 +133,7 @@ Before starting setup, have these details ready:
 
 [TIME] This entire part takes approximately 10-15 minutes.
 
-Your Commute Compute™ server runs in the cloud for free on Vercel. "The cloud" simply means the server runs on someone else's computer (Vercel's) instead of yours.
+Your Cross Commute server runs in the cloud for free on Vercel. "The cloud" simply means the server runs on someone else's computer (Vercel's) instead of yours.
 
 **Before you begin:** Register for a Transport Victoria OpenData API key now. Approval takes 24–48 hours — start this first so your key is ready when you reach the dashboard setup step.
 
@@ -148,22 +148,22 @@ Your Commute Compute™ server runs in the cloud for free on Vercel. "The cloud"
 3. Choose **Continue with GitLab** (recommended)
 4. If you don't have a GitLab account, click "Create one" and follow the registration steps at [gitlab.com](https://gitlab.com)
 
-**What is GitLab?** GitLab is a code hosting platform. Vercel needs to connect to it to access the Commute Compute™ code.
+**What is GitLab?** GitLab is a code hosting platform. Vercel needs to connect to it to access the Cross Commute code.
 
-### Step 1.2: Deploy Commute Compute
+### Step 1.2: Deploy Cross Commute
 
 [TIME] Approximately 3-5 minutes (mostly automated waiting).
 
-[NOTE] "Deploy" means to copy the Commute Compute™ code to Vercel's servers and start it running.
+[NOTE] "Deploy" means to copy the Cross Commute code to Vercel's servers and start it running.
 
-1. Go to the Commute Compute™ repository on GitLab
+1. Go to the Cross Commute repository on GitLab
 2. Click the **Deploy to Vercel** button in the README
 3. Click **Create** when prompted by Vercel
 4. Wait while Vercel builds and deploys your server (takes 2-3 minutes)
 
 **Success!** You'll see a green checkmark and a deployment URL like `your-project-name.vercel.app`
 
-[IMPORTANT] Write down this URL -- you'll use it throughout setup. This is your personal Commute Compute™ server address.
+[IMPORTANT] Write down this URL -- you'll use it throughout setup. This is your personal Cross Commute server address.
 
 ### Step 1.3: Create Database
 
@@ -189,11 +189,11 @@ Your server needs a database to store your settings (addresses, API keys, prefer
 
 [TIME] Approximately 2-3 minutes.
 
-Redis installed via the Marketplace needs to be linked to your Commute Compute™ project.
+Redis installed via the Marketplace needs to be linked to your Cross Commute project.
 
 1. After database creation, you'll see a **Projects** tab
 2. Click **Connect Project**
-3. Select your Commute Compute™ project from the list
+3. Select your Cross Commute project from the list
 4. Click **Connect**
 
 **What just happened?** Vercel automatically added two "environment variables" (configuration settings) to your project so it knows how to access the database.
@@ -287,7 +287,7 @@ If you want CoffeeDecision™ recommendations (whether you have time for coffee 
 
 **Transport Victoria API Key (Required for live departure data):**
 
-This key powers the live real-time departure countdowns, which is the core feature of Commute Compute™. Without this key, transit legs (trams, trains, buses) will not appear on your dashboard.
+This key powers the live real-time departure countdowns, which is the core feature of Cross Commute. Without this key, transit legs (trams, trains, buses) will not appear on your dashboard.
 
 **If you already have a key:**
 1. Paste the key into the "Transport Victoria API Key" field
@@ -391,7 +391,7 @@ This verification confirms your server is working before you invest time in devi
 
 You have two options to flash CCFirm™ firmware to your TRMNL display. The browser flasher is the easiest method and requires no software installation.
 
-**What is flashing?** "Flashing" means installing the Commute Compute™ firmware (device software) onto your display's memory chip. This is a one-time process.
+**What is flashing?** "Flashing" means installing the Cross Commute firmware (device software) onto your display's memory chip. This is a one-time process.
 
 ### Option A: Browser Flasher (Recommended -- No Software Install Required)
 
@@ -441,7 +441,7 @@ pip3 install platformio
 
 **Step 2: Download Firmware Code**
 
-1. Go to the Commute Compute™ GitLab repository in your browser
+1. Go to the Cross Commute GitLab repository in your browser
 2. Click **Code** dropdown button > **Download ZIP**
 3. Extract the ZIP file to your Downloads folder
 4. Open Terminal (macOS) or Command Prompt (Windows)
@@ -526,7 +526,7 @@ After WiFi provisioning succeeds (or after entering a pairing code, if one was d
 
 [IMPORTANT] Do not power off or reset the display during initial connection. The first load takes longer than subsequent refreshes.
 
-**Success!** Your device will show your personalised Commute Compute™ dashboard with:
+**Success!** Your device will show your personalised Cross Commute dashboard with:
 - Current time and date
 - When to leave home
 - Journey legs (walk, tram/train, walk)
@@ -679,7 +679,7 @@ If you're stuck:
 |------|---------|
 | **TRMNL display** | The e-ink display hardware (manufactured by TRMNL) — the physical screen that shows your dashboard |
 | **CCFirm™** | The custom firmware (device software) that runs on your TRMNL display |
-| **Vercel** | Free cloud hosting service that runs your Commute Compute™ server |
+| **Vercel** | Free cloud hosting service that runs your Cross Commute server |
 | **Redis** | Database for your settings, installed via the Vercel Marketplace (powered by Upstash) |
 | **PlatformIO** | Software tool used to program (flash) firmware onto devices |
 | **Firmware** | Software that runs directly on your TRMNL display hardware |

@@ -3,8 +3,8 @@
 // Part of the Commute Compute System™ — https://gitlab.com/angusbergman/commute-compute-system
 
 /**
- * CommuteCompute™ Engine v4.1
- * Part of the Commute Compute System™
+ * Cross Commute Engine v4.1
+ * Part of Cross Commute
  *
  * Multi-state GTFS-RT support (VIC/NSW/QLD live, SA/WA/TAS/NT/ACT timetable fallback),
  * coordinate-based stop detection via haversine distance (226 VIC metro + 1637 tram +
@@ -17,7 +17,7 @@
  * discovery, Lifestyle Context and Mindset analysis.
  *
  * Six Interconnected Intelligence Engines:
- *   CommuteCompute™ — Core journey orchestration
+ *   Cross Commute — Core journey orchestration
  *   CoffeeDecision™ — Cafe proximity and timing analysis
  *   DepartureConfidence™ (Departure Confidence) — Real-time departure reliability scoring
  *   LifestyleContext™ (Lifestyle Context) — Weather-aware lifestyle suggestions and Mindset analysis

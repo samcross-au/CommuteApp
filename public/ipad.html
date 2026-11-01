@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--
-    Commute Compute iPad Kiosk - full-screen CCDash for iPad Safari
+    Cross Commute iPad Kiosk - full-screen CCDash for iPad Safari
     Copyright (c) 2025-2026 Angus Bergman
     SPDX-License-Identifier: AGPL-3.0-or-later
     Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
@@ -30,7 +30,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/ipad.webmanifest">
     <link rel="icon" href="/favicon-32.png">
-    <title>Commute Compute</title>
+    <title>Cross Commute</title>
     <style>
         html, body {
             margin: 0;
@@ -136,11 +136,11 @@
 <body>
     <div id="frameA" class="frame"></div>
     <div id="frameB" class="frame"></div>
-    <div id="message">Loading your commute&hellip;<small>Commute Compute</small></div>
+    <div id="message">Loading your commute&hellip;<small>Cross Commute</small></div>
     <div id="stale"></div>
 
     <div id="panel" role="dialog" aria-label="Display settings">
-        <h2>Commute Compute</h2>
+        <h2>Cross Commute</h2>
         <div class="meta" id="panel-meta">Not loaded yet</div>
         <div class="row" id="dest-row" style="display: none;">
             <div class="label">Destination</div>
@@ -351,7 +351,7 @@
             } else {
                 failures++;
                 if (!lastSuccess) {
-                    message.innerHTML = 'Can&rsquo;t reach your Commute Compute server.' +
+                    message.innerHTML = 'Can&rsquo;t reach your Cross Commute server.' +
                         '<small>Retrying&hellip; Check Wi-Fi, or that setup is complete.</small>';
                 } else if (failures >= 2) {
                     stale.innerHTML = 'Offline &mdash; last updated ' + clockString(lastSuccess);

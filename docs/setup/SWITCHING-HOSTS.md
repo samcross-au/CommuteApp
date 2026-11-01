@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Moving Off Vercel
 
-**Run your Commute Compute™ deployment on another host without changing how it behaves**
+**Run your Cross Commute deployment on another host without changing how it behaves**
 
 Copyright (c) 2025-2026 Angus Bergman — AGPL-3.0 Dual Licence
 

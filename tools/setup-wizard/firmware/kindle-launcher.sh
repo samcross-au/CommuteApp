@@ -1,8 +1,8 @@
 #!/bin/sh
 
 ###############################################################################
-# Commute Compute System Kindle Launcher Script
-# Launches Commute Compute System display on jailbroken Kindle devices
+# Cross Commute Kindle Launcher Script
+# Launches Cross Commute display on jailbroken Kindle devices
 #
 # Copyright (c) 2026 Angus Bergman
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -43,7 +43,7 @@ log() {
 if [ -f "$PID_FILE" ]; then
     PID=$(cat "$PID_FILE")
     if kill -0 "$PID" 2>/dev/null; then
-        log "Commute Compute System is already running (PID: $PID)"
+        log "Cross Commute is already running (PID: $PID)"
         exit 0
     else
         log "Removing stale PID file"
@@ -51,7 +51,7 @@ if [ -f "$PID_FILE" ]; then
     fi
 fi
 
-log "=== Commute Compute System Kindle Launcher Starting ==="
+log "=== Cross Commute Kindle Launcher Starting ==="
 log "Device: $DEVICE_TYPE"
 log "Server: $SERVER_URL"
 log "Refresh Interval: ${REFRESH_INTERVAL}s"
@@ -185,5 +185,5 @@ while true; do
 done
 
 # Cleanup on exit
-log "Commute Compute System stopping..."
+log "Cross Commute stopping..."
 rm -f "$PID_FILE"

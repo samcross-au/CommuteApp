@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-AU">
 <!--
-    Commute Compute™ - Smart Journey Dashboard
+    Cross Commute - Smart Journey Dashboard
     Copyright (c) 2026 Angus Bergman
     SPDX-License-Identifier: AGPL-3.0-or-later
     Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
@@ -15,7 +15,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commute Compute™ Admin</title>
+    <title>Cross Commute Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1813,8 +1813,8 @@
     <!-- Sticky Header (matches privacy/help pages) -->
     <header class="header-bar" role="banner" aria-label="Site header">
         <a href="/" class="brand">
-            <img src="/assets/brand/cc-logo-128.png" alt="Commute Compute&#8482;" style="height: 56px; width: auto; margin-right: 10px;">
-            <span>Commute Compute&#8482;</span>
+            <img src="/assets/brand/cc-logo-128.png" alt="Cross Commute" style="height: 56px; width: auto; margin-right: 10px;">
+            <span>Cross Commute</span>
         </a>
         <nav class="nav-links" role="navigation" aria-label="Main navigation">
             <a href="/" class="nav-link">Home</a>
@@ -1920,7 +1920,7 @@
         <div class="content" aria-label="Dashboard content">
             <!-- Sub-header: time/status display -->
             <div class="header">
-                <h1>Commute Compute&#8482; Dashboard</h1>
+                <h1>Cross Commute Dashboard</h1>
                 <div class="live-indicator" aria-live="polite" role="status">
                     <div class="live-dot"></div>
                     <span id="data-mode">Loading...</span>
@@ -1945,7 +1945,7 @@
             <!-- Not Configured State -->
             <div id="setup-not-configured" style="display: none; text-align: center; padding: 60px 20px;">
                 <div style="margin-bottom: 20px;"><svg class="icon-hero" style="color: #4fb28e;"><use href="#icon-rocket"/></svg></div>
-                <h2 style="margin-bottom: 15px; font-size: 24px;">Welcome to Commute Compute&#8482;</h2>
+                <h2 style="margin-bottom: 15px; font-size: 24px;">Welcome to Cross Commute</h2>
                 <p style="opacity: 0.8; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7; font-size: 15px;">
                     Set up your commute in just a few steps. We'll find the best route and keep your e-ink display updated with live transit data.
                 </p>
@@ -2201,7 +2201,7 @@
                         <div id="firmware-disclaimer" style="padding: 12px; background: rgba(251, 191, 36, 0.1); border-radius: 8px; margin-bottom: 15px;">
                             <div style="font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.85);">
                                 <strong><svg class="icon-sm"><use href="#icon-warning"/></svg> Custom Firmware Required:</strong> Your device must be flashed with 
-                                <a href="/flasher/" target="_blank" style="color: #fbbf24;">Commute Compute&#8482; firmware</a> 
+                                <a href="/flasher/" target="_blank" style="color: #fbbf24;">Cross Commute firmware</a> 
                                 to connect to this dashboard. Stock firmware will not work.
                             </div>
                         </div>
@@ -2233,16 +2233,16 @@
                     </div>
                 </div>
 
-                <!-- CommuteCompute Settings Card -->
+                <!-- Cross Commute Settings Card -->
                 <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(79, 178, 142, 0.08) 0%, rgba(102, 126, 234, 0.08) 100%); border-radius: 12px; border: 1px solid rgba(79, 178, 142, 0.2);">
                     <div class="card-header" style="margin-bottom: 20px;">
                         <span class="card-icon">
                             <svg width="20" height="20" style="color: #4fb28e;"><use href="#icon-cpu"/></svg>
                         </span>
-                        <h2>CommuteCompute&#8482; Settings</h2>
+                        <h2>Cross Commute Settings</h2>
                     </div>
                     <p style="margin-bottom: 20px; font-size: 13px; opacity: 0.8; line-height: 1.6;">
-                        Fine-tune how the CommuteCompute engine calculates your optimal journey. These settings affect departure time recommendations and coffee feasibility.
+                        Fine-tune how the Cross Commute engine calculates your optimal journey. These settings affect departure time recommendations and coffee feasibility.
                     </p>
 
                     <!-- Walking Times Section -->
@@ -2308,7 +2308,7 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label class="form-label" style="font-size: 12px;">Coffee Position in Route</label>
                                 <select id="sc-coffee-position" class="form-input">
-                                    <option value="auto">Auto (CommuteCompute decides)</option>
+                                    <option value="auto">Auto (Cross Commute decides)</option>
                                     <option value="before">Before transit (on way to station)</option>
                                     <option value="after">After transit (near work)</option>
                                     <option value="never">Never include coffee</option>
@@ -2380,7 +2380,7 @@
                     <!-- Save Button -->
                     <button onclick="saveCommuteComputeSettings()" class="btn btn-primary btn-block" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
                         <svg width="16" height="16"><use href="#icon-save"/></svg>
-                        Save CommuteCompute Settings
+                        Save Cross Commute Settings
                     </button>
                     <div id="sc-settings-message" aria-live="polite" role="status" style="display: none; margin-top: 12px; padding: 12px; border-radius: 8px; font-size: 13px;"></div>
                 </div>
@@ -2398,7 +2398,7 @@
                         </button>
                     </div>
                     <p style="margin-bottom: 16px; font-size: 13px; opacity: 0.8; line-height: 1.6;">
-                        CommuteCompute discovers multiple route options. Select your preferred route below - it will be used for display calculations.
+                        Cross Commute discovers multiple route options. Select your preferred route below - it will be used for display calculations.
                     </p>
 
                     <!-- Loading State -->
@@ -2602,7 +2602,7 @@
                 <svg width="80" height="80" style="opacity: 0.3; margin-bottom: 20px; color: #4fb28e;"><use href="#icon-route"/></svg>
                 <h2 style="margin-bottom: 15px; font-size: 24px; font-weight: 600; color: #f1f5f9;">Journey Not Configured</h2>
                 <p style="opacity: 0.7; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.6; font-size: 15px; color: #cbd5e1;">
-                    Complete the setup wizard to configure your commute. The CommuteCompute engine will calculate optimal routes and departure times.
+                    Complete the setup wizard to configure your commute. The Cross Commute engine will calculate optimal routes and departure times.
                 </p>
                 <button class="btn btn-primary" onclick="showTab('setup', this)" style="padding: 12px 30px; font-size: 16px;">
                     Configure Journey
@@ -2611,14 +2611,14 @@
 
             <!-- Configured State -->
             <div id="live-data-configured">
-                <!-- CommuteCompute Status Banner -->
+                <!-- Cross Commute Status Banner -->
                 <div id="commutecompute-status-banner" aria-live="polite" role="status" style="margin-bottom: 20px; padding: 18px 20px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 15px; background: linear-gradient(135deg, rgba(79, 178, 142, 0.15) 0%, rgba(34, 197, 94, 0.15) 100%);">
                     <div style="display: flex; align-items: center; gap: 15px;">
                         <div id="commutecompute-status-icon" style="width: 32px; height: 32px; border-radius: 50%; background: #22c55e; display: flex; align-items: center; justify-content: center;">
                             <svg width="18" height="18" style="color: white;"><use href="#icon-check"/></svg>
                         </div>
                         <div>
-                            <div id="commutecompute-status-title" style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #f1f5f9;">CommuteCompute Active</div>
+                            <div id="commutecompute-status-title" style="font-weight: 700; font-size: 16px; margin-bottom: 4px; color: #f1f5f9;">Cross Commute Active</div>
                             <div id="commutecompute-status-subtitle" style="font-size: 13px; color: #cbd5e1;">Real-time journey calculation enabled</div>
                         </div>
                     </div>
@@ -2754,7 +2754,7 @@
                             <span style="font-size: 13px; color: #cbd5e1;">Adjust journey settings to see changes on display</span>
                         </div>
                         <button onclick="showTab('setup', this)" class="btn" style="padding: 8px 16px; font-size: 13px; background: #667eea;">
-                            Edit CommuteCompute Settings
+                            Edit Cross Commute Settings
                         </button>
                     </div>
                 </div>
@@ -2895,7 +2895,7 @@
                                 </div>
                                 <div>
                                     <h3 style="font-size: 16px; font-weight: 600; color: #f1f5f9; margin: 0;">CoffeeDecision&#8482;</h3>
-                                    <span style="font-size: 12px; color: #cbd5e1;">CommuteCompute recommendation</span>
+                                    <span style="font-size: 12px; color: #cbd5e1;">Cross Commute recommendation</span>
                                 </div>
                             </div>
                             <span id="coffee-status-badge" style="padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; background: rgba(167, 139, 250, 0.2); color: #a78bfa;">Auto</span>
@@ -2909,7 +2909,7 @@
                     </div>
                 </div>
 
-                <!-- CommuteCompute Journey Summary -->
+                <!-- Cross Commute Journey Summary -->
                 <div class="card" style="margin-top: 20px; background: rgba(30, 41, 59, 0.8); border-radius: 12px; padding: 20px;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px;">
@@ -2918,7 +2918,7 @@
                             </div>
                             <div>
                                 <h3 style="font-size: 16px; font-weight: 600; color: #f1f5f9; margin: 0;">Today's Journey</h3>
-                                <span style="font-size: 12px; color: #cbd5e1;">CommuteCompute calculated route</span>
+                                <span style="font-size: 12px; color: #cbd5e1;">Cross Commute calculated route</span>
                             </div>
                         </div>
                         <button class="btn btn-secondary" onclick="recalculateJourney()" style="padding: 8px 16px; font-size: 13px; display: flex; align-items: center; gap: 6px;">
@@ -2988,7 +2988,7 @@
                     <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1;">
                             <svg width="14" height="14" style="color: #4fb28e;"><use href="#icon-check"/></svg>
-                            <span id="cc-header-engine-version">CommuteCompute Engine v4.2</span>
+                            <span id="cc-header-engine-version">Cross Commute Engine v4.2</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #cbd5e1;">
                             <svg width="14" height="14" style="color: #4fb28e;"><use href="#icon-check"/></svg>
@@ -3375,7 +3375,7 @@
             <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-radius: 12px;">
                 <div class="card-header" style="display: flex; align-items: center; gap: 12px;">
                     <svg width="22" height="22" style="color: #4fb28e;"><use href="#icon-layers"/></svg>
-                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Commute Compute&#8482; System Architecture</h2>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Cross Commute Architecture</h2>
                 </div>
                 <p style="margin-bottom: 20px; color: #cbd5e1; line-height: 1.7; font-size: 14px;">
                     A fully self-hosted smart transit display system for Australian public transport. Each user deploys their own complete stack with zero external dependencies. Features device pairing via Redis for persistent configuration across serverless invocations.
@@ -3395,17 +3395,17 @@
                     <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Commute Compute&#8482; Trade Marked Tools</h2>
                 </div>
                 <p style="margin: 15px 0 20px 0; font-size: 14px; color: #cbd5e1;">
-                    Five interconnected intelligence engines power the Commute Compute&#8482; ecosystem, each handling a specific domain of the smart transit experience.
+                    Five interconnected intelligence engines power the Cross Commute ecosystem, each handling a specific domain of the smart transit experience.
                 </p>
 
-                <!-- CommuteCompute -->
+                <!-- Cross Commute -->
                 <div style="margin-bottom: 16px; padding: 16px; background: linear-gradient(135deg, rgba(79, 178, 142, 0.15) 0%, rgba(79, 178, 142, 0.05) 100%); border-radius: 10px; border: 1px solid rgba(79, 178, 142, 0.3);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
                         <svg width="24" height="24" style="color: #4fb28e;"><use href="#icon-route"/></svg>
-                        <h3 id="cc-detail-engine-version" style="margin: 0; font-size: 16px; font-weight: 700; color: #4fb28e;">CommuteCompute&#8482; Engine v4.2</h3>
+                        <h3 id="cc-detail-engine-version" style="margin: 0; font-size: 16px; font-weight: 700; color: #4fb28e;">Cross Commute Engine v4.2</h3>
                     </div>
                     <p style="font-size: 13px; color: #e2e8f0; line-height: 1.7; margin-bottom: 12px;">
-                        The intelligent journey planning core that optimises multi-modal routes across Australian public transport networks. CommuteCompute analyses real-time GTFS data, user preferences, and contextual factors to recommend the optimal departure time and route.
+                        The intelligent journey planning core that optimises multi-modal routes across Australian public transport networks. Cross Commute analyses real-time GTFS data, user preferences, and contextual factors to recommend the optimal departure time and route.
                     </p>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
                         <div style="padding: 10px; background: rgba(0,0,0,0.2); border-radius: 6px;">
@@ -3611,7 +3611,7 @@
                         </div>
                         <div style="padding: 10px 14px; background: linear-gradient(90deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 100%); border-radius: 6px;">
                             <span style="color: #fbbf24; font-weight: 600;">SERVICE LAYER</span>
-                            <span style="color: #cbd5e1; margin-left: 12px;">CommuteCompute&#8482;, CC LiveDash&#8482;, Zone Renderer, Weather</span>
+                            <span style="color: #cbd5e1; margin-left: 12px;">Cross Commute, CC LiveDash&#8482;, Zone Renderer, Weather</span>
                         </div>
                         <div style="padding: 10px 14px; background: linear-gradient(90deg, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.1) 100%); border-radius: 6px;">
                             <span style="color: #ef4444; font-weight: 600;">CORE LAYER</span>
@@ -3694,7 +3694,7 @@
                     <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px;">
                         <div style="width: 32px; height: 32px; background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">3</div>
                         <div style="flex: 1;">
-                            <div style="font-weight: 600; font-size: 14px;">CommuteCompute&#8482; Engine</div>
+                            <div style="font-weight: 600; font-size: 14px;">Cross Commute Engine</div>
                             <div style="font-size: 12px; color: #cbd5e1;">Route optimisation, CoffeeDecision&trade;, journey legs with preferences from KV</div>
                         </div>
                     </div>
@@ -3827,8 +3827,8 @@
                     </div>
                 </div>
 
-                <!-- CommuteCompute Endpoints -->
-                <div style="margin-top: 20px; margin-bottom: 12px; font-size: 12px; font-weight: 600; color: #fbbf24;">CommuteCompute Engine</div>
+                <!-- Cross Commute Endpoints -->
+                <div style="margin-top: 20px; margin-bottom: 12px; font-size: 12px; font-weight: 600; color: #fbbf24;">Cross Commute Engine</div>
                 <div style="display: grid; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
                     <div style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.03); border-radius: 6px;">
                         <span style="padding: 2px 8px; background: #22c55e; border-radius: 4px; font-size: 10px; font-weight: 700;">GET</span>
@@ -3904,7 +3904,7 @@
                     </h3>
                     <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(0,0,0,0.3); padding: 16px; border-radius: 6px; overflow-x: auto;">
                         <pre style="margin: 0; color: #cbd5e1; line-height: 1.5;">
-                               <span style="color: #4fb28e;">COMMUTE COMPUTE SYSTEM ARCHITECTURE v5.11.0</span>
+                               <span style="color: #4fb28e;">CROSS COMMUTE ARCHITECTURE v5.11.0</span>
 
     <span style="color: #fbbf24;">USER SETUP</span>                        <span style="color: #a855f7;">PERSISTENT STORAGE</span>                    <span style="color: #667eea;">DEVICE</span>
         |                                      |                                   |
@@ -3930,7 +3930,7 @@
                                |       <span style="color: #667eea;">VERCEL SERVERLESS</span>        |                   |
                                |                               |                   |
                                |  +-------------------------+  |                   |
-                               |  |   <span style="color: #4fb28e;">CommuteCompute&#8482; v4.2</span>   |  |                   |
+                               |  |   <span style="color: #4fb28e;">Cross Commute v4.2</span>   |  |                   |
                                |  |   - Route optimisation  |  |                   |
                                |  |   - CoffeeDecision     |  |                   |
                                |  |   - Mode preferences    |  |                   |
@@ -3963,15 +3963,15 @@
                     </div>
                 </div>
 
-                <!-- CommuteCompute Engine Detail -->
+                <!-- Cross Commute Engine Detail -->
                 <div style="margin-top: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 16px;">
                     <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
                         <svg width="16" height="16" style="color: #667eea;"><use href="#icon-cpu"/></svg>
-                        CommuteCompute&#8482; Engine Decision Flow
+                        Cross Commute Engine Decision Flow
                     </h3>
                     <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(0,0,0,0.3); padding: 16px; border-radius: 6px; overflow-x: auto;">
                         <pre style="margin: 0; color: #cbd5e1; line-height: 1.5;">
-                        <span style="color: #4fb28e;">COMMUTECOMPUTE ENGINE v4.2</span>
+                        <span style="color: #4fb28e;">CROSS COMMUTE ENGINE v4.2</span>
 
    +------------------+     +------------------+     +------------------+
    |   <span style="color: #fbbf24;">USER PREFS</span>     |     |   <span style="color: #667eea;">LIVE DATA</span>      |     |   <span style="color: #a855f7;">CONTEXT</span>        |
@@ -4098,19 +4098,19 @@
             <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(79, 178, 142, 0.1) 0%, rgba(102, 126, 234, 0.1) 100%); border-radius: 12px;">
                 <div class="card-header" style="display: flex; align-items: center; gap: 12px;">
                     <svg width="24" height="24" style="color: #4fb28e;"><use href="#icon-cpu"/></svg>
-                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Commute Compute&#8482; System Overview</h2>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Cross Commute Overview</h2>
                 </div>
                 <p style="margin-bottom: 12px; opacity: 0.9; font-size: 14px;">
                     Real-time transit intelligence for your daily commute. Five interconnected engines working together.
                 </p>
                 <p style="margin-bottom: 20px; font-size: 13px; color: #cbd5e1; font-style: italic; line-height: 1.6; padding: 12px 16px; background: rgba(79, 178, 142, 0.08); border-radius: 8px;">
-                    Other apps show delays. CommuteCompute&#8482; reacts to them. Live data flows into every decision- coffee, timing, connections. 1 glance. No app switching. Open Source.
+                    Other apps show delays. Cross Commute reacts to them. Live data flows into every decision- coffee, timing, connections. 1 glance. No app switching. Open Source.
                 </p>
                 
                 <!-- Version Grid -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">
                     <div style="padding: 15px; background: rgba(79, 178, 142, 0.15); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 12px; opacity: 0.8; margin-bottom: 4px;">CommuteCompute Engine</div>
+                        <div style="font-size: 12px; opacity: 0.8; margin-bottom: 4px;">Cross Commute Engine</div>
                         <div id="cc-grid-engine-version" style="font-size: 20px; font-weight: 700; color: #4fb28e;">v4.2</div>
                     </div>
                     <div style="padding: 15px; background: rgba(102, 126, 234, 0.15); border-radius: 8px; text-align: center;">
@@ -4131,7 +4131,7 @@
                 <div style="padding: 20px; background: rgba(0,0,0,0.2); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; overflow-x: auto;">
 <pre style="margin: 0; color: #f1f5f9;">
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    COMMUTE COMPUTE SYSTEM ARCHITECTURE                   │
+│                    CROSS COMMUTE ARCHITECTURE                   │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                          │
 │   EXTERNAL DATA                                                          │
@@ -4144,7 +4144,7 @@
 │          └─────────────────┼─────────────────┘                          │
 │                            ▼                                            │
 │   ┌─────────────────────────────────────────────────────────────────┐   │
-│   │                   CommuteCompute Engine v4.2                       │   │
+│   │                   Cross Commute Engine v4.2                       │   │
 │   │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │   │
 │   │  │ Route       │  │ Coffee      │  │ Cafe Busy   │              │   │
 │   │  │ Recommender │  │ Decision    │  │ Detector    │              │   │
@@ -4184,11 +4184,11 @@
                     <h2 style="margin: 0; font-size: 18px; font-weight: 600;">API Endpoints</h2>
                 </div>
                 <p style="margin-bottom: 15px; opacity: 0.9; font-size: 14px;">
-                    Core endpoints powering the Commute Compute&#8482; System.
+                    Core endpoints powering Cross Commute.
                 </p>
                 
                 <div style="display: grid; gap: 10px;">
-                    <!-- CommuteCompute API -->
+                    <!-- Cross Commute API -->
                     <div style="padding: 12px; background: rgba(79, 178, 142, 0.1); border-radius: 8px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                             <code style="font-family: 'JetBrains Mono', monospace; color: #4fb28e; font-size: 13px;">/api/commutecompute</code>
@@ -4335,7 +4335,7 @@
                     <h2 style="margin: 0; font-size: 18px; font-weight: 600;">CCFirm&#8482; Firmware</h2>
                 </div>
                 <p style="margin-bottom: 15px; opacity: 0.9; font-size: 14px;">
-                    Custom firmware for e-ink display devices. Required for all Commute Compute&#8482; displays.
+                    Custom firmware for e-ink display devices. Required for all Cross Commute displays.
                 </p>
                 
                 <div style="padding: 15px; background: rgba(251, 191, 36, 0.1); border-radius: 8px; margin-bottom: 15px;">
@@ -4365,7 +4365,7 @@
                 <div style="margin-top: 15px; padding: 12px; background: rgba(239, 68, 68, 0.1); border-radius: 6px;">
                     <div style="font-size: 12px; font-weight: 600; color: #ef4444; margin-bottom: 4px;">Important</div>
                     <div style="font-size: 12px; opacity: 0.9;">
-                        E-ink devices must run Commute Compute&#8482; firmware for this system to function.
+                        E-ink devices must run Cross Commute firmware for this system to function.
                         Flash the CC firmware using the web flasher or PlatformIO.
                     </div>
                 </div>
@@ -4457,7 +4457,7 @@
                     <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Support Development</h2>
                 </div>
                 <p style="margin-bottom: 15px; opacity: 0.9; font-size: 14px;">
-                    Commute Compute&#8482; is free and open source. If you find it useful, consider supporting continued development.
+                    Cross Commute is free and open source. If you find it useful, consider supporting continued development.
                 </p>
                 <a href="https://buymeacoffee.com/angusbergman" target="_blank" rel="noopener noreferrer" class="btn btn-block"
                     style="background: white; color: #40DCA5; font-weight: 600; font-size: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px;">
@@ -4470,7 +4470,7 @@
             <div class="card" style="background: rgba(30, 41, 59, 0.8); border-radius: 12px;">
                 <div class="card-header" style="display: flex; align-items: center; gap: 12px;">
                     <svg width="22" height="22" style="color: #667eea;"><use href="#icon-info"/></svg>
-                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">About Commute Compute&#8482;</h2>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">About Cross Commute</h2>
                 </div>
                 <p style="line-height: 1.6; margin-bottom: 15px;">
                     An intelligent real-time transit display system that learns your commute and answers the daily question:
@@ -4505,15 +4505,15 @@
                     </div>
                     <div style="display: grid; gap: 8px;">
                         <div style="display: flex; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 13px;">
-                            <span style="font-weight: 500;">Commute Compute™</span>
+                            <span style="font-weight: 500;">Cross Commute</span>
                             <span style="opacity: 0.7; font-size: 12px;">© 2026 Angus Bergman</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 13px;">
-                            <span style="font-weight: 500;">Commute Compute System™</span>
+                            <span style="font-weight: 500;">Cross Commute</span>
                             <span style="opacity: 0.7; font-size: 12px;">© 2026 Angus Bergman</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 13px;">
-                            <span style="font-weight: 500;">CommuteCompute™</span>
+                            <span style="font-weight: 500;">Cross Commute</span>
                             <span style="opacity: 0.7; font-size: 12px;">© 2026 Angus Bergman</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; padding: 10px 12px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 13px;">
@@ -4928,7 +4928,7 @@
 
         const ONBOARDING_STEPS = [
             {
-                title: "Welcome to Commute Compute\u2122!",
+                title: "Welcome to Cross Commute!",
                 content: `
                     <p>Your intelligent transit display system for smart commute decisions.</p>
                     <ul class="onboarding-features">
@@ -4963,7 +4963,7 @@
                         <li>Select departure and arrival stations</li>
                         <li>Data validation ensures accuracy</li>
                     </ul>
-                    <p style="margin-top: 15px;">Commute Compute&#8482; will then calculate smart departure times automatically.</p>
+                    <p style="margin-top: 15px;">Cross Commute will then calculate smart departure times automatically.</p>
                 `
             },
             {
@@ -5445,7 +5445,7 @@
             // Load destinations for the Config tab
             try { loadDestinations(); } catch (e) { console.error('[Admin] loadDestinations failed:', e); }
 
-            // Load CommuteCompute settings and e-ink preview
+            // Load Cross Commute settings and e-ink preview
             try { loadCommuteComputeSettings(); } catch (e) { console.error('[Admin] loadCommuteComputeSettings failed:', e); }
             try { loadInlineEditValues(); } catch (e) { console.error('[Admin] loadInlineEditValues failed:', e); }
             try { loadEinkPreview(); } catch (e) { console.error('[Admin] loadEinkPreview failed:', e); }
@@ -5684,7 +5684,7 @@
                     return;
                 }
                 
-                // Fetch CommuteCompute data - this is the single source of truth per dev rules
+                // Fetch Cross Commute data - this is the single source of truth per dev rules
                 const scResponse = await fetch(BASE_URL + '/api/commutecompute', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -5856,7 +5856,7 @@
                         lastUpdated.textContent = `Last updated: ${now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' })}`;
                     }
                 } else {
-                    throw new Error(scData.error || 'CommuteCompute calculation failed');
+                    throw new Error(scData.error || 'Cross Commute calculation failed');
                 }
 
             } catch (error) {
@@ -5874,7 +5874,7 @@
             }
         }
         
-        // Update departures from CommuteCompute response
+        // Update departures from Cross Commute response
         function updateCommuteComputeDepartures(scData) {
             const trainEl = document.getElementById('train-departures');
             const tramEl = document.getElementById('tram-departures');
@@ -6055,7 +6055,7 @@
             }
         }
 
-        // Update weather from CommuteCompute response
+        // Update weather from Cross Commute response
         function updateWeatherFromCommuteCompute(weather) {
             const el = document.getElementById('weather-display');
             if (!weather) {
@@ -6072,7 +6072,7 @@
                 </div>`;
         }
         
-        // Update coffee decision from CommuteCompute response
+        // Update coffee decision from Cross Commute response
         function updateCoffeeFromCommuteCompute(coffee, summary) {
             const el = document.getElementById('coffee-decision');
             if (!coffee || coffee.decision === null) {
@@ -6098,7 +6098,7 @@
                 </div>`;
         }
         
-        // Update journey summary from CommuteCompute response  
+        // Update journey summary from Cross Commute response  
         function updateJourneySummaryFromCommuteCompute(scData) {
             const el = document.getElementById('journey-summary');
             if (!scData.journey_legs || scData.journey_legs.length === 0) {
@@ -6339,7 +6339,7 @@
             if (!indicator) return;
 
             // Check configuration state (not data accuracy - that comes from updateLiveDataBanner)
-            // This is the initial state shown before CommuteCompute data loads
+            // This is the initial state shown before Cross Commute data loads
             const transitValidated = localStorage.getItem('cc-transit-api-validated') === 'true';
             const hasTransitKey = !!localStorage.getItem('cc-transit-api-key') || localStorage.getItem('cc-transit-api-configured') === 'true';
             const serverHasLive = apis && apis.transitAuthority && apis.transitAuthority.configured;
@@ -7126,7 +7126,7 @@
                 summaryEl.innerHTML = parts.join(' &bull; ');
             }
             
-            // Update CommuteCompute status based on API validation
+            // Update Cross Commute status based on API validation
             updateCommuteComputeStatus(prefs);
             // v5.9.0 (T8): populate the Resolved Inputs panel from the latest
             // _liveDataDiag snapshot so drift between the user's config and
@@ -7230,7 +7230,7 @@
             }
         }
 
-        // Update CommuteCompute status banner
+        // Update Cross Commute status banner
         function updateCommuteComputeStatus(prefs, liveStatus) {
             const banner = document.getElementById('commutecompute-status-banner');
             const iconContainer = document.getElementById('commutecompute-status-icon');
@@ -7253,7 +7253,7 @@
                 banner.style.borderLeftColor = '#4fb28e';
                 iconContainer.style.background = '#22c55e';
                 iconContainer.innerHTML = '<svg width="18" height="18" style="color: white;"><use href="#icon-check"/></svg>';
-                title.textContent = 'CommuteCompute Active';
+                title.textContent = 'Cross Commute Active';
                 subtitle.textContent = 'Real-time journey calculation enabled';
             } else if (hasTransitKey && transitValidated) {
                 banner.style.background = 'linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%)';
@@ -7302,7 +7302,7 @@
             });
         }
         
-        // Recalculate journey (calls CommuteCompute engine)
+        // Recalculate journey (calls Cross Commute engine)
         async function recalculateJourney() {
             const config = JSON.parse(localStorage.getItem('cc-config') || '{}');
             const journeySummary = document.getElementById('journey-summary');
@@ -7312,7 +7312,7 @@
             }
 
             try {
-                // Use the main CommuteCompute endpoint (single source of truth)
+                // Use the main Cross Commute endpoint (single source of truth)
                 const response = await fetch(BASE_URL + '/api/commutecompute', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -7330,7 +7330,7 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    // Re-render all data from fresh CommuteCompute response
+                    // Re-render all data from fresh Cross Commute response
                     updateCommuteComputeDepartures(result);
                     updateJourneySummaryFromCommuteCompute(result);
                     updateCommuteAnalytics(result);
@@ -7552,11 +7552,11 @@
                 previewImage.src = imageUrl;
             }
             
-            // Also load raw CommuteCompute data for the debug panel
+            // Also load raw Cross Commute data for the debug panel
             if (!quiet) loadCommuteComputeRawData(forceRefresh);
         }
 
-        // Load raw CommuteCompute data for debug panel
+        // Load raw Cross Commute data for debug panel
         async function loadCommuteComputeRawData(forceRefresh = false) {
             const config = JSON.parse(localStorage.getItem('cc-config') || '{}');
             const rawOutput = document.getElementById('sc-raw-output');
@@ -7668,7 +7668,7 @@
         function updateCommuteComputeSummary(result) {}
         function updateCommuteComputeLegs(result) {}
 
-        // Toggle CommuteCompute details panel
+        // Toggle Cross Commute details panel
         function toggleCommuteComputeDetails() {
             const details = document.getElementById('commutecompute-details');
             if (details) {
@@ -7676,7 +7676,7 @@
             }
         }
 
-        // Save CommuteCompute settings
+        // Save Cross Commute settings
         function saveCommuteComputeSettings() {
             const settings = {
                 homeToStop: parseInt(document.getElementById('sc-home-to-stop')?.value) || 5,
@@ -7719,12 +7719,12 @@
             if (msg) {
                 msg.style.display = 'block';
                 msg.style.background = 'rgba(34, 197, 94, 0.2)';
-                msg.innerHTML = '<svg class="icon-sm"><use href="#icon-check-circle"/></svg> CommuteCompute settings saved! <a href="#" onclick="loadCommuteComputeOutput(true); return false;" style="color: #4fb28e; text-decoration: underline;">Recalculate now</a>';
+                msg.innerHTML = '<svg class="icon-sm"><use href="#icon-check-circle"/></svg> Cross Commute settings saved! <a href="#" onclick="loadCommuteComputeOutput(true); return false;" style="color: #4fb28e; text-decoration: underline;">Recalculate now</a>';
                 setTimeout(() => msg.style.display = 'none', 5000);
             }
         }
 
-        // Load CommuteCompute settings into form
+        // Load Cross Commute settings into form
         function loadCommuteComputeSettings() {
             const settings = JSON.parse(localStorage.getItem('cc-commutecompute-settings') || '{}');
             
@@ -8042,7 +8042,7 @@
         // Route Alternatives Functions
         // ============================================
 
-        // Refresh and display route alternatives from CommuteCompute API
+        // Refresh and display route alternatives from Cross Commute API
         async function refreshRouteAlternatives() {
             const loadingEl = document.getElementById('routes-loading');
             const errorEl = document.getElementById('routes-error');
@@ -8380,7 +8380,7 @@
         }
 
         // ============================================
-        // End CommuteCompute Functions
+        // End Cross Commute Functions
         // ============================================
         
         // Populate the rebuilt Setup & Journey tab from localStorage config
@@ -10229,7 +10229,7 @@
                         <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
                             <div style="font-weight: 700; margin-bottom: 10px; font-size: 14px; text-align: center;"><svg class="icon-sm" style="vertical-align: middle;"><use href="#icon-globe"/></svg> ACTIVE DATA SOURCES</div>
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px;">
-                                ${attributions.attributions?.filter(a => a.required || a.name !== 'Commute Compute').map(attr => `
+                                ${attributions.attributions?.filter(a => a.required || a.name !== 'Cross Commute').map(attr => `
                                     <div style="padding: 8px; background: rgba(255,255,255,0.15); border-radius: 6px;">
                                         <div style="font-weight: 600; font-size: 11px;">${attr.name}</div>
                                         <div style="font-size: 9px; opacity: 0.8; margin-top: 2px;">${attr.license}</div>
@@ -10904,7 +10904,7 @@
 
                     // Header version labels
                     const headerEngine = document.getElementById('cc-header-engine-version');
-                    if (headerEngine) headerEngine.textContent = `CommuteCompute Engine ${scVersion}`;
+                    if (headerEngine) headerEngine.textContent = `Cross Commute Engine ${scVersion}`;
                     const headerRenderer = document.getElementById('cc-header-renderer-version');
                     if (headerRenderer) headerRenderer.innerHTML = `CCDash&#8482; Renderer ${rendererVersion}`;
 
@@ -10920,7 +10920,7 @@
                     const detailRenderer = document.getElementById('cc-detail-renderer-version');
                     if (detailRenderer) detailRenderer.innerHTML = `CCDash&#8482; Renderer ${rendererVersion}`;
                     const detailEngine = document.getElementById('cc-detail-engine-version');
-                    if (detailEngine) detailEngine.innerHTML = `CommuteCompute&#8482; Engine ${scVersion}`;
+                    if (detailEngine) detailEngine.innerHTML = `Cross Commute Engine ${scVersion}`;
 
                     // System tab version grid
                     const gridEngine = document.getElementById('cc-grid-engine-version');
@@ -10993,7 +10993,7 @@
             const transitKey = localStorage.getItem('cc-transit-api-key');
             const attributions = [];
             
-            // Always include Commute Compute attribution
+            // Always include Cross Commute attribution
             attributions.push('© 2026 Angus Bergman');
             
             // Transit API attribution (if configured)
@@ -11031,7 +11031,7 @@
             <div class="cc-footer-versions">
                 <div class="cc-footer-version-item">
                     <div class="cc-footer-live-dot"></div>
-                    <span class="cc-footer-version-label">CommuteCompute</span>
+                    <span class="cc-footer-version-label">Cross Commute</span>
                     <span class="cc-footer-version-value" id="cc-footer-commutecompute-version">v4.2</span>
                 </div>
                 <div class="cc-footer-version-item">

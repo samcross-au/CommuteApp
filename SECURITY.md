@@ -5,10 +5,10 @@ Licensed under AGPL-3.0
 -->
 
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ — Security Policy
+# Cross Commute — Security Policy
 
 **Effective Date:** 16 February 2026
 **Last Updated:** 16 February 2026
@@ -18,7 +18,7 @@ Licensed under AGPL-3.0
 
 ## 1. Responsible Disclosure Policy
 
-We take the security of Commute Compute™ seriously. If you discover a security vulnerability, we ask that you disclose it responsibly.
+We take the security of Cross Commute seriously. If you discover a security vulnerability, we ask that you disclose it responsibly.
 
 ### How to Report
 
@@ -77,7 +77,7 @@ The following are out-of-scope:
 
 ## 4. Notifiable Data Breaches (NDB) Response Plan
 
-In accordance with Part IIIC of the *Privacy Act 1988* (Cth), Commute Compute™ maintains the following response plan for eligible data breaches.
+In accordance with Part IIIC of the *Privacy Act 1988* (Cth), Cross Commute maintains the following response plan for eligible data breaches.
 
 ### Step 1: Containment and Assessment (within 24 hours)
 
@@ -109,7 +109,7 @@ If the assessment determines the breach is an eligible data breach (likely to re
 
 ## 5. Data Classification
 
-Commute Compute™ stores the following categories of data in each user's own Redis instance:
+Cross Commute stores the following categories of data in each user's own Redis instance:
 
 | Classification | Data | Storage Key | Sensitivity |
 |:---------------|:-----|:------------|:------------|

@@ -1,6 +1,6 @@
 /**
  * Landing Page Handler for Vercel
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
  * Serves public/index.html directly.
  * 

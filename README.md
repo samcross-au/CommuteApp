@@ -1,15 +1,19 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="220">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="220">
 </p>
 
-<h1 align="center">Commute Compute&#8482; System</h1>
+<h1 align="center">Cross Commute</h1>
 
 <p align="center">
   <strong>Real-Time Commuter Intelligence for E-Ink Displays</strong>
 </p>
 
 <p align="center">
-  <em>Other apps show delays. CommuteCompute&#8482; reacts to them. Live data flows into every decision- coffee, timing, connections. 1 glance. No app switching. Open Source.</em>
+  Cross Commute is a modified version of <a href="https://github.com/CommuteCompute/CommuteCompute">Commute Compute&trade;</a> by Angus Bergman, licensed under AGPL-3.0.
+</p>
+
+<p align="center">
+  <em>Other apps show delays. Cross Commute reacts to them. Live data flows into every decision- coffee, timing, connections. 1 glance. No app switching. Open Source.</em>
 </p>
 
 <br>
@@ -38,7 +42,7 @@
 
 ## Overview
 
-Commute Compute™ is a self-hosted commuter intelligence system for e-ink displays. You tell it where you live, where you work, and when you need to arrive. Every 60 seconds it pulls live transit, weather, and places data, runs it through its intelligence engines, and renders a single-glance dashboard image to your display. No phone needed — everything you need for your morning commute is visible from across the room.
+Cross Commute is a self-hosted commuter intelligence system for e-ink displays. You tell it where you live, where you work, and when you need to arrive. Every 60 seconds it pulls live transit, weather, and places data, runs it through its intelligence engines, and renders a single-glance dashboard image to your display. No phone needed — everything you need for your morning commute is visible from across the room.
 
 The CCDash™ dashboard includes live departure countdowns, walking time to your stop, weather preparation (umbrella, jacket, sunscreen), coffee feasibility at nearby cafes, commute confidence scoring, sleep optimisation for next-day readiness, and alternative transport costs when services are disrupted. All rendered as a 1-bit 800×480 image designed for e-ink.
 
@@ -60,13 +64,13 @@ See [SETUP_GUIDE.md](SETUP_GUIDE.md) for detailed instructions including API key
 
 ## What Makes This Different
 
-Commute Compute&#8482; is not another transit app. It is an open-source commuter intelligence system that renders a complete decision surface onto an 800x480 1-bit e-ink display. Everything a commuter needs is visible in a single glance from 1-2 meters away. No phone. No app switching. No scrolling.
+Cross Commute is not another transit app. It is an open-source commuter intelligence system that renders a complete decision surface onto an 800x480 1-bit e-ink display. Everything a commuter needs is visible in a single glance from 1-2 meters away. No phone. No app switching. No scrolling.
 
 Here is what no other commuter tool provides:
 
 - **Single-glance intelligence on e-ink.** The entire commute -- departure countdowns, weather preparation, coffee feasibility, journey confidence, sleep optimisation, and alternative transport costs -- rendered as one image. Readable from across a room.
 
-- **Five interconnected intelligence engines.** CommuteCompute&#8482;, DepartureConfidence™, LifestyleContext™, SleepOptimiser™, and AltTransit™ work together. A weather change affects clothing suggestions, walking speed estimates, coffee feasibility, and confidence scoring simultaneously. They do not operate in isolation.
+- **Five interconnected intelligence engines.** Cross Commute, DepartureConfidence™, LifestyleContext™, SleepOptimiser™, and AltTransit™ work together. A weather change affects clothing suggestions, walking speed estimates, coffee feasibility, and confidence scoring simultaneously. They do not operate in isolation.
 
 - **Sleep optimisation for next-day commute readiness.** No other transit tool calculates your optimal bedtime and alarm time based on tomorrow's journey duration, your wake routine, and desired sleep hours.
 
@@ -100,7 +104,7 @@ Status timing follows user-intent logic: when departure is still far away (>120 
  YOU CONFIGURE                    DATA SOURCES                    INTELLIGENCE ENGINES
 +------------------+       +------------------------+       +---------------------------+
 |                  |       |                        |       |                           |
-|  Home Address    |       |  GTFS-RT Live Transit  |       |  1. CommuteCompute™       |
+|  Home Address    |       |  GTFS-RT Live Transit  |       |  1. Cross Commute       |
 |  Work Address    | ----> |  BOM Weather API       | ----> |  2. DepartureConfidence   |
 |  Arrival Time    |       |  Google Places API     |       |  3. LifestyleContext      |
 |  Preferences     |       |                        |       |  4. SleepOptimiser        |
@@ -135,9 +139,9 @@ The pipeline runs entirely serverless on Vercel. The device fetches a pre-render
 
 ## The Five Intelligence Engines
 
-All five engines operate under the CommuteCompute&#8482; umbrella. They share data, influence each other, and produce a unified commute intelligence model.
+All five engines operate under the Cross Commute umbrella. They share data, influence each other, and produce a unified commute intelligence model.
 
-### 1. CommuteCompute&#8482; Engine (v4.2)
+### 1. Cross Commute Engine (v4.2)
 
 Multi-state GTFS-RT support (VIC/NSW/QLD live data, SA/WA/TAS/NT/ACT timetable fallback). Core journey orchestration with coordinate-based stop detection across all Australian capital cities, runtime line verification, real-time multi-modal planning, and Melbourne Metro Tunnel compliance.
 
@@ -278,7 +282,7 @@ DISPLAY: ALT TRANSIT | Uber ~$21 | Scooter ~$9 | Bike $3.50
 
 ### 6. CoffeeDecision&#8482; Engine
 
-Real-time coffee feasibility calculator integrated into the CommuteCompute&#8482; Engine, determining whether the commuter has time to stop at their configured cafe without missing their target arrival.
+Real-time coffee feasibility calculator integrated into the Cross Commute Engine, determining whether the commuter has time to stop at their configured cafe without missing their target arrival.
 
 | | |
 |---|---|
@@ -335,16 +339,16 @@ The Melbourne Metro Tunnel is the city's largest public transport infrastructure
 | **City Loop changes** | Several lines no longer loop through Flinders Street - Parliament - Melbourne Central - Flagstaff |
 | **New interchange patterns** | Passengers transferring between lines must use new stations |
 
-### How Commute Compute&#8482; Handles It
+### How Cross Commute Handles It
 
-The CommuteCompute&#8482; Engine includes full Metro Tunnel compliance:
+The Cross Commute Engine includes full Metro Tunnel compliance:
 
 - **Updated stop IDs.** All five Metro Tunnel station GTFS stop IDs are registered and mapped.
 - **Line routing awareness.** The engine knows which lines now use the tunnel and which still use the City Loop, preventing invalid route suggestions.
 - **Citybound detection.** Updated CBD boundary detection accounts for the new underground stations when determining travel direction.
 - **Real-time departures.** Live GTFS-RT data from Transport Victoria OpenData API includes Metro Tunnel services from day one.
 
-This makes Commute Compute&#8482; one of the first commuter tools to fully support the new network topology -- a meaningful advantage for Melbourne commuters during the transition period.
+This makes Cross Commute one of the first commuter tools to fully support the new network topology -- a meaningful advantage for Melbourne commuters during the transition period.
 
 <br>
 
@@ -363,7 +367,7 @@ This makes Commute Compute&#8482; one of the first commuter tools to fully suppo
 |  /api/commutecompute | /api/zones | /api/livedash | /api/admin/* | /api/health   |
 +--------------------------------------------------------------------------+
 |                          SERVICE LAYER                                    |
-|  CommuteCompute(TM) | CCDash(TM) | CC LiveDash(TM) | Weather (BOM)      |
+|  Cross Commute | CCDash(TM) | CC LiveDash(TM) | Weather (BOM)      |
 +--------------------------------------------------------------------------+
 |                        INTELLIGENCE LAYER                                 |
 |  DepartureConfidence | LifestyleContext | SleepOptimiser | AltTransit    |
@@ -458,7 +462,7 @@ Embed snippet for docs pages that support iframes:
 ```html
 <iframe
   src="https://your-project.vercel.app/flasher/"
-  title="Commute Compute™ Device Flasher"
+  title="Cross Commute Device Flasher"
   width="100%"
   height="900"
   style="border:1px solid #d7e0eb;border-radius:12px;"
@@ -624,7 +628,7 @@ The TRMNL Display (OG) is the primary supported device and provides the best exp
 
 ## Support the Project
 
-Commute Compute&#8482; is developed and maintained by **Angus Bergman** as an open-source project.
+Cross Commute is built on Commute Compute&trade;, which is developed and maintained by **Angus Bergman** as an open-source project. You can support the original project here:
 
 <p align="center">
   <a href="https://buymeacoffee.com/angusbergman">
@@ -670,7 +674,7 @@ For commercial licensing enquiries: **licensing@commutecompute.com**
 
 The following are trade mark applications (registration pending) owned by Angus Bergman:
 
-**Commute Compute&#8482;** | **Commute Compute System&#8482;** | **CommuteCompute&#8482;** | **CCDash&#8482;** | **CC LiveDash&#8482;** | **CCFirm&#8482;**
+**Cross Commute** | **Cross Commute** | **Cross Commute** | **CCDash&#8482;** | **CC LiveDash&#8482;** | **CCFirm&#8482;**
 
 See [LEGAL.md](LEGAL.md) for complete trade mark and intellectual property details.
 
@@ -681,13 +685,13 @@ See [LEGAL.md](LEGAL.md) for complete trade mark and intellectual property detai
 <br>
 
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="80">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="80">
 </p>
 
 <p align="center">
-  <strong>Commute Compute&#8482; System v5.11.0</strong><br>
+  <strong>Cross Commute v5.11.0</strong><br>
   V16.0 Turnkey Multi-State<br>
-  CommuteCompute&#8482; Engine v4.2 | CCDash&#8482; Renderer v3.3 | CC LiveDash&#8482; v3.1 | Admin Panel v6.1 | CCFirm&#8482; v8.1.0<br>
+  Cross Commute Engine v4.2 | CCDash&#8482; Renderer v3.3 | CC LiveDash&#8482; v3.1 | Admin Panel v6.1 | CCFirm&#8482; v8.1.0<br>
   <br>
   Copyright (c) 2026 Angus Bergman. All rights reserved.<br>
   <em>Built in Melbourne, Australia.</em>

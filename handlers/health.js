@@ -1,6 +1,6 @@
 /**
  * Health Check API
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
  * Copyright (c) 2026 Angus Bergman
  * SPDX-License-Identifier: AGPL-3.0-or-later

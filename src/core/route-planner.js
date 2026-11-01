@@ -322,7 +322,7 @@ class RoutePlanner {
 
       const response = await fetch(url, {
         headers: {
-          'User-Agent': 'Commute Compute/1.0 (Educational Project)'
+          'User-Agent': 'Cross Commute/1.0 (Educational Project)'
         }
       });
 

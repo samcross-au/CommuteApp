@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Attribution
 
 **Last Updated:** 2026-02-16
 
-Commute Compute™ uses data and services from the following providers:
+Cross Commute uses data and services from the following providers:
 
 ## Transport Data
 

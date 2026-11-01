@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Firmware Flashing Guide
@@ -45,7 +45,7 @@ Inkplate devices (6" and 10") use ESP32 microcontrollers and can either:
    - Use Arduino Inkplate examples for HTTP client
    - Endpoint: `/api/livedash?device=inkplate-6` or `inkplate-10`
 
-2. **Develop custom Commute Compute firmware** (experimental/community)
+2. **Develop custom Cross Commute firmware** (experimental/community)
    - Inkplate has different pinouts than TRMNL hardware
    - Requires adapting `firmware/` code to Inkplate platform
    - Community contributions welcome

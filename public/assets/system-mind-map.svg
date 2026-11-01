@@ -35,7 +35,7 @@
 
   <!-- Title -->
   <text x="700" y="50" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="700" fill="#f1f5f9" text-anchor="middle">
-    Commute Compute V15.0 System Architecture
+    Cross Commute V15.0 System Architecture
   </text>
   <text x="700" y="85" font-family="Inter, system-ui, sans-serif" font-size="15" fill="#94a3b8" text-anchor="middle">
     Concentric layers showing engine stack and component interactions
@@ -94,10 +94,10 @@
     LAYER 2: V15.0 Engine Stack
   </text>
 
-  <!-- CommuteCompute Engine v3.1 -->
+  <!-- Cross Commute Engine v3.1 -->
   <g transform="translate(400, 400)">
     <rect x="0" y="0" width="200" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2" filter="url(#glow)"/>
-    <text x="100" y="25" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#22c55e" text-anchor="middle">CommuteCompute v3.1</text>
+    <text x="100" y="25" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600" fill="#22c55e" text-anchor="middle">Cross Commute v3.1</text>
     <text x="100" y="44" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Core journey planning</text>
     <text x="100" y="60" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Multi-modal routing</text>
     <text x="100" y="76" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Walk-faster exclusion</text>
@@ -193,7 +193,7 @@
     <text x="80" y="72" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Admin interface</text>
   </g>
 
-  <!-- Core: Commute Compute System (Center) -->
+  <!-- Core: Cross Commute (Center) -->
   <circle cx="700" cy="720" r="80" fill="url(#coreGrad)" stroke="#6366f1" stroke-width="4" filter="url(#glow)"/>
   <text x="700" y="700" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="700" fill="white" text-anchor="middle">
     COMMUTE
@@ -238,7 +238,7 @@
     <!-- Core -->
     <circle cx="10" cy="25" r="8" fill="#6366f1"/>
     <text x="25" y="30" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#94a3b8">
-      Core: Commute Compute V15.0 orchestrator
+      Core: Cross Commute V15.0 orchestrator
     </text>
 
     <!-- Layer 1 -->
@@ -250,7 +250,7 @@
     <!-- Layer 2 -->
     <circle cx="10" cy="75" r="8" fill="#10b981"/>
     <text x="25" y="80" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#94a3b8">
-      Layer 2: Engine stack (CommuteCompute™, DepartureConfidence, LifestyleContext, CoffeeDecision, SleepOptimizer, AltTransit)
+      Layer 2: Engine stack (Cross Commute, DepartureConfidence, LifestyleContext, CoffeeDecision, SleepOptimizer, AltTransit)
     </text>
 
     <!-- Layer 3 -->
@@ -281,7 +281,7 @@
 
   <!-- Version + Copyright footer -->
   <text x="700" y="1360" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">
-    Commute Compute V15.0 | CommuteCompute Engine v3.1 | CCDash Renderer v2.1 | System 4.2.0
+    Cross Commute V15.0 | Cross Commute Engine v3.1 | CCDash Renderer v2.1 | System 4.2.0
   </text>
   <text x="700" y="1385" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#475569" text-anchor="middle">
     Copyright (c) 2026 Angus Bergman | AGPL-3.0 Dual License

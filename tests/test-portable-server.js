@@ -104,7 +104,7 @@ describe('Portable server: HTTP behaviour', () => {
   it('should serve the iPad kiosk via the /ipad rewrite', async () => {
     const res = await fetch(`${base}/ipad?demo=1`);
     assert.equal(res.status, 200);
-    assert.match(await res.text(), /Commute Compute iPad Kiosk/);
+    assert.match(await res.text(), /Cross Commute iPad Kiosk/);
   });
 
   it('should run a rewritten function (/health -> handlers/health.js)', async () => {

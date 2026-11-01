@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Installation Guide
+# Cross Commute Installation Guide
 
-**Detailed technical installation instructions for Commute Compute System.**
+**Detailed technical installation instructions for Cross Commute.**
 
 **Version:** 3.0
 **Last Updated:** 2026-02-14
@@ -138,7 +138,7 @@ Redis (via Vercel Marketplace) is **required** for persistent storage. The syste
 
 3. **Connect to Project**
    - Go to the **Projects** tab for your Redis database
-   - Click **Connect Project** and select your Commute Compute project
+   - Click **Connect Project** and select your Cross Commute project
    - After connecting, the integration appears as **Redis** in your Integrations tab
 
 4. **Redeploy** your project for environment variables to take effect
@@ -452,7 +452,7 @@ Replace `your-project` with your actual project/service name.
 
 3. **Connect to Project**
    - Click **Connect to Project**
-   - Select your Commute Compute project
+   - Select your Cross Commute project
 
 4. **Verify Connection**
    ```bash
@@ -532,13 +532,13 @@ pio run -e trmnl -t upload --upload-port COM3
 
 ### Verify Flash
 
-After flashing, the device should display the Commute Compute boot logo followed by the BLE setup screen. If the device does not start, hold the BOOT button while pressing RESET to enter flash mode and retry.
+After flashing, the device should display the Cross Commute boot logo followed by the BLE setup screen. If the device does not start, hold the BOOT button while pressing RESET to enter flash mode and retry.
 
 ---
 
 ## Device Provisioning
 
-Commute Compute uses **hybrid provisioning** (BLE + Pairing Code):
+Cross Commute uses **hybrid provisioning** (BLE + Pairing Code):
 
 ### Phase 1: BLE WiFi Provisioning
 

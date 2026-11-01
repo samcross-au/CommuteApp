@@ -1,6 +1,6 @@
 /**
  * CoffeeDecision Engine
- * Part of the CommuteCompute™ Component of Commute Compute System™
+ * Part of the Cross Commute Component of Cross Commute
  * 
  * Calculates whether there's time to get coffee before work.
  * Commute timing is configurable based on user's journey settings.

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # CCFirm™ Device Pairing Specification
@@ -73,7 +73,7 @@ This architecture avoids WiFiManager/captive portal which crashes ESP32-C3.
 ```
 ┌─────────────────────────────────────────┐
 │                                         │
-│         COMMUTE COMPUTE                 │
+│         CROSS COMMUTE                 │
 │                                         │
 │         BLUETOOTH SETUP                 │
 │                                         │
@@ -116,7 +116,7 @@ Device MUST be connected to WiFi (from Phase 1) before entering pairing mode.
 ```
 ┌─────────────────────────────────────────┐
 │                                         │
-│         COMMUTE COMPUTE                 │
+│         CROSS COMMUTE                 │
 │                                         │
 │   WiFi Connected: ✓                     │
 │                                         │

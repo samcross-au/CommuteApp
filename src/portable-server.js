@@ -234,7 +234,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const port = process.env.PORT || 3000;
   const app = await createApp();
   app.listen(port, () => {
-    console.log(`[portable-server] Commute Compute listening on http://localhost:${port}`);
+    console.log(`[portable-server] Cross Commute listening on http://localhost:${port}`);
   });
 }
 

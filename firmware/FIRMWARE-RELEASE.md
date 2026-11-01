@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Firmware Releases
+# Cross Commute Firmware Releases
 
 ## [UNLOCKED] Current Production: CCFirm v8.1.0
 
@@ -67,7 +67,7 @@ cp .pio/build/trmnl/bootloader.bin  ../public/flasher/bootloader.bin
 cp .pio/build/trmnl/partitions.bin  ../public/flasher/partitions.bin
 
 # Verify the binary contains the correct version string
-strings ../public/flasher/firmware.bin | grep "Commute Compute v"
+strings ../public/flasher/firmware.bin | grep "Cross Commute v"
 ```
 
 **Critical:** The web flasher binary (`public/flasher/firmware.bin`) is a **committed binary** and must be manually updated after each firmware release. It does not update automatically when source code changes. Always copy fresh binaries after compiling a release.

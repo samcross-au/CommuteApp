@@ -1,12 +1,12 @@
 /**
  * CCDash™ Renderer v3.3
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  *
  * Copyright (c) 2026 Angus Bergman
  * SPDX-License-Identifier: AGPL-3.0-or-later
  * Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
  *
- * Primary renderer for Commute Compute System dashboards.
+ * Primary renderer for Cross Commute dashboards.
  * Implements CCDashDesignV16.0 specification (UNLOCKED 2026-02-06).
  * V16.0: Dimension-aware rendering — all layout scales from REF_W×REF_H.
  *

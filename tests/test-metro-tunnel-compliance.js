@@ -1,7 +1,7 @@
 /**
  * Test Metro Tunnel Compliance
  * 
- * Verifies CommuteCompute™ correctly handles Melbourne Metro Tunnel routing
+ * Verifies Cross Commute correctly handles Melbourne Metro Tunnel routing
  * effective 1 February 2026.
  * 
  * Per DEVELOPMENT-RULES.md Section 14 (Testing Requirements)

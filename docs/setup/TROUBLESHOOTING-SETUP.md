@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Troubleshooting Setup Issues
-**For Commute Compute(TM) v5.0.0+ (CCDashDesignV16.0)**
+**For Cross Commute v5.0.0+ (CCDashDesignV16.0)**
 **Date**: 2026-02-06
 
 ---

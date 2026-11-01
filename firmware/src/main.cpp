@@ -1,6 +1,6 @@
 /**
  * CCFirm™ v8.1.0 — Battery Optimisation Firmware
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  *
  * v8.1.0 ADDITIONS:
  *   WiFi fast reconnect via RTC-cached BSSID/channel (saves 1-4s per cycle)
@@ -487,9 +487,9 @@ void setup() {
     }
     if (!suppressSerial) {
         if (wokeFromDeepSleep) {
-            Serial.printf("\n=== Commute Compute v" FIRMWARE_VERSION " (deep sleep wake #%d) ===\n", rtcBootCount);
+            Serial.printf("\n=== Cross Commute v" FIRMWARE_VERSION " (deep sleep wake #%d) ===\n", rtcBootCount);
         } else {
-            Serial.println("\n=== Commute Compute v" FIRMWARE_VERSION " (cold boot) ===");
+            Serial.println("\n=== Cross Commute v" FIRMWARE_VERSION " (cold boot) ===");
         }
         Serial.printf("[BATTERY] %dmV (%d%%) — %s\n", batteryVoltageMv, batteryPercent,
                       onBatteryPower ? "BATTERY" : "USB");

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Commute Compute Kindle Firmware Packager
+# Cross Commute Kindle Firmware Packager
 # Creates distribution packages for each Kindle model
 #
 # Usage: ./package-firmware.sh [device]
@@ -42,7 +42,7 @@ package_device() {
     
     # Create version file
     cat > "$pkg_dir/VERSION" << EOF
-Commute Compute Kindle Firmware
+Cross Commute Kindle Firmware
 Version: $VERSION
 Device: $device
 Built: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
@@ -75,7 +75,7 @@ package_all() {
 }
 
 show_help() {
-    echo "Commute Compute Kindle Firmware Packager v$VERSION"
+    echo "Cross Commute Kindle Firmware Packager v$VERSION"
     echo ""
     echo "Usage: $0 [device|all]"
     echo ""

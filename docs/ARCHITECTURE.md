@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute System(TM) Architecture
+# Cross Commute Architecture
 
 **Version:** 7.0
 **Last Updated:** 2026-02-13
@@ -35,17 +35,17 @@ See **LEGAL.md** for complete IP documentation.
 
 Complete mapping of each trade mark to its constituent files in the codebase.
 
-### CommuteCompute(TM) -- Intelligent Route Engine
+### Cross Commute -- Intelligent Route Engine
 
 | File | Type | Purpose |
 |------|------|---------|
 | `src/engines/commute-compute.js` | Core | Main journey recommendation engine |
-| `handlers/commutecompute.js` | API | REST endpoint for CommuteCompute |
+| `handlers/commutecompute.js` | API | REST endpoint for Cross Commute |
 | `src/services/smart-journey-integration.js` | Service | Integration layer |
 | `src/services/smart-route-recommender.js` | Service | Route scoring and selection |
 | `tests/test-commute-compute.js` | Test | Unit tests |
 
-#### Sub-Engines (under CommuteCompute(TM))
+#### Sub-Engines (under Cross Commute)
 
 | File | Engine | Purpose |
 |------|--------|---------|
@@ -83,7 +83,7 @@ Complete mapping of each trade mark to its constituent files in the codebase.
 | `firmware/include/prerendered-screens.h` | Asset | Prerendered screens (boot, error) |
 | `firmware/platformio.ini` | Build | PlatformIO build config |
 
-### CoffeeDecision™ Engine (Component of CommuteCompute(TM))
+### CoffeeDecision™ Engine (Component of Cross Commute)
 
 | File | Type | Purpose |
 |------|------|---------|
@@ -106,11 +106,11 @@ Complete mapping of each trade mark to its constituent files in the codebase.
 
 | File | Trade Mark | Purpose |
 |------|-----------|---------|
-| `src/services/opendata.js` | CommuteCompute(TM) | Transport Victoria GTFS-RT client |
+| `src/services/opendata.js` | Cross Commute | Transport Victoria GTFS-RT client |
 | `src/services/weather-bom.js` | CCDash(TM) | BOM weather integration |
-| `src/services/geocoding-service.js` | CommuteCompute(TM) | Address resolution |
-| `src/services/journey-planner.js` | CommuteCompute(TM) | Journey calculation |
-| `src/services/journey-scenarios.js` | CommuteCompute(TM) | Scenario handling |
+| `src/services/geocoding-service.js` | Cross Commute | Address resolution |
+| `src/services/journey-planner.js` | Cross Commute | Journey calculation |
+| `src/services/journey-scenarios.js` | Cross Commute | Scenario handling |
 | `src/services/dashboard-service.js` | CCDash(TM) | Dashboard data aggregation |
 | `src/utils/config-token.js` | System | Token encode/decode |
 | `src/utils/config-token.js` | System | Token encode/decode |
@@ -137,7 +137,7 @@ The Commute Compute System(TM) is composed of four core trade mark families work
                                    │
                                    v
 ┌───────────────────────────────────────────────────────────────────────────┐
-│                       CommuteCompute(TM) ENGINE                          │
+│                       Cross Commute ENGINE                          │
 │                                                                          │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐          │
 │  │ GTFS-RT Client  │  │ Route Planner   │  │ CoffeeDecision  │          │
@@ -255,7 +255,7 @@ Vercel Serverless (free tier) -> Redis (storage) -> GitLab CI/CD -> Multi-device
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
 │                                                                           │
-│                        Commute Compute System(TM)                         │
+│                        Cross Commute                         │
 │                              (Parent Brand)                               │
 │                                                                           │
 │    ┌─────────────────┬──────────────────┬─────────────────────────────┐  │
@@ -290,7 +290,7 @@ Vercel Serverless (free tier) -> Redis (storage) -> GitLab CI/CD -> Multi-device
 ### Data Flow Summary
 
 ```
-External APIs -> CommuteCompute(TM) -> CCDash(TM)/CC LiveDash(TM) -> CCFirm(TM) -> E-ink Display
+External APIs -> Cross Commute -> CCDash(TM)/CC LiveDash(TM) -> CCFirm(TM) -> E-ink Display
     (input)        (processing)            (rendering)               (device)       (output)
 ```
 
@@ -309,7 +309,7 @@ External APIs -> CommuteCompute(TM) -> CCDash(TM)/CC LiveDash(TM) -> CCFirm(TM) 
 8. [Zone-Based Partial Refresh](#8-zone-based-partial-refresh)
 9. [Security Model](#9-security-model)
 10. [Deployment Architecture](#10-deployment-architecture)
-11. [CommuteCompute(TM) Engine](#11-commutecomputetm-engine)
+11. [Cross Commute Engine](#11-commutecomputetm-engine)
 12. [Melbourne Metro Tunnel Compliance](#12-melbourne-metro-tunnel-compliance)
 13. [CC LiveDash(TM) Multi-Device Renderer](#13-cc-livedashtm-multi-device-renderer)
 14. [CoffeeDecision™ Patterns](#14-coffeedecision-patterns)
@@ -328,7 +328,7 @@ External APIs -> CommuteCompute(TM) -> CCDash(TM)/CC LiveDash(TM) -> CCFirm(TM) 
 
 ## 1. Overview
 
-Commute Compute is a **fully self-hosted smart transit display system** for Australian public transport. Each user deploys their own complete stack with zero external dependencies.
+Cross Commute is a **fully self-hosted smart transit display system** for Australian public transport. Each user deploys their own complete stack with zero external dependencies.
 
 ### Core Principles
 
@@ -372,7 +372,7 @@ Commute Compute is a **fully self-hosted smart transit display system** for Aust
 │   ┌─────────────────────────────────────────────────────────────────┐  │
 │   │                     USER'S VERCEL INSTANCE                      │  │
 │   │  ┌───────────────┐  ┌─────────────┐  ┌───────────────────────┐ │  │
-│   │  │CommuteCompute │  │  CCDash     │  │  CC LiveDash          │ │  │
+│   │  │Cross Commute │  │  CCDash     │  │  CC LiveDash          │ │  │
 │   │  │  (TM) Engine  │--│  (TM)      │--│  (TM) Multi-Device    │ │  │
 │   │  └───────────────┘  └─────────────┘  └───────────────────────┘ │  │
 │   └────────────────────────────┬───────────────────────────────────┘   │
@@ -424,7 +424,7 @@ commute-compute/
 │   │   └── [id].js               # Individual zone fetch
 │   ├── address-search.js         # Geocoding (Google/OSM)
 │   ├── cafe-details.js           # Cafe data fetch
-│   ├── commutecompute.js         # CommuteCompute(TM) REST endpoint
+│   ├── commutecompute.js         # Cross Commute REST endpoint
 │   ├── health.js                 # Health check
 │   ├── livedash.js               # Multi-device renderer
 │   ├── commutecompute.js         # Unified endpoint (JSON/PNG/BMP)
@@ -447,7 +447,7 @@ commute-compute/
 │   │   ├── fallback-timetables.js
 │   │   ├── gtfs-static.js        # GTFS static data
 │   │   └── preferences-manager.js
-│   ├── engines/                  # CommuteCompute(TM) sub-engines
+│   ├── engines/                  # Cross Commute sub-engines
 │   │   ├── commute-compute.js    # Core engine
 │   │   ├── departure-confidence.js  # DepartureConfidence
 │   │   ├── lifestyle-context.js  # LifestyleContext
@@ -538,7 +538,7 @@ commute-compute/
 │  │  -- Zone-based BMP output       │  │  -- Multi-device PNG/BMP    │  │
 │  └─────────────────────────────────┘  └─────────────────────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
-│                    CORE LAYER (CommuteCompute(TM))                      │
+│                    CORE LAYER (Cross Commute)                      │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐   │
 │  │CommuteComp- │  │ Coffee      │  │   Route     │  │  GTFS-RT    │   │
 │  │ ute(TM)     │  │ Decision    │  │  Planner    │  │   Client    │   │
@@ -582,7 +582,7 @@ commute-compute/
                                │
                                v 30s cache
 ┌──────────────────────────────────────────────────────────────────────────┐
-│                      CommuteCompute(TM) ENGINE                          │
+│                      Cross Commute ENGINE                          │
 │                                                                          │
 │   ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐         │
 │   │  GTFS-RT Client │  │  Route Planner  │  │ CoffeeDecision  │         │
@@ -712,7 +712,7 @@ commute-compute/
 | `/api/commutecompute` | GET | Full screen PNG (unified endpoint; `/api/screen` rewritten via `vercel.json`) | PNG |
 | `/api/fullscreen` | GET | Fullscreen render | PNG |
 | `/api/livedash` | GET | Multi-device renderer | BMP/PNG |
-| `/api/commutecompute` | GET | CommuteCompute(TM) engine | JSON |
+| `/api/commutecompute` | GET | Cross Commute engine | JSON |
 | `/api/device/[token]` | GET | Device-specific endpoint | JSON |
 | `/api/pair/[code]` | GET/POST | Device pairing | JSON |
 | `/api/health` | GET | Health check | JSON |
@@ -871,7 +871,7 @@ BMP format pads each row to 32-bit (4-byte) boundaries. If width is not aligned,
 
 | Asset | Width | Height | Notes |
 |-------|-------|--------|-------|
-| Boot logo | 256px | 380px | Full "COMMUTE COMPUTE" branding |
+| Boot logo | 256px | 380px | Full "CROSS COMMUTE" branding |
 | Small logo | 128px | 130px | Connecting/setup screens |
 | Zone widths | 800px | varies | Already 32-aligned |
 
@@ -1059,11 +1059,11 @@ All API keys entered via admin panel are validated:
 
 ---
 
-## 11. CommuteCompute(TM) Engine
+## 11. Cross Commute Engine
 
 ### 11.1 Overview
 
-CommuteCompute is the intelligent route recommendation engine that auto-detects optimal multi-modal journeys across all Australian states. Renamed from SmartCommute to CommuteCompute on 2026-02-07.
+Cross Commute is the intelligent route recommendation engine that auto-detects optimal multi-modal journeys across all Australian states. Renamed from SmartCommute to Cross Commute on 2026-02-07.
 
 ### 11.2 State Support
 
@@ -1128,7 +1128,7 @@ const STATE_CONFIG = {
 
 **Effective Date:** 1 February 2026
 
-CommuteCompute(TM) is fully compliant with the Melbourne Metro Tunnel network restructure. This section documents the network changes and how CommuteCompute handles them.
+Cross Commute is fully compliant with the Melbourne Metro Tunnel network restructure. This section documents the network changes and how Cross Commute handles them.
 
 ### 12.1 Metro Tunnel Overview
 
@@ -1178,9 +1178,9 @@ These lines continue to run through the traditional City Loop:
 | Northern | Hurstbridge, Mernda |
 | Cross-City | Werribee, Williamstown |
 
-### 12.5 CommuteCompute Implementation
+### 12.5 Cross Commute Implementation
 
-CommuteCompute handles Metro Tunnel compliance through the following data structures:
+Cross Commute handles Metro Tunnel compliance through the following data structures:
 
 ```javascript
 // Lines that use Metro Tunnel (NO LONGER use City Loop)
@@ -1204,7 +1204,7 @@ export function getRoutingChangeInfo(stationName) { ... }
 
 ### 12.6 Automatic Route Adjustment
 
-CommuteCompute automatically:
+Cross Commute automatically:
 
 1. **Detects Metro Tunnel lines** -- Uses `isMetroTunnelLine()` to identify affected services
 2. **Routes via Metro Tunnel** -- Directs Sunbury/Craigieburn/Upfield/Pakenham/Cranbourne through new stations
@@ -1213,7 +1213,7 @@ CommuteCompute automatically:
 
 ### 12.7 Data Sources & Attribution
 
-Metro Tunnel network data incorporated in CommuteCompute(TM) is derived from official sources:
+Metro Tunnel network data incorporated in Cross Commute is derived from official sources:
 
 | Source | URL | Data Type |
 |--------|-----|-----------|
@@ -1498,7 +1498,7 @@ if (apiUnavailable || !apiKey) {
 
 ### 18.1 Overview
 
-Commute Compute supports all Australian states with state-specific transit APIs and configurations.
+Cross Commute supports all Australian states with state-specific transit APIs and configurations.
 
 ### 18.2 State Detection
 
@@ -1738,7 +1738,7 @@ Health monitoring provides visibility into system status for debugging and alert
 
 ### 21.1 Overview
 
-CCFirm(TM) is the custom firmware family for Commute Compute devices. All devices MUST run CCFirm(TM), not stock TRMNL firmware.
+CCFirm(TM) is the custom firmware family for Cross Commute devices. All devices MUST run CCFirm(TM), not stock TRMNL firmware.
 
 ### 21.2 Firmware Variants
 
@@ -1947,11 +1947,11 @@ const apiKey = await getTransitApiKey();
 
 ### 23.1 Overview
 
-CommuteCompute(TM) uses GTFS-RT (General Transit Feed Specification - Realtime) for live transit data. Direction-specific stop IDs are critical for correct journey calculation.
+Cross Commute uses GTFS-RT (General Transit Feed Specification - Realtime) for live transit data. Direction-specific stop IDs are critical for correct journey calculation.
 
 ### 23.2 Protobuf Parsing
 
-GTFS-RT data arrives as Protocol Buffer (protobuf) encoded messages. CommuteCompute parses these into usable JavaScript objects:
+GTFS-RT data arrives as Protocol Buffer (protobuf) encoded messages. Cross Commute parses these into usable JavaScript objects:
 
 ```javascript
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
@@ -2094,7 +2094,7 @@ grep -rn "Clara\|Toorak\|Norman" src/ api/ --include="*.js" \
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 6.0 | 2026-02-07 | **Engine Rename and V15.0 Spec**: Renamed SmartCommute to CommuteCompute throughout. Updated to CCDash V15.0 (UNLOCKED) with new dashboard layout: Sleep mode, Alt Transit cost panel, Mindset status bar, enhanced glanceability. Added sub-engines (DepartureConfidence, LifestyleContext, SleepOptimiser, AltTransit). FRIDAY TREAT for CoffeeDecision. Alternate routes shown only when primary confidence < 40%. Metro Tunnel Compliance promoted to standalone section. All references updated to GitLab. Development Rules v1.26. |
+| 6.0 | 2026-02-07 | **Engine Rename and V15.0 Spec**: Renamed SmartCommute to Cross Commute throughout. Updated to CCDash V15.0 (UNLOCKED) with new dashboard layout: Sleep mode, Alt Transit cost panel, Mindset status bar, enhanced glanceability. Added sub-engines (DepartureConfidence, LifestyleContext, SleepOptimiser, AltTransit). FRIDAY TREAT for CoffeeDecision. Alternate routes shown only when primary confidence < 40%. Metro Tunnel Compliance promoted to standalone section. All references updated to GitLab. Development Rules v1.26. |
 | 5.4 | 2026-02-01 | **Hybrid BLE + Pairing Provisioning**: Major update to Device Pairing and Firmware Architecture. Documents two-phase provisioning: Phase 1 (BLE WiFi only) and Phase 2 (Pairing code for server config). |
 | 5.2 | 2026-01-31 | **Simplified System Architecture Diagrams**: Added high-level trade mark-based architecture diagram. Updated all diagrams to use trade mark family names consistently. |
 | 5.1 | 2026-01-31 | **Trade Mark Family File Registry**: Added comprehensive mapping of all trade mark components to their constituent files. |

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Boot Welcome Screen Specification
@@ -29,7 +29,7 @@ Displayed when device has no WiFi credentials.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                                              │
+│  Cross Commute CCFirm v8.1.0                                              │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │                    WiFi Setup Required                        │
@@ -37,7 +37,7 @@ Displayed when device has no WiFi credentials.
 │                                                               │
 │         Connect to WiFi network:                              │
 │                                                               │
-│              "Commute Compute-Setup"                                │
+│              "Cross Commute-Setup"                                │
 │                                                               │
 │         Then open in browser:                                 │
 │                                                               │
@@ -62,7 +62,7 @@ Displayed while device connects to saved WiFi network.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                                             │
+│  Cross Commute CCFirm v8.1.0                                             │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │                                                               │
@@ -90,7 +90,7 @@ Displayed when WiFi is connected but server setup not complete.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                          Connected ✓        │
+│  Cross Commute CCFirm v8.1.0                          Connected ✓        │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │                                                               │
@@ -122,7 +122,7 @@ Displayed when fetching initial transit data from server.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                          Connected ✓        │
+│  Cross Commute CCFirm v8.1.0                          Connected ✓        │
 ├───────────────────────────────────┬───────────────────────────┤
 │                                   │  Loading...               │
 │                                   │  ═══════════              │
@@ -150,7 +150,7 @@ Displayed after successful setup - transitions to normal dashboard display.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                          08:05 Mon 28 Jan   │
+│  Cross Commute CCFirm v8.1.0                          08:05 Mon 28 Jan   │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │  Setup Complete! ✓                                            │
@@ -173,7 +173,7 @@ Then immediately transitions to normal dashboard display.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                                              │
+│  Cross Commute CCFirm v8.1.0                                              │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │                    WiFi Connection Failed                     │
@@ -196,7 +196,7 @@ Then immediately transitions to normal dashboard display.
 
 ```
 ┌───────────────────────────────────────────────────────────────┐
-│  Commute Compute CCFirm v8.1.0                           Connected ✓        │
+│  Cross Commute CCFirm v8.1.0                           Connected ✓        │
 ├───────────────────────────────────────────────────────────────┤
 │                                                               │
 │                    Server Unreachable                         │

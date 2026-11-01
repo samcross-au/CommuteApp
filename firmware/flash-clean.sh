@@ -41,4 +41,4 @@ python3 "$ESPTOOL" \
     0x10000 .pio/build/trmnl/firmware.bin
 
 echo ""
-echo "Done! Device will reboot and create WiFi hotspot: Commute Compute System-Setup"
+echo "Done! Device will reboot and create WiFi hotspot: Cross Commute-Setup"

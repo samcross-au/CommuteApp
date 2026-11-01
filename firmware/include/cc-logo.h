@@ -1,5 +1,5 @@
 /**
- * Commute Compute Logo - 1-bit bitmap for e-ink display
+ * Cross Commute Logo - 1-bit bitmap for e-ink display
  * Inverted: 1=black (logo), 0=white (background)
  * Dimensions: 150x150 pixels
  * 

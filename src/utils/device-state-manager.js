@@ -5,7 +5,7 @@
  */
 
 /**
- * Device State Manager - Commute Compute
+ * Device State Manager - Cross Commute
  * 
  * Tracks what the device is displaying, prevents crashes, and enables debugging.
  * Provides verifiable proof of display state via content hashing.

@@ -4,10 +4,10 @@
 
 /**
  * LifestyleContext Engine v1.1
- * Part of the Commute Compute™ System
+ * Part of Cross Commute
  *
  * Provides contextual lifestyle suggestions based on weather, time of day,
- * and season. Extends the CommuteCompute™ "1 glance, no app switching"
+ * and season. Extends the Cross Commute "1 glance, no app switching"
  * philosophy to lifestyle decisions beyond just transit.
  *
  * Suggestion types: umbrella, jacket, sunglasses, sunscreen, hydration, layers
@@ -85,11 +85,11 @@ function buildNoDataResponse() {
 // =============================================================================
 
 /**
- * LifestyleContext - Contextual lifestyle suggestion engine for Commute Compute™.
+ * LifestyleContext - Contextual lifestyle suggestion engine for Cross Commute.
  *
  * Analyzes weather conditions, time of day, and user location to produce
  * actionable lifestyle suggestions (umbrella, jacket, sunglasses, sunscreen,
- * hydration, layers) rendered on the CommuteCompute™ dashboard.
+ * hydration, layers) rendered on the Cross Commute dashboard.
  *
  * @example
  * const engine = new LifestyleContext();

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Commute Compute Setup Wizard
+ * Cross Commute Setup Wizard
  * Cross-platform tool for device firmware flashing and deployment setup
  *
  * Copyright (c) 2026 Angus Bergman
@@ -124,7 +124,7 @@ class SetupWizard {
   logBanner() {
     console.clear();
     this.log('\n╔═══════════════════════════════════════════════╗', 'cyan');
-    this.log('║  Commute Compute Setup Wizard v3.0.0                ║', 'cyan');
+    this.log('║  Cross Commute Setup Wizard v3.0.0                ║', 'cyan');
     this.log('║  Copyright © 2026 Angus Bergman               ║', 'cyan');
     this.log('╚═══════════════════════════════════════════════╝\n', 'cyan');
   }
@@ -286,7 +286,7 @@ class SetupWizard {
 
     this.log('Add these environment variables in Render:\n', 'yellow');
     this.log('1. Go to your Render dashboard', 'cyan');
-    this.log('2. Select your Commute Compute service', 'cyan');
+    this.log('2. Select your Cross Commute service', 'cyan');
     this.log('3. Click "Environment" tab', 'cyan');
     this.log('4. Add the following variables:\n', 'cyan');
 
@@ -435,7 +435,7 @@ class SetupWizard {
     this.log('\n✅ Setup Complete!', 'green');
     this.log('═══════════════════\n', 'green');
 
-    this.log('Your Commute Compute is configured with:', 'cyan');
+    this.log('Your Cross Commute is configured with:', 'cyan');
     this.log(`   📱 Device: ${config.device.name}`, 'cyan');
     this.log(`   🌐 Server: ${config.renderUrl}`, 'cyan');
     this.log(`   📏 Resolution: ${config.device.resolution.width}×${config.device.resolution.height}`, 'cyan');
@@ -452,7 +452,7 @@ class SetupWizard {
     this.log('   - Documentation: Check docs/ folder in repository', 'cyan');
     this.log('   - Support: Open an issue on GitLab\n', 'cyan');
 
-    this.log('Thank you for using Commute Compute! 🎉\n', 'green');
+    this.log('Thank you for using Cross Commute! 🎉\n', 'green');
   }
 
   async run() {

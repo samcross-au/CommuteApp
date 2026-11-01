@@ -1,6 +1,6 @@
 /**
  * Vercel Serverless Function Handler
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
  * Wraps the Express app for Vercel's serverless environment.
  * 
@@ -27,7 +27,7 @@ export default function handler(req, res) {
   // API index - return available endpoints
   if (req.url === '/api/index' || req.url === '/api' || req.url === '/api/') {
     return res.status(200).json({
-      name: 'Commute Compute System™ API',
+      name: 'Cross Commute API',
       version: HANDLER_VERSION,
       timestamp: new Date().toISOString(),
       status: initError ? 'error' : 'ok',

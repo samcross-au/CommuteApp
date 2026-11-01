@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Commute Compute Launcher for Kindle v2.0
+# Cross Commute Launcher for Kindle v2.0
 # Ported from TRMNL Firmware v6.0
 #
 # FEATURES:
@@ -212,7 +212,7 @@ create_error_image() {
     # Create a simple text-based error display using eips
     display_clear
     eips 10 5 "================================" 2>/dev/null
-    eips 10 7 "  COMMUTE COMPUTE v$VERSION" 2>/dev/null
+    eips 10 7 "  CROSS COMMUTE v$VERSION" 2>/dev/null
     eips 10 9 "================================" 2>/dev/null
     eips 10 12 "  STATUS: $state" 2>/dev/null
     eips 10 14 "  $msg" 2>/dev/null
@@ -232,7 +232,7 @@ show_setup_required() {
     fi
     
     eips 10 20 "================================" 2>/dev/null
-    eips 10 22 "  COMMUTE COMPUTE SETUP" 2>/dev/null
+    eips 10 22 "  CROSS COMMUTE SETUP" 2>/dev/null
     eips 10 24 "================================" 2>/dev/null
     eips 10 27 "  Setup Required" 2>/dev/null
     eips 10 30 "  Please complete setup at:" 2>/dev/null
@@ -244,7 +244,7 @@ show_setup_required() {
 show_connecting() {
     display_clear
     eips 10 10 "================================" 2>/dev/null
-    eips 10 12 "  COMMUTE COMPUTE" 2>/dev/null
+    eips 10 12 "  CROSS COMMUTE" 2>/dev/null
     eips 10 14 "================================" 2>/dev/null
     eips 10 17 "  Connecting to WiFi..." 2>/dev/null
     eips 10 19 "  Please wait" 2>/dev/null
@@ -262,7 +262,7 @@ show_welcome() {
     fi
     
     eips 10 20 "================================" 2>/dev/null
-    eips 10 22 "  COMMUTE COMPUTE v$VERSION" 2>/dev/null
+    eips 10 22 "  CROSS COMMUTE v$VERSION" 2>/dev/null
     eips 10 24 "  Smart Transit Display" 2>/dev/null
     eips 10 26 "================================" 2>/dev/null
     eips 10 29 "  Device: $(get_model)" 2>/dev/null
@@ -561,7 +561,7 @@ run_once() {
 }
 
 show_status() {
-    echo "=== Commute Compute Status ==="
+    echo "=== Cross Commute Status ==="
     echo "Version: $VERSION (firmware compat: $FIRMWARE_COMPAT)"
     echo "Server: $CC_SERVER"
     echo "Webhook: ${CC_WEBHOOK_URL:-not configured}"
@@ -595,7 +595,7 @@ show_status() {
 }
 
 show_help() {
-    echo "Commute Compute Kindle Launcher v$VERSION"
+    echo "Cross Commute Kindle Launcher v$VERSION"
     echo ""
     echo "Usage: $0 {start|stop|once|status|configure|help}"
     echo ""
@@ -615,7 +615,7 @@ show_help() {
 }
 
 show_configure() {
-    echo "=== Commute Compute Configuration ==="
+    echo "=== Cross Commute Configuration ==="
     echo ""
     echo "1. Complete setup at: $CC_SERVER/setup-wizard.html"
     echo ""

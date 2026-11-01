@@ -1,7 +1,7 @@
 {
   "system": {
     "version": "5.11.0",
-    "name": "Commute Compute System",
+    "name": "Cross Commute",
     "releaseDate": "2026-04-15",
     "codename": "Turnkey Multi-State",
     "buildDate": "2026-04-15"
@@ -9,7 +9,7 @@
   "components": {
     "commutecompute": {
       "version": "4.2",
-      "name": "CommuteCompute Engine",
+      "name": "Cross Commute Engine",
       "description": "Multi-state GTFS-RT support (VIC/NSW/QLD live, SA/WA/TAS/NT/ACT timetable fallback), coordinate-based stop detection (226 VIC metro + 1637 tram + 4151 bus + expanded fallback stops for all states), state-aware suburb-to-stop mappings for all capital cities, graceful no-GTFS-RT degradation, runtime line verification, Metro Tunnel citybound detection (VIC), direction-based train filtering, route-aware transit filtering, Departure Confidence, Sleep Optimiser, Alt Transit, Lifestyle Context, Mindset analysis",
       "locked": false,
       "lastUpdated": "2026-03-22"

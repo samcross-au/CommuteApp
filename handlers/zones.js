@@ -4,7 +4,7 @@
 
 /**
  * CCDash™ Zone API — /api/zones
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
  * Returns changed zones for e-ink partial refresh.
  * 

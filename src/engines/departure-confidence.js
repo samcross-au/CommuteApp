@@ -5,7 +5,7 @@
 
 /**
  * Departure Confidence Engine v1.0
- * Part of the Commute Compute™ System
+ * Part of Cross Commute
  * Dual-licensed under AGPL-3.0 and commercial terms — see LICENSE
  *
  * Calculates a Departure Confidence Score (0-100%) representing how likely

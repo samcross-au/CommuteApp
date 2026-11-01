@@ -44,7 +44,7 @@ if [ $? -eq 0 ]; then
     echo "✓ Device will restart automatically"
     echo ""
     echo "What happens next:"
-    echo "1. Device will create WiFi network: Commute Compute System-Setup"
+    echo "1. Device will create WiFi network: Cross Commute-Setup"
     echo "2. Connect to it and configure your WiFi"
     echo "3. Device will register with: https://your-deployment.vercel.app"
     echo "4. Display will show transit data!"

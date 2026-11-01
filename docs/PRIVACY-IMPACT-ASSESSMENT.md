@@ -1,6 +1,6 @@
 # Privacy Impact Assessment
 
-**Commute Compute System™ -- Privacy Impact Assessment**
+**Cross Commute -- Privacy Impact Assessment**
 
 **Version:** 1.0
 **Date:** 2026-02-27
@@ -11,9 +11,9 @@
 
 ## 1. Overview
 
-The Commute Compute System is a personalised transit dashboard that renders 1-bit BMP images for display on e-ink hardware (TRMNL Display). It processes real-time and scheduled transit data via the Transport Victoria OpenData API to generate departure boards tailored to a user's configured routes and addresses.
+Cross Commute is a personalised transit dashboard that renders 1-bit BMP images for display on e-ink hardware (TRMNL Display). It processes real-time and scheduled transit data via the Transport Victoria OpenData API to generate departure boards tailored to a user's configured routes and addresses.
 
-The system stores user preferences in Redis (via Vercel Marketplace, powered by Upstash), renders dashboard images server-side through the CCDash™ renderer, and serves those images to the TRMNL Display hardware over HTTPS. The CommuteCompute™ engine calculates optimal transit routes, incorporating features such as DepartureConfidence™ scoring, LifestyleContext™ suggestions, CoffeeDecision™ indicators, SleepOptimiser™ adjustments, and AltTransit™ alternatives. CC LiveDash™ provides real-time departure updates, while CCFirm™ manages the device firmware.
+The system stores user preferences in Redis (via Vercel Marketplace, powered by Upstash), renders dashboard images server-side through the CCDash™ renderer, and serves those images to the TRMNL Display hardware over HTTPS. The Cross Commute engine calculates optimal transit routes, incorporating features such as DepartureConfidence™ scoring, LifestyleContext™ suggestions, CoffeeDecision™ indicators, SleepOptimiser™ adjustments, and AltTransit™ alternatives. CC LiveDash™ provides real-time departure updates, while CCFirm™ manages the device firmware.
 
 This Privacy Impact Assessment (PIA) evaluates the system's data handling practices against the Australian Privacy Principles (APPs) under the Privacy Act 1988 (Cth) and identifies risks, mitigations, and ongoing review obligations.
 
@@ -49,13 +49,13 @@ This Privacy Impact Assessment (PIA) evaluates the system's data handling practi
 
 ## 3. Data Flows
 
-The following describes the end-to-end data flow within the Commute Compute System:
+The following describes the end-to-end data flow within Cross Commute:
 
 1. **Configuration** -- The user opens the Setup Wizard in a browser and enters their Transport Victoria OpenData API key, optional Google Places API key, home/work addresses, and transit route preferences.
 2. **Storage** -- All preferences are written to Redis (Upstash, via Vercel Marketplace). Redis encrypts data at rest. No `.env` files are used; all secrets are stored exclusively in Redis.
 3. **Request** -- The TRMNL Display hardware periodically requests a dashboard image from `handlers/commutecompute.js` over HTTPS, authenticating via its device token.
 4. **Transit Data Fetch** -- The server-side endpoint calls the Transport Victoria OpenData API using the user's stored API key, retrieving real-time GTFS-RT and scheduled GTFS data for the configured routes.
-5. **Route Processing** -- The CommuteCompute engine processes the transit data, calculating departure times, walking estimates, and contextual information.
+5. **Route Processing** -- The Cross Commute engine processes the transit data, calculating departure times, walking estimates, and contextual information.
 6. **Rendering** -- The CCDash renderer generates a 1-bit BMP image (optimised for e-ink display) containing the processed transit information.
 7. **Delivery** -- The BMP image is returned to the TRMNL Display over HTTPS. No data is stored client-side.
 
@@ -101,13 +101,13 @@ Assessment against the 13 Australian Privacy Principles under the Privacy Act 19
 
 ### APP 1 -- Open and Transparent Management of Personal Information
 
-The Commute Compute System publishes this PIA, a LEGAL.md document, and maintains open-source code that enables public inspection of all data handling practices. There is no hidden data collection. The system's data practices are documented and accessible.
+Cross Commute publishes this PIA, a LEGAL.md document, and maintains open-source code that enables public inspection of all data handling practices. There is no hidden data collection. The system's data practices are documented and accessible.
 
 **Assessment:** Compliant.
 
 ### APP 2 -- Anonymity and Pseudonymity
 
-Users are not required to identify themselves to use the system. No names, email addresses, or personal identifiers are collected. The system uses device tokens (tied to hardware, not individuals) and API keys (tied to developer accounts with the Transport Victoria OpenData API, not to individuals within the Commute Compute System).
+Users are not required to identify themselves to use the system. No names, email addresses, or personal identifiers are collected. The system uses device tokens (tied to hardware, not individuals) and API keys (tied to developer accounts with the Transport Victoria OpenData API, not to individuals within Cross Commute).
 
 **Assessment:** Compliant. Users operate under effective anonymity within the system.
 
@@ -119,7 +119,7 @@ The only data that may constitute personal information is home/work address data
 
 ### APP 4 -- Dealing with Unsolicited Personal Information
 
-The Commute Compute System does not receive unsolicited personal information. All data is explicitly entered by the user through the Setup Wizard or Admin Panel.
+Cross Commute does not receive unsolicited personal information. All data is explicitly entered by the user through the Setup Wizard or Admin Panel.
 
 **Assessment:** Not applicable.
 
@@ -137,7 +137,7 @@ Address data is used solely for transit route calculation. It is transmitted to 
 
 ### APP 7 -- Direct Marketing
 
-The Commute Compute System does not engage in direct marketing of any kind. A standing founder directive prohibits the collection of email addresses or personal contact information. No electronic messages are sent to users.
+Cross Commute does not engage in direct marketing of any kind. A standing founder directive prohibits the collection of email addresses or personal contact information. No electronic messages are sent to users.
 
 **Assessment:** Compliant. Direct marketing is structurally impossible given the system's design.
 
@@ -237,7 +237,7 @@ The following Australian legislation is relevant to this assessment:
 | **Consumer Data Right** (where applicable) | Noted for awareness; transit data is not currently a designated CDR sector. |
 | **Telecommunications Act 1997 (Cth)** | Not directly applicable, but relevant to the extent that internet-based services process data through Australian telecommunications networks. |
 
-**Note on the small business exemption:** Under s 6D of the Privacy Act 1988, organisations with annual turnover of less than $3 million are generally exempt from the APPs. The Commute Compute System, as a sole trader operation, likely falls within this exemption. However, this PIA is maintained as a matter of good practice and to demonstrate a commitment to responsible data handling.
+**Note on the small business exemption:** Under s 6D of the Privacy Act 1988, organisations with annual turnover of less than $3 million are generally exempt from the APPs. Cross Commute, as a sole trader operation, likely falls within this exemption. However, this PIA is maintained as a matter of good practice and to demonstrate a commitment to responsible data handling.
 
 ---
 
@@ -259,4 +259,4 @@ The following Australian legislation is relevant to this assessment:
 
 ---
 
-*This Privacy Impact Assessment is maintained as part of the Commute Compute System™ documentation. It reflects the system architecture as of v4.2.0 and is published in the open-source repository for transparency.*
+*This Privacy Impact Assessment is maintained as part of Cross Commute documentation. It reflects the system architecture as of v4.2.0 and is published in the open-source repository for transparency.*

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute System™ — Project Vision & Roadmap
+# Cross Commute — Project Vision & Roadmap
 
 **Version:** 2.1
 **Last Updated:** 2026-02-15
@@ -13,7 +13,7 @@
 
 ## Vision Statement
 
-**Commute Compute System™ aims to be the definitive open-source smart transit display for Australian public transport** — empowering commuters with real-time journey information on beautiful e-ink displays, while maintaining complete privacy and user control.
+**Cross Commute aims to be the definitive open-source smart transit display for Australian public transport** — empowering commuters with real-time journey information on beautiful e-ink displays, while maintaining complete privacy and user control.
 
 ---
 
@@ -40,9 +40,9 @@ All code, specifications, and documentation freely available under AGPL-3.0 (dua
 
 | Brand | Purpose |
 |-------|---------|
-| **Commute Compute System™** | Overall system name |
-| **Commute Compute™** | Short brand name |
-| **CommuteCompute™** | Journey calculation engine |
+| **Cross Commute** | Overall system name |
+| **Cross Commute** | Short brand name |
+| **Cross Commute** | Journey calculation engine |
 | **CCDash™** | Dashboard rendering specification |
 | **CC LiveDash™** | Multi-device live renderer |
 | **CCFirm™** | Custom firmware family |
@@ -129,7 +129,7 @@ Create a **"set and forget"** smart transit display that tells you exactly when 
 - [x] Firmware anti-brick documentation
 
 ### Phase 4: Multi-State & Engine -- COMPLETE
-- [x] CommuteCompute™ engine
+- [x] Cross Commute engine
 - [x] CC LiveDash™ multi-device renderer
 - [x] NSW (TfNSW) support
 - [x] Queensland (TransLink) support
@@ -342,7 +342,7 @@ Things we explicitly **will not** pursue:
 
 ## Conclusion
 
-Commute Compute System™ represents a commitment to privacy-respecting, user-empowering technology. By keeping everything self-hosted and open-source, we ensure that users truly own their smart transit experience — no strings attached.
+Cross Commute represents a commitment to privacy-respecting, user-empowering technology. By keeping everything self-hosted and open-source, we ensure that users truly own their smart transit experience — no strings attached.
 
 The project succeeds when an Australian commuter can glance at their e-ink display, see "LEAVE NOW — Coffee included", and walk out the door knowing they'll catch their train on time.
 

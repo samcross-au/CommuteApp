@@ -1,23 +1,23 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Setup Guide
+# Cross Commute Setup Guide
 
-**Complete setup instructions for your Commute Compute™ smart transit display.**
+**Complete setup instructions for your Cross Commute smart transit display.**
 
 **Version:** 4.1
 **Last Updated:** 2026-02-16
 **System Version:** v5.0.0 (CCDashDesignV16.0)
 **Licence:** AGPL-3.0 Dual Licence (see [LICENSE](LICENSE))
 
-> New to Commute Compute™? Start with our [Complete Beginner Guide](docs/guides/COMPLETE-BEGINNER-GUIDE.md) for a friendlier walkthrough with no technical background required.
+> New to Cross Commute? Start with our [Complete Beginner Guide](docs/guides/COMPLETE-BEGINNER-GUIDE.md) for a friendlier walkthrough with no technical background required.
 
 ---
 
 ## Overview
 
-Setting up Commute Compute™ involves four steps:
+Setting up Cross Commute involves four steps:
 
 1. **Deploy** -- Host the server on Vercel (one click)
 2. **Storage** -- Add Redis via Vercel Marketplace
@@ -34,7 +34,7 @@ Before starting setup, gather these items:
 
 | Requirement | Description |
 |-------------|-------------|
-| Vercel account | **Pro tier required** ($20/month) -- the Hobby (free) tier cannot auto-deploy Commute Compute™ due to the number of serverless functions. See note below. |
+| Vercel account | **Pro tier required** ($20/month) -- the Hobby (free) tier cannot auto-deploy Cross Commute due to the number of serverless functions. See note below. |
 | TRMNL display | Or jailbroken Kindle |
 | USB-C power source | USB-C (wall adapter or USB port) for continuous always-on use. Battery operation provides several days of cable-free use — ideal for testing placement or portable scenarios. |
 | WiFi network details | Network name (SSID) and password -- must be 2.4 GHz network (5 GHz not supported) |
@@ -52,7 +52,7 @@ Before starting setup, gather these items:
 
 [TIME] This step takes approximately 3-5 minutes.
 
-[IMPORTANT] **Vercel Pro tier is required.** Commute Compute™ uses multiple serverless functions (API endpoints, rendering engine, GTFS-RT client, and intelligence engines) that exceed Vercel's Hobby tier function count limit. Auto-deploy will fail on the free Hobby tier. A Pro plan ($20/month) is required. Commute Compute™ is not truly free to operate at this scale — the Vercel Pro subscription is the primary ongoing hosting cost.
+[IMPORTANT] **Vercel Pro tier is required.** Cross Commute uses multiple serverless functions (API endpoints, rendering engine, GTFS-RT client, and intelligence engines) that exceed Vercel's Hobby tier function count limit. Auto-deploy will fail on the free Hobby tier. A Pro plan ($20/month) is required. Cross Commute is not truly free to operate at this scale — the Vercel Pro subscription is the primary ongoing hosting cost.
 
 ### 1.1 One-Click Deploy (Recommended)
 
@@ -92,7 +92,7 @@ You should see a JSON response confirming the server is running.
 
 [TIME] This step takes approximately 5-7 minutes.
 
-Redis provides persistent storage for your configuration, API keys, and device pairing codes. This is required for Commute Compute™ to function across serverless invocations.
+Redis provides persistent storage for your configuration, API keys, and device pairing codes. This is required for Cross Commute to function across serverless invocations.
 
 ### 2.1 Install Redis Integration
 
@@ -115,7 +115,7 @@ Redis provides persistent storage for your configuration, API keys, and device p
 
 1. Go to the **Projects** tab for your new Redis database
 2. Click **Connect Project**
-3. Select your Commute Compute™ project
+3. Select your Cross Commute project
 4. Click **Connect**
 
 This automatically injects the required environment variables (`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`) into your Vercel project. After connecting, the integration appears as **Redis** in your Integrations tab with a green status indicator.
@@ -177,7 +177,7 @@ Enter your home and work addresses:
 
 ### 3.5 Transport Victoria API Key (Required for live departure data)
 
-This key is essential for live real-time departure countdowns -- the core feature of Commute Compute™:
+This key is essential for live real-time departure countdowns -- the core feature of Cross Commute:
 
 1. Go to [opendata.transport.vic.gov.au](https://opendata.transport.vic.gov.au/)
 2. Create an account and request an API key
@@ -315,7 +315,7 @@ Your TRMNL display should show:
 
 ## What Data Does My Device Fetch?
 
-Once configured, your TRMNL display periodically fetches a dashboard image from your personal Commute Compute™ server deployment.
+Once configured, your TRMNL display periodically fetches a dashboard image from your personal Cross Commute server deployment.
 
 **Endpoint:** Your device connects to `/api/commutecompute` on your Vercel deployment (e.g., `https://your-project.vercel.app/api/commutecompute`). This URL was automatically configured during BLE setup.
 
@@ -451,7 +451,7 @@ This is normal behaviour during initial setup:
 
 ## Alternative Hosting
 
-While Vercel is the recommended platform (turnkey setup, free tier), Commute Compute™ can also run on:
+While Vercel is the recommended platform (turnkey setup, free tier), Cross Commute can also run on:
 
 - **Render.com** -- Free tier with Redis addon
 - **Railway** -- With Redis plugin

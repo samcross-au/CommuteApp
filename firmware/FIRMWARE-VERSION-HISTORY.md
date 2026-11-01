@@ -1,14 +1,14 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Firmware Version History
+# Cross Commute Firmware Version History
 
 > **Note:** References to `pio device monitor` in this document are historical. Do NOT use `pio device monitor` with ESP32-C3 hardware -- it causes system crash/freeze. Use a standalone serial terminal instead (e.g., `screen /dev/cu.usbmodem* 115200` on macOS, or PuTTY on Windows).
 
 **Copyright (c) 2026 Angus Bergman — AGPL-3.0 Dual Licence**
 
-This document tracks all firmware releases for the Commute Compute System.
+This document tracks all firmware releases for Cross Commute.
 
 ---
 

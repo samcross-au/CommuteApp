@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Testing Guide
+# Cross Commute Testing Guide
 **MANDATORY COMPLIANCE DOCUMENT**
 **Created**: 2026-01-28
 **Version**: 1.0.0

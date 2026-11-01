@@ -150,7 +150,7 @@ class WeatherBOM {
     try {
       const response = await fetch(this.observationUrl, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; Commute Compute/1.0; Educational)',
+          'User-Agent': 'Mozilla/5.0 (compatible; CrossCommute/1.0; Educational)',
           'Accept': 'application/json'
         },
         timeout: 15000 // 15 second timeout
@@ -389,7 +389,7 @@ export async function getWeatherSimple() {
 
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; Commute Compute/1.0; Educational)',
+        'User-Agent': 'Mozilla/5.0 (compatible; CrossCommute/1.0; Educational)',
         'Accept': 'application/json'
       },
       timeout: 10000

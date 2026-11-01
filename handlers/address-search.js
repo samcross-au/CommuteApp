@@ -91,7 +91,7 @@ export default async function handler(req, res) {
     const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}, Australia&limit=5`;
     
     const response = await fetch(nominatimUrl, {
-      headers: { 'User-Agent': 'Commute Compute/1.0' }
+      headers: { 'User-Agent': 'CrossCommute/1.0' }
     });
     const results = await response.json();
     

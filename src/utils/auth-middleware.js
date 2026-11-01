@@ -7,7 +7,7 @@
  * Checks for Authorization: Bearer <token> header against CC_ADMIN_TOKEN env var.
  * SECURITY: Denies by default when CC_ADMIN_TOKEN is not set (Section 26.2).
  *
- * Part of the Commute Compute System
+ * Part of Cross Commute
  */
 
 import crypto from 'node:crypto';

@@ -1,5 +1,5 @@
 /**
- * Pre-rendered Screens for Commute Compute Firmware
+ * Pre-rendered Screens for Cross Commute Firmware
  * Screen 1: Boot screen (large CC logo)
  * Screen 2: WiFi Setup screen (smaller logo + instructions)
  * 
@@ -16,7 +16,7 @@
 
 #include <Arduino.h>
 
-// Pre-rendered screen1_boot screen for Commute Compute
+// Pre-rendered screen1_boot screen for Cross Commute
 // Dimensions: 800x480, 1-bit packed (1=black)
 // Auto-generated - do not edit manually
 
@@ -3028,7 +3028,7 @@ static const uint8_t SCREEN1_BOOT_DATA[] PROGMEM = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-// Pre-rendered screen2_setup screen for Commute Compute
+// Pre-rendered screen2_setup screen for Cross Commute
 // Dimensions: 800x480, 1-bit packed (1=black)
 // Auto-generated - do not edit manually
 

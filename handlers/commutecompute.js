@@ -1,5 +1,5 @@
 /**
- * CommuteCompute™ Unified Dashboard Endpoint
+ * Cross Commute Unified Dashboard Endpoint
  *
  * Single source of truth for ALL dashboard output — admin JSON preview,
  * TRMNL display PNG/BMP, and debug/diagnostic data.

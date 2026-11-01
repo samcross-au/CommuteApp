@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # End-to-End Testing Checklist
 
 **Version**: 2.0.0  
 **Last Updated**: 2026-02-03  
-**System**: Commute Compute System v5.0.0
+**System**: Cross Commute v5.0.0
 **Spec**: CCDashDesignV16.0 (UNLOCKED)
 **Firmware**: CCFirm v8.1.0 (UNLOCKED)
 **Architecture**: Zero-Config Serverless (Vercel + KV)
@@ -33,7 +33,7 @@ Before ANY testing, read and understand:
         │                       │                       │
         ▼                       ▼                       ▼
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Config Token   │     │ CommuteCompute™ │     │  CCDash™ V15.0  │
+│  Config Token   │     │ Cross Commute │     │  CCDash™ V15.0  │
 │  (Base64URL)    │     │  Engine         │     │  Renderer       │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
@@ -68,7 +68,7 @@ Before ANY testing, read and understand:
 - [ ] Create Redis database — Region: **Sydney, Australia**
 - [ ] Plan: **Free** (256MB, 500K commands/month)
 - [ ] Name: `commute-compute-redis`
-- [ ] Connect to your Commute Compute project
+- [ ] Connect to your Cross Commute project
 - [ ] Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` auto-injected
 
 **Deployment Verification**:
@@ -96,7 +96,7 @@ Before ANY testing, read and understand:
 
 **Expected Console Output**:
 ```
-[DONE] Commute Compute server starting...
+[DONE] Cross Commute server starting...
 [DONE] KV storage: connected (or: using fallback)
 [DONE] Ready on http://localhost:3000
 ```

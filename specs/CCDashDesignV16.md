@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 <p align="center">
-  <img src="../assets/brand/cc-logo-200.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-200.png" alt="Cross Commute" width="120">
 </p>
 
-# CCDashDesignV16 - Commute Compute™ Dashboard Specification
+# CCDashDesignV16 - Cross Commute Dashboard Specification
 
 **Status:** UNLOCKED — V16.0 (active development)
 **Version:** 16.0
@@ -15,7 +15,7 @@
 **Display:** 800×480px e-ink (TRMNL device)
 **Refresh:** 60-second partial refresh cycle
 **Renderer:** ccdash-renderer.js v3.0
-**CommuteCompute:** v4.0 (Unified Engine, Metro Tunnel Compliant)
+**Cross Commute:** v4.0 (Unified Engine, Metro Tunnel Compliant)
 
 ---
 
@@ -547,7 +547,7 @@ for (const zoneId of zones) {
 
 ### 8.1 Overview
 
-CCDash V15.0 is fully compliant with the Melbourne Metro Tunnel network restructure. The CommuteCompute™ engine automatically handles routing for the five lines that now use the Metro Tunnel instead of the City Loop.
+CCDash V15.0 is fully compliant with the Melbourne Metro Tunnel network restructure. The Cross Commute engine automatically handles routing for the five lines that now use the Metro Tunnel instead of the City Loop.
 
 ### 8.2 Metro Tunnel Lines
 
@@ -571,7 +571,7 @@ CCDash V15.0 is fully compliant with the Melbourne Metro Tunnel network restruct
 
 ### 8.4 Discontinued Services Display
 
-When a user's journey involves a discontinued service (e.g., Pakenham Line at Southern Cross), the CommuteCompute engine provides alternatives. The renderer does NOT display discontinued routes.
+When a user's journey involves a discontinued service (e.g., Pakenham Line at Southern Cross), the Cross Commute engine provides alternatives. The renderer does NOT display discontinued routes.
 
 ### 8.5 Transit Leg Subtitle Format
 

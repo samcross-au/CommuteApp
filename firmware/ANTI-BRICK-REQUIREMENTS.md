@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # TRMNL Firmware Anti-Brick Requirements
@@ -395,7 +395,7 @@ void initDisplay() {
 ```cpp
 // [YES] ALWAYS: Log key events
 Serial.begin(115200);
-Serial.println("=== Commute Compute Starting ===");
+Serial.println("=== Cross Commute Starting ===");
 
 Serial.println("Initializing display...");
 initDisplay();

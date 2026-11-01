@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Device Compatibility Guide
-**Supported E-ink Displays for Commute Compute™**
+**Supported E-ink Displays for Cross Commute**
 
 Last Updated: 2026-02-16
 
@@ -11,7 +11,7 @@ Last Updated: 2026-02-16
 
 ## Overview
 
-Commute Compute™ supports multiple e-ink display devices. This guide helps you:
+Cross Commute supports multiple e-ink display devices. This guide helps you:
 1. Choose the right device for your needs
 2. Verify compatibility with your hardware
 3. Configure the server for your specific device
@@ -304,7 +304,7 @@ const INKPLATE_10 = {
 
 ## Server-Side Device Detection
 
-Commute Compute™ automatically adapts to different devices.
+Cross Commute automatically adapts to different devices.
 
 ### Auto-Detection System
 
@@ -399,14 +399,14 @@ The webhook URL is automatically configured during BLE setup via the Setup Wizar
 **WARNING**: Jailbreaking voids your Amazon warranty.
 
 **For Kindle Paperwhite 3/4/5**:
-1. Follow Commute Compute™'s Kindle setup guide
+1. Follow Cross Commute's Kindle setup guide
 2. Download jailbreak tools from MobileRead forums
 3. Install via USB connection
 4. Verify jailbreak successful
 
 **Resources**:
 - MobileRead Wiki: https://wiki.mobileread.com/wiki/Kindle_Hacks_Information
-- Commute Compute™ Kindle Setup Guide: See `/docs/hardware/KINDLE-SETUP.md`
+- Cross Commute Kindle Setup Guide: See `/docs/hardware/KINDLE-SETUP.md`
 
 ### Step 2: Install Kiosk Mode
 
@@ -775,7 +775,7 @@ A: Yes! Jailbreak doesn't remove Amazon functionality. You can switch between tr
 **Q: Which Kindle should I buy used?**
 A: Kindle Paperwhite 3 or 4 ($50-80 used) offers best value. Avoid Kindle Fire (it's a tablet, not e-ink).
 
-**Q: Does Commute Compute™ work with Kobo devices?**
+**Q: Does Cross Commute work with Kobo devices?**
 A: Experimentally. Kobo uses different software. Community members have had success but it requires custom work.
 
 **Q: Can I use an old e-reader I found?**
@@ -796,7 +796,7 @@ A: Open a GitLab Issue with your device specs. Community may have already tested
 ## Resources
 
 ### Official Guides
-- **Commute Compute™ Kindle Guide**: See `/docs/hardware/KINDLE-SETUP.md`
+- **Cross Commute Kindle Guide**: See `/docs/hardware/KINDLE-SETUP.md`
 - **CCFirm&#8482; Firmware**: See `/tools/setup-wizard/firmware/`
 - **TRMNL Hardware Support**: https://discord.gg/trmnl
 

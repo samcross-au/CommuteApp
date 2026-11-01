@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Boot Sequence and Initialization Protocol
+# Cross Commute Boot Sequence and Initialization Protocol
 
 > **Note:** This document describes the legacy WiFiManager boot sequence used in firmware versions prior to v7.0. Current firmware (CCFirm v8.1.0) uses BLE provisioning. See [QUICK_START.md](QUICK_START.md) for current setup instructions.
 

@@ -116,7 +116,7 @@ export default async function handler(req, res) {
     // Black text
     ctx.fillStyle = 'black';
     ctx.font = 'bold 48px sans-serif';
-    ctx.fillText('Commute Compute', 200, 200);
+    ctx.fillText('Cross Commute', 200, 200);
     ctx.font = '32px sans-serif';
     ctx.fillText(new Date().toISOString(), 200, 280);
     

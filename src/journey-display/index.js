@@ -1,6 +1,6 @@
 /**
  * CCDash™ Journey Display Module
- * Part of the Commute Compute System™
+ * Part of Cross Commute
  * 
  * Server-side journey planning display for e-ink devices.
  * 

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-<h1 align="center">CCFirm™ — Commute Compute Custom Firmware</h1>
+<h1 align="center">CCFirm™ — Cross Commute Custom Firmware</h1>
 
 ![Version](https://img.shields.io/badge/version-8.1.0-blue)
 ![Anti-Brick](https://img.shields.io/badge/Anti--Brick-12%2F12%20✓-brightgreen)
@@ -20,7 +20,7 @@
 
 ## Overview
 
-CCFirm™ is the custom firmware that runs on TRMNL e-ink display hardware to power the Commute Compute System. It implements:
+CCFirm™ is the custom firmware that runs on TRMNL e-ink display hardware to power Cross Commute. It implements:
 
 - **BLE + Pairing Code provisioning** (WiFiManager removed — causes ESP32-C3 crashes)
 - **60-second partial refresh** (HARDCODED per DEVELOPMENT-RULES.md Section 19)
@@ -36,14 +36,14 @@ CCFirm™ is the custom firmware that runs on TRMNL e-ink display hardware to po
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     COMMUTE COMPUTE SYSTEM                       │
+│                     CROSS COMMUTE                       │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │   ┌──────────────┐         ┌──────────────────────────────────┐ │
 │   │   TRMNL      │  WiFi   │        Vercel Server             │ │
 │   │   Device     │ ◄─────► │                                  │ │
 │   │              │         │  ┌─────────────────────────────┐ │ │
-│   │  CCFirm v8.1 │         │  │ CommuteCompute™ Engine      │ │ │
+│   │  CCFirm v8.1 │         │  │ Cross Commute Engine      │ │ │
 │   │              │         │  │ • Journey calculation       │ │ │
 │   │  • Display   │         │  │ • Coffee decision           │ │ │
 │   │  • Refresh   │         │  │ • Real-time departures      │ │ │
@@ -165,7 +165,7 @@ screen /dev/cu.usbmodem* 115200          # macOS
 ### Expected Boot Output
 
 ```
-=== Commute Compute v8.1.0 ===
+=== Cross Commute v8.1.0 ===
 BLE Provisioning Firmware
 [Display] Initializing...
 [Display] Full refresh complete
@@ -245,5 +245,5 @@ https://www.gnu.org/licenses/agpl-3.0.html
 ---
 
 <p align="center">
-  <em>Part of the Commute Compute System™</em>
+  <em>Part of Cross Commute</em>
 </p>

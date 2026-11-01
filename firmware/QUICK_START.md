@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute™ Quick Start Guide
+# Cross Commute Quick Start Guide
 
 ## Your Device is Ready!
 
-Your TRMNL display has been flashed with CCFirm™ firmware and is ready to connect to your Commute Compute™ admin panel.
+Your TRMNL display has been flashed with CCFirm™ firmware and is ready to connect to your Cross Commute admin panel.
 
 > **Note:** If you have not yet flashed your device, see the Browser Flasher guide first at `https://your-project-name.vercel.app/flasher/` (Chrome or Edge required). This Quick Start guide assumes flashing is already complete.
 
@@ -106,7 +106,7 @@ If your device shows a 6-character pairing code after WiFi setup, enter it in th
 
 ### After First Dashboard Load:
 - Display fetches initial dashboard (takes 2-3 minutes on first load)
-- Shows your personalised Commute Compute™ dashboard
+- Shows your personalised Cross Commute dashboard
 - Updates begin automatically
 - If BLE URL delivery did not succeed, the device may display a 6-character pairing code instead -- enter it in the Setup Wizard or Admin Panel
 
@@ -131,7 +131,7 @@ Use PuTTY or similar serial terminal at 115200 baud.
 
 You should see output like:
 ```
-=== Commute Compute BOOT ===
+=== Cross Commute BOOT ===
 Reset reason: POWER ON
 Free heap: 280000 bytes
 Display initialized
@@ -309,7 +309,7 @@ If you need to change the server URL, factory reset the device (hold button 10 s
 
 ---
 
-**Enjoy your personalised Commute Compute™ dashboard!**
+**Enjoy your personalised Cross Commute dashboard!**
 
 ---
 

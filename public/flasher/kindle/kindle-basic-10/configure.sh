@@ -1,13 +1,13 @@
 #!/bin/sh
 #
-# Commute Compute Configuration Helper
+# Cross Commute Configuration Helper
 # Copyright (c) 2026 Angus Bergman - AGPL-3.0
 #
 
 SCRIPT_DIR="$(dirname "$0")"
 CONFIG_FILE="$SCRIPT_DIR/config.sh"
 
-echo "=== Commute Compute Configuration ==="
+echo "=== Cross Commute Configuration ==="
 echo ""
 
 # Check if config exists
@@ -24,10 +24,10 @@ else
     
     cat > "$CONFIG_FILE" << 'EOF'
 #!/bin/sh
-# Commute Compute Configuration
+# Cross Commute Configuration
 # Copyright (c) 2026 Angus Bergman - AGPL-3.0
 #
-# Edit this file to configure your Commute Compute display.
+# Edit this file to configure your Cross Commute display.
 #
 # REQUIRED: Set your server URL or webhook URL
 # Get your webhook URL from the setup wizard at:

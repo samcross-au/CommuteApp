@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Contributing to Commute Compute™
+# Contributing to Cross Commute
 
 Thank you for your interest in contributing! This project welcomes community contributions.
 
@@ -150,4 +150,4 @@ Or use `git commit -s` to add it automatically.
 
 ---
 
-*Thank you for helping make Commute Compute better!*
+*Thank you for helping make Cross Commute better!*

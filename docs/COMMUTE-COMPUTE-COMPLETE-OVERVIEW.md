@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute System™
+# Cross Commute
 
 ## Complete Project Overview
 
@@ -15,7 +15,7 @@
 
 # Executive Summary
 
-I built **Commute Compute System™** as a fully self-hosted smart transit display for Australian public transport. It delivers real-time journey information to e-ink displays, answering the daily questions every commuter faces: "When should I leave?", "Is my train delayed?", "Do I have time for coffee?", and "Should I bring an umbrella?"
+I built **Cross Commute** as a fully self-hosted smart transit display for Australian public transport. It delivers real-time journey information to e-ink displays, answering the daily questions every commuter faces: "When should I leave?", "Is my train delayed?", "Do I have time for coffee?", and "Should I bring an umbrella?"
 
 I designed the system to be completely free to deploy, require zero ongoing costs, and respect user privacy by keeping all data on the user's own server.
 
@@ -78,8 +78,8 @@ I wanted a single glance at an e-ink display to answer all of these.
 
 | Brand | Purpose |
 |-------|---------|
-| **Commute Compute System™** | Overall system name |
-| **CommuteCompute™** | Journey calculation engine |
+| **Cross Commute** | Overall system name |
+| **Cross Commute** | Journey calculation engine |
 | **CCDash™** | Dashboard rendering specification |
 | **CC LiveDash™** | Multi-device live renderer |
 | **CCFirm™** | Custom firmware family |
@@ -248,7 +248,7 @@ Each Australian state has different transit APIs:
 
 ### How I Solved It
 
-I built the **CommuteCompute™ Engine** as a unified abstraction:
+I built the **Cross Commute Engine** as a unified abstraction:
 
 ```
 State     | Authority          | Auth Method
@@ -472,11 +472,11 @@ REPEAT
 
 ---
 
-# Part 5: The CommuteCompute™ Engine
+# Part 5: The Cross Commute Engine
 
 ## What I Built
 
-CommuteCompute™ is the journey calculation engine. It:
+Cross Commute is the journey calculation engine. It:
 
 1. Fetches real-time data from transit authorities
 2. Detects delays and disruptions
@@ -890,7 +890,7 @@ Done! Device displays your commute.
 | Foundation | Core server, CCDashDesignV16.0 spec, zone refresh, VIC API, weather |
 | Firmware | CCFirm, anti-brick rules, state machine |
 | Documentation | DEVELOPMENT-RULES v1.6, Architecture v4.0 |
-| Multi-State | CommuteCompute, CC LiveDash, NSW, QLD support |
+| Multi-State | Cross Commute, CC LiveDash, NSW, QLD support |
 | Setup UX | Zero-config, free-tier caching, iOS compatibility |
 
 ## What I'm Working On
@@ -910,7 +910,7 @@ Done! Device displays your commute.
 
 # Summary
 
-I built **Commute Compute System™** over 18 months, solving real problems:
+I built **Cross Commute** over 18 months, solving real problems:
 
 - **76,445 lines of code** across 176 files
 - **10 major technical challenges** solved

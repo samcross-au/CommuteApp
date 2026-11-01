@@ -1,6 +1,6 @@
 /**
- * CommuteCompute™ Journey Integration
- * Part of the Commute Compute System™
+ * Cross Commute Journey Integration
+ * Part of Cross Commute
  * 
  * Connects SmartRouteRecommender with CoffeeDecision engine and live transit data.
  * 

@@ -1,4 +1,4 @@
-# Commute Compute Firmware Version
+# Cross Commute Firmware Version
 # Copyright (c) 2026 Angus Bergman - AGPL-3.0
 
 VERSION=8.1.0

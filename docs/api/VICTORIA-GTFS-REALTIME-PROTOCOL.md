@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # Victorian Transport - GTFS Realtime API Protocol
-**For Commute Compute Users in Victoria**
+**For Cross Commute Users in Victoria**
 **Date**: 2026-02-06
 **System Version:** v5.0.0 (CCDashDesignV16.0)
 **Status**: OFFICIAL PROTOCOL FOR VICTORIAN USERS
@@ -307,10 +307,10 @@ function isTripCancelled(tripUpdate) {
 
 ---
 
-## Integration with Commute Compute(TM)
+## Integration with Cross Commute
 
 ### Current Setup
-Commute Compute currently uses:
+Cross Commute currently uses:
 - **Transport Victoria Timetable API** for scheduled departures
 - **HMAC-SHA1 authentication** with Developer ID + API Key
 
@@ -324,7 +324,7 @@ This new endpoint provides:
 
 ```
 ┌─────────────────────────────────────────────┐
-│         Commute Compute System                    │
+│         Cross Commute                    │
 ├─────────────────────────────────────────────┤
 │                                             │
 │  1. Transport Victoria Timetable API (HMAC)            │
@@ -345,7 +345,7 @@ This new endpoint provides:
 └─────────────────────────────────────────────┘
 ```
 
-### Configuration in Commute Compute
+### Configuration in Cross Commute
 
 **New environment variable needed**:
 ```env
@@ -508,7 +508,7 @@ function getCombinedTripInfo(tripId, apiKey) {
 - [ ] Test connection with sample code
 - [ ] Verify response decoding works
 
-### Integration with Commute Compute
+### Integration with Cross Commute
 - [ ] Add `VICTORIA_GTFS_REALTIME_KEY` to .env
 - [ ] Update admin page to show GTFS viewer (Victorian users only)
 - [ ] Implement real-time delay display
@@ -581,7 +581,7 @@ app.get('/api/victoria/realtime', async (req, res) => {
 ### Technical Issues
 - **OpenData Support**: Via portal contact form
 - **GTFS Specification**: Google GTFS Realtime community
-- **Commute Compute Issues**: GitLab repository
+- **Cross Commute Issues**: GitLab repository
 
 ### Related Documents
 - **Transport Victoria Timetable API**: See `OPENDATA-VIC-API-GUIDE.md`
@@ -592,7 +592,7 @@ app.get('/api/victoria/realtime', async (req, res) => {
 
 **Protocol Version**: 1.1
 **Last Updated**: 2026-02-06
-**Applies To**: Commute Compute(TM) v5.0.0+ (CCDashDesignV16.0)
+**Applies To**: Cross Commute v5.0.0+ (CCDashDesignV16.0)
 **Region**: Victoria, Australia Only
 
 **Status**: VERIFIED & PRODUCTION READY

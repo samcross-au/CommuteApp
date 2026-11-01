@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute(TM) Brand Colours
+# Cross Commute Brand Colours
 
 **Last Updated:** 2026-02-07
 

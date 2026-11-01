@@ -3,8 +3,8 @@
 // Part of the Commute Compute System™ — https://gitlab.com/angusbergman/commute-compute-system
 
 /**
- * CommuteCompute™ OpenData Client
- * Part of the Commute Compute System™
+ * Cross Commute OpenData Client
+ * Part of Cross Commute
  *
  * State-aware GTFS-RT client supporting multiple Australian transit authorities.
  * VIC: Transport Victoria OpenData API (GTFS-RT Protobuf)

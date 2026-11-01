@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # iPad Kiosk Guide
 
-**Use any iPad as a full-screen Commute Compute™ display**
+**Use any iPad as a full-screen Cross Commute display**
 
 Copyright (c) 2025-2026 Angus Bergman — AGPL-3.0 Dual Licence
 
@@ -88,7 +88,7 @@ iPads that can no longer update past iOS 9, 10 or 12.
 
 | Problem | Fix |
 |:--------|:----|
-| "Can't reach your Commute Compute server" | Check the iPad's Wi-Fi and that the Setup Wizard is complete. Try `/ipad?demo=1` to confirm the kiosk itself works. |
+| "Can't reach your Cross Commute server" | Check the iPad's Wi-Fi and that the Setup Wizard is complete. Try `/ipad?demo=1` to confirm the kiosk itself works. |
 | Screen turns off | Set Auto-Lock to Never (see step 4). |
 | Address bar still visible | Open the kiosk from the home-screen icon, not from Safari. |
 | 401/403 errors after enabling device auth | Add `?token=YOUR_TOKEN` to the link and re-add it to the home screen. |

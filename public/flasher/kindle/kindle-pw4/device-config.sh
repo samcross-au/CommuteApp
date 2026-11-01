@@ -1,6 +1,6 @@
 #!/bin/sh
 # Kindle Paperwhite 4 (10th gen) - Device Configuration
-# Commute Compute Firmware v2.0
+# Cross Commute Firmware v2.0
 # Copyright (c) 2026 Angus Bergman - AGPL-3.0
 
 # Device identification

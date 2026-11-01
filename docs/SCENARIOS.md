@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="../assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
 # CCDash™ Dashboard Scenarios
@@ -13,7 +13,7 @@
 
 ## Overview
 
-This document catalogues all dashboard scenarios supported by the CommuteCompute™ engine and CCDash™ renderer. Each scenario demonstrates how the system handles different real-world transit situations.
+This document catalogues all dashboard scenarios supported by the Cross Commute engine and CCDash™ renderer. Each scenario demonstrates how the system handles different real-world transit situations.
 
 ---
 

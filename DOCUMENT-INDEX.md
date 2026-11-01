@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/brand/cc-logo-apple-touch.png" alt="Commute Compute™" width="120">
+  <img src="assets/brand/cc-logo-apple-touch.png" alt="Cross Commute" width="120">
 </p>
 
-# Commute Compute System — Complete Document Index
+# Cross Commute — Complete Document Index
 > Generated: 2026-02-04 04:45 UTC
 
 ## Summary
@@ -277,4 +277,4 @@
 
 ---
 
-*Index generated for Commute Compute System*
+*Index generated for Cross Commute*

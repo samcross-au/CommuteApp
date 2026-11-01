@@ -1,5 +1,5 @@
 /**
- * Commute Compute Server
+ * Cross Commute Server
  * BYOS (Bring Your Own Server) implementation for TRMNL e-ink display
  * Serves transit data in PIDS format for Australian transit systems
  *
@@ -762,7 +762,7 @@ app.get('/', (req, res) => {
 
 // Health check endpoint (for monitoring/uptime checks)
 app.get('/health', (req, res) => {
-  res.send('[OK] Commute Compute service running');
+  res.send('[OK] Cross Commute service running');
 });
 
 // Keep-alive endpoint (for cron pings to prevent cold starts)
@@ -926,7 +926,7 @@ app.get('/api/attributions', (req, res) => {
 
     // Software attribution (always shown)
     attributions.push({
-      name: 'Commute Compute',
+      name: 'Cross Commute',
       text: 'Created by Angus Bergman',
       license: 'AGPL-3.0',
       required: true,
@@ -1190,10 +1190,10 @@ app.post('/api/feedback', async (req, res) => {
     if (emailTransporter && process.env.FEEDBACK_EMAIL) {
       try {
         await emailTransporter.sendMail({
-          from: `"Commute Compute System" <${process.env.SMTP_USER}>`,
+          from: `"Cross Commute" <${process.env.SMTP_USER}>`,
           to: process.env.FEEDBACK_EMAIL, // Required env var - no hardcoded email per Section 17.4
-          subject: `Commute Compute Feedback: ${type}`,
-          text: `New feedback received from Commute Compute system:
+          subject: `Cross Commute Feedback: ${type}`,
+          text: `New feedback received from Cross Commute system:
 
 From: ${feedbackLog.from}
 Email: ${feedbackLog.email}
@@ -1204,10 +1204,10 @@ Message:
 ${feedbackLog.message}
 
 ---
-Sent via Commute Compute Admin Panel`,
+Sent via Cross Commute Admin Panel`,
           html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <h2 style="color: #667eea;">New Commute Compute Feedback</h2>
+              <h2 style="color: #667eea;">New Cross Commute Feedback</h2>
               <div style="background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
                 <p><strong>From:</strong> ${feedbackLog.from}</p>
                 <p><strong>Email:</strong> ${feedbackLog.email}</p>
@@ -1219,7 +1219,7 @@ Sent via Commute Compute Admin Panel`,
                 <p style="white-space: pre-wrap;">${feedbackLog.message}</p>
               </div>
               <p style="color: #718096; font-size: 12px; margin-top: 20px;">
-                Sent via Commute Compute Admin Panel
+                Sent via Cross Commute Admin Panel
               </p>
             </div>
           `
@@ -1268,7 +1268,7 @@ Sent via Commute Compute Admin Panel`,
 ${feedbackLog.message}
 
 ---
-*Submitted via Commute Compute Feedback System*`;
+*Submitted via Cross Commute Feedback System*`;
 
         const issueResponse = await fetch('https://gitlab.com/api/v4/projects/angusbergman%2Fcommute-compute-system/issues', {
           method: 'POST',
@@ -4222,7 +4222,7 @@ app.get('/admin/address/search', async (req, res) => {
           const url = `https://nominatim.openstreetmap.org/search?format=json&q=${nominatimQuery}&countrycodes=au&limit=5&addressdetails=1`;
 
           const response = await fetch(url, {
-            headers: { 'User-Agent': 'Commute Compute/2.5 (Smart Transit System)' }
+            headers: { 'User-Agent': 'Cross Commute/2.5 (Smart Transit System)' }
           });
 
           if (!response.ok) {
@@ -5135,7 +5135,7 @@ app.get('/admin/dashboard-preview', async (req, res) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Commute Compute Dashboard Preview</title>
+  <title>Cross Commute Dashboard Preview</title>
   <style>
     body {
       margin: 0;
@@ -5246,7 +5246,7 @@ app.get('/admin/dashboard-preview', async (req, res) => {
 </head>
 <body>
   <div class="container">
-    <h1>Commute Compute Dashboard Preview</h1>
+    <h1>Cross Commute Dashboard Preview</h1>
     <p>Live visualization of 800×480 e-ink display</p>
 
     <div class="dashboard">
@@ -5516,7 +5516,7 @@ app.get('/admin/live-display', async (req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Device Display - Commute Compute</title>
+    <title>Live Device Display - Cross Commute</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -6275,7 +6275,7 @@ app.get('/preview', requireConfiguration, async (req, res) => {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>Commute Compute E-ink Preview</title>
+      <title>Cross Commute E-ink Preview</title>
       <meta charset="UTF-8">
       <meta http-equiv="refresh" content="20">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">

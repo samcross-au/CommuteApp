@@ -42,14 +42,14 @@ export default async function handler(req, res) {
     date: buildDate,
     system: {
       version: SYSTEM_VERSION,
-      name: versionData.system?.name || 'Commute Compute System',
+      name: versionData.system?.name || 'Cross Commute',
       copyright: '© 2026 Angus Bergman',
       license: 'AGPL-3.0'
     },
     components: {
       commutecompute: {
         version: `v${comp.commutecompute?.version || '0.0'}`,
-        name: comp.commutecompute?.name || 'CommuteCompute Engine',
+        name: comp.commutecompute?.name || 'Cross Commute Engine',
         description: comp.commutecompute?.description || '',
         locked: comp.commutecompute?.locked ?? false
       },

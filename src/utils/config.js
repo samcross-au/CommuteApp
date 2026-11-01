@@ -1,5 +1,5 @@
 /**
- * Configuration for Commute Compute
+ * Configuration for Cross Commute
  * Station preferences, route definitions, and API settings
  *
  * NOTE: This is a template configuration.

@@ -1,6 +1,6 @@
 /**
- * CommuteCompute™ Route Recommender
- * Part of the Commute Compute System™
+ * Cross Commute Route Recommender
+ * Part of Cross Commute
  * 
  * Auto-detects and recommends optimal routes based on user preferences.
  * Identifies preferred patterns: coffee-before-transit, minimal walking, train preference.
