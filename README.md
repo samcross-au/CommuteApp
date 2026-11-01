@@ -471,6 +471,10 @@ The device connects via BLE, receives your server URL, and begins displaying you
 
 See **[SETUP_GUIDE.md](SETUP_GUIDE.md)** for detailed step-by-step instructions including API key setup, device pairing, and troubleshooting.
 
+### Multiple Destinations
+
+Commuting to more than one place from home, such as a partner's work or a second office? Add each one in **Admin Panel → Configuration → Destinations** with its own arrival time and commute days. Displays show whichever destination is due next today. To pin a display to one destination, add `?dest=ID` to its URL. On an iPad, tap the screen to choose a destination or rotate between them.
+
 ### Keeping Your Dashboard Warm (Free Tier)
 
 Vercel free-tier deployments can experience cold starts — a 5–10 second delay on the first request after a period of inactivity. Because the TRMNL Display fetches your dashboard every 60 seconds, functions may go cold during periods when no other traffic reaches your deployment. This is entirely optional, but a simple cron job keeps your serverless function warm by periodically hitting the `/api/commutecompute` endpoint.

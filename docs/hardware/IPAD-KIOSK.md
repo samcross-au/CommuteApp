@@ -40,6 +40,7 @@ Leave the iPad on its charger — an always-on screen will drain the battery in 
 
 Tap anywhere on the dashboard to open the settings panel:
 
+- **Destination** — Auto / Rotate / a specific destination (shown when you have more than one; see below)
 - **Night mode** — Auto / On / Off
 - **Refresh every** — 30 s, 1 min, 2 min, 5 min
 - **Refresh now**
@@ -57,8 +58,20 @@ home-screen app keeps the link it was added with):
 | `interval` | `?interval=120` | Refresh period in seconds (30–900) |
 | `night` | `?night=on` | `auto`, `on` or `off` |
 | `demo` | `?demo=1` | Show a random demo journey (useful before API keys are approved) |
+| `dest` | `?dest=alexs-work` | Which destination to show: `auto` (default), `rotate`, or a destination ID from the Admin Panel |
 
 Example: `https://YOUR-PROJECT-NAME.vercel.app/ipad?interval=120&night=auto`
+
+## Several Destinations
+
+If your household commutes to more than one place (a partner's work, a second
+office), add them in the **Admin Panel → Configuration → Destinations**. Then:
+
+- **Auto** (default) shows whichever destination is due next today. For example,
+  a partner arriving at 8:15 is shown until 8:15, then your 9:00 journey.
+- **Rotate** takes turns, moving to the next destination on each refresh.
+- **A specific destination** pins the display, which is handy for a second iPad,
+  or for each person's own home-screen icon (`/ipad?dest=alexs-work`).
 
 ## How It Works
 

@@ -28,14 +28,33 @@ import DepartureConfidence from '../src/engines/departure-confidence.js';
 import LifestyleContext from '../src/engines/lifestyle-context.js';
 import SleepOptimiser from '../src/engines/sleep-optimiser.js';
 import AltTransit from '../src/engines/alt-transit.js';
+import { listDestinations, selectDestination, applyDestination } from '../src/data/destinations.js';
 import crypto from 'node:crypto';
 
 // Vercel serverless config: extend max duration beyond default 10s for cold starts
 export const config = { maxDuration: 60 };
 
-// Engine cache - re-initialized when preferences change
-let journeyEngine = null;
-let lastPrefsHash = null;
+// Engine cache, one per destination/preferences combination (bounded), so
+// alternating between destinations doesn't re-run route discovery each time
+const engineCache = new Map();
+const ENGINE_CACHE_MAX = 6;
+
+/**
+ * Route locks (pinned tram route / train line) and admin station overrides
+ * are learned for the primary commute. Other destinations neither read nor
+ * overwrite them, or alternating destinations would keep resetting them.
+ */
+function routeLockStore(isPrimaryDestination) {
+  if (isPrimaryDestination) {
+    return { getStationOverrides, getPreferredTramRoute, setPreferredTramRoute, getPreferredTramStop, setPreferredTramStop,
+      getPreferredTrainLine, setPreferredTrainLine, getPreferredTrainStation, setPreferredTrainStation };
+  }
+  const none = async () => null;
+  const skip = async () => true;
+  return { getStationOverrides: async () => ({}), getPreferredTramRoute: none, setPreferredTramRoute: skip,
+    getPreferredTramStop: none, setPreferredTramStop: skip, getPreferredTrainLine: none,
+    setPreferredTrainLine: skip, getPreferredTrainStation: none, setPreferredTrainStation: skip };
+}
 
 // State timezone mapping - supports all 8 Australian states/territories
 // Fallback: 'Australia/Melbourne' if state is unknown
@@ -456,7 +475,7 @@ async function ensureFreshHomeCoords(kvPrefs, diag) {
  * Initialize the Smart Journey Engine with KV preferences
  * Per Zero-Config: preferences come from Redis (synced from Setup Wizard)
  */
-async function getEngine(freshnessDiag) {
+async function getEngine(freshnessDiag, destination = null) {
   // Load preferences from KV storage
   let kvPrefs = await getPreferences();
   // v5.9.8 (DD1 + DD4): verify the stored home coord still matches the
@@ -468,6 +487,9 @@ async function getEngine(freshnessDiag) {
   } catch (_e) {
     // Non-fatal — proceed with whatever kvPrefs we have
   }
+  // Plan to the selected destination (after the home coord check above, which
+  // writes back the raw preferences)
+  kvPrefs = applyDestination(kvPrefs, destination);
   const state = await getUserState();
   const transitKey = await getTransitApiKey();
 
@@ -489,10 +511,11 @@ async function getEngine(freshnessDiag) {
   };
 
   // Create hash to detect preference changes (includes route selection by index and ID)
-  const prefsHash = JSON.stringify({ state, home: preferences.homeAddress, work: preferences.workAddress, selectedRouteIndex: kvPrefs.selectedRouteIndex, selectedRouteId: kvPrefs.selectedRouteId });
+  const prefsHash = JSON.stringify({ state, home: preferences.homeAddress, work: preferences.workAddress, selectedRouteIndex: kvPrefs.selectedRouteIndex, selectedRouteId: kvPrefs.selectedRouteId, destination: destination?.id || null, destinationName: destination?.name || null, arrivalTime: preferences.arrivalTime, coffeeEnabled: preferences.coffeeEnabled });
 
   // Re-initialize engine if preferences changed or no engine exists
-  if (!journeyEngine || prefsHash !== lastPrefsHash) {
+  let journeyEngine = engineCache.get(prefsHash);
+  if (!journeyEngine) {
 
     journeyEngine = new CommuteCompute();
     await journeyEngine.initialize(preferences);
@@ -512,7 +535,8 @@ async function getEngine(freshnessDiag) {
       journeyEngine.selectRoute(parseInt(kvPrefs.selectedRouteIndex));
     }
 
-    lastPrefsHash = prefsHash;
+    if (engineCache.size >= ENGINE_CACHE_MAX) engineCache.delete(engineCache.keys().next().value);
+    engineCache.set(prefsHash, journeyEngine);
   }
 
   return journeyEngine;
@@ -2711,6 +2735,15 @@ export default async function handler(req, res) {
     };
     const hasSimOverrides = Object.values(simOverrides).some(v => v);
 
+    // DESTINATION — ?dest=<id>, or 'auto': the next destination today whose
+    // arrival time is still ahead (see src/data/destinations.js)
+    const storedPrefs = await getPreferences();
+    const destinationCount = listDestinations(storedPrefs).length;
+    const destination = selectDestination(storedPrefs, req.query?.dest || 'auto', {
+      state: await getUserState() || 'VIC'
+    });
+    const routeLocks = routeLockStore(!destination || destination.primary);
+
     // Initialize engine and get route (need state before time formatting)
     // Issue 1: Wrap engine invocation in try/catch to prevent crash on tight constraints
     // v5.9.8 (DD1 + DD4): pass a freshness diagnostic object into getEngine
@@ -2719,7 +2752,7 @@ export default async function handler(req, res) {
     let engine, route, locations, config;
     const homeCoordFreshnessDiag = {};
     try {
-      engine = await getEngine(homeCoordFreshnessDiag);
+      engine = await getEngine(homeCoordFreshnessDiag, destination);
       route = engine.getSelectedRoute();
       locations = engine.getLocations();
       config = engine.journeyConfig;
@@ -2760,7 +2793,7 @@ export default async function handler(req, res) {
     // Fetch live data from sources
     // Per Section 3.1: Zero-Config - get stop IDs from preferences (KV), no process.env
     // V13.6: Auto-detect stop IDs from home address if not configured
-    const kvPrefs = await getPreferences();
+    const kvPrefs = applyDestination(storedPrefs, destination);
 
     // Home address and coordinates for stop detection
     const homeAddress = locations.home?.address || kvPrefs?.addresses?.home;
@@ -2836,7 +2869,7 @@ export default async function handler(req, res) {
     // Admin saves overrides keyed by transit-leg index (e.g. train_1, tram_0),
     // so we search all entries by type rather than assuming a fixed key.
     let stationOverrides = {};
-    try { stationOverrides = await getStationOverrides() || {}; } catch (e) {}
+    try { stationOverrides = await routeLocks.getStationOverrides() || {}; } catch (e) {}
     const findOverride = (type) => Object.values(stationOverrides).find(o => o?.type === type);
 
     // v5.8.2 (C4-gate): Distance gate. An override whose resolved stop is more
@@ -3127,7 +3160,7 @@ export default async function handler(req, res) {
 
     // Load preferred tram route for consistent display (pinned by user)
     let preferredTramRoute = null;
-    try { preferredTramRoute = await getPreferredTramRoute(); } catch (e) {}
+    try { preferredTramRoute = await routeLocks.getPreferredTramRoute(); } catch (e) {}
     // v5.9.0 (T2 / B2): Strengthened invalidation. A preferredTramRoute is
     // only meaningful when paired with a preferredTramStop at the SAME stop
     // the engine is currently using. Any of the following make it stale:
@@ -3137,7 +3170,7 @@ export default async function handler(req, res) {
     //   (c) storedTramStop present but current tramStopId is null
     // In any of these cases, drop the preference AND wipe the KV entry so
     // the next API call runs a clean detection pass.
-    const storedTramStop = await getPreferredTramStop().catch(() => null);
+    const storedTramStop = await routeLocks.getPreferredTramStop().catch(() => null);
     const prefRouteIsStale = preferredTramRoute && (
       !storedTramStop ||
       !tramStopId ||
@@ -3145,8 +3178,8 @@ export default async function handler(req, res) {
     );
     if (prefRouteIsStale) {
       preferredTramRoute = null;
-      setPreferredTramRoute(null).catch(() => {});
-      setPreferredTramStop(null).catch(() => {});
+      routeLocks.setPreferredTramRoute(null).catch(() => {});
+      routeLocks.setPreferredTramStop(null).catch(() => {});
     }
 
     // v5.9.0 (T6 / B8): Preferred train line stability lock.
@@ -3155,8 +3188,8 @@ export default async function handler(req, res) {
     // equivalent train-line cache. The lock stores { line, station } in KV
     // and is invalidated using the same staleness rules as the tram lock.
     let preferredTrainLine = null;
-    try { preferredTrainLine = await getPreferredTrainLine(); } catch (e) {}
-    const storedTrainStation = await getPreferredTrainStation().catch(() => null);
+    try { preferredTrainLine = await routeLocks.getPreferredTrainLine(); } catch (e) {}
+    const storedTrainStation = await routeLocks.getPreferredTrainStation().catch(() => null);
     const prefLineIsStale = preferredTrainLine && (
       !storedTrainStation ||
       !trainStopId ||
@@ -3164,8 +3197,8 @@ export default async function handler(req, res) {
     );
     if (prefLineIsStale) {
       preferredTrainLine = null;
-      setPreferredTrainLine(null).catch(() => {});
-      setPreferredTrainStation(null).catch(() => {});
+      routeLocks.setPreferredTrainLine(null).catch(() => {});
+      routeLocks.setPreferredTrainStation(null).catch(() => {});
     }
 
     // Auto-detect work-side stop IDs for train destination resolution
@@ -3424,8 +3457,8 @@ export default async function handler(req, res) {
     }
     // Sync KV to admin override when set — prevents stale auto-detected KV from conflicting
     if (tramRouteOverride && tramRouteOverride !== preferredTramRoute) {
-      setPreferredTramRoute(tramRouteOverride).catch(() => {});
-      setPreferredTramStop(tramStopId).catch(() => {});
+      routeLocks.setPreferredTramRoute(tramRouteOverride).catch(() => {});
+      routeLocks.setPreferredTramStop(tramStopId).catch(() => {});
       preferredTramRoute = tramRouteOverride;
     }
 
@@ -3497,8 +3530,8 @@ export default async function handler(req, res) {
         // AND the KV was empty entering this request. Symmetric with
         // v5.9.4 Z2 tram write-once gate.
         if (!preferredTrainLine && dominantLineIsStopLevel) {
-          setPreferredTrainLine(dominantLiveLine).catch(() => {});
-          setPreferredTrainStation(trainStopId).catch(() => {});
+          routeLocks.setPreferredTrainLine(dominantLiveLine).catch(() => {});
+          routeLocks.setPreferredTrainStation(trainStopId).catch(() => {});
           preferredTrainLine = dominantLiveLine;
         }
       } else if (preferredTrainLine) {
@@ -3726,8 +3759,8 @@ export default async function handler(req, res) {
           // route-level wins may drive the current request's selectedRoute
           // but must not touch KV. See DEVELOPMENT-RULES.md §23.15.
           if (!preferredTramRoute && bestIsStopLevel) {
-            setPreferredTramRoute(bestRoute).catch(() => {});
-            setPreferredTramStop(tramStopId).catch(() => {});
+            routeLocks.setPreferredTramRoute(bestRoute).catch(() => {});
+            routeLocks.setPreferredTramStop(tramStopId).catch(() => {});
           }
           preferredTramRoute = bestRoute;
         }
@@ -3773,8 +3806,8 @@ export default async function handler(req, res) {
           STOP_LEVEL_SOURCES.has(t.source)
         );
         if (!preferredTramRoute && selectedIsStopLevel) {
-          setPreferredTramRoute(selectedRoute).catch(() => {});
-          setPreferredTramStop(tramStopId).catch(() => {});
+          routeLocks.setPreferredTramRoute(selectedRoute).catch(() => {});
+          routeLocks.setPreferredTramStop(tramStopId).catch(() => {});
           preferredTramRoute = selectedRoute;
         }
         // V5.6.1: Filter trams array to only the selected route's departures.
@@ -4056,7 +4089,8 @@ export default async function handler(req, res) {
     const homeSuburb = isUsefulSuburb(rawHomeSuburb) ? rawHomeSuburb : null;
     const workSuburb = isUsefulSuburb(rawWorkSuburb) ? rawWorkSuburb : null;
     const displayHome = simOverrides.home || homeSuburb || 'Home';
-    const displayWork = simOverrides.work || workSuburb || 'Work';
+    // With several destinations, label the footer by name ("ALEX'S WORK")
+    const displayWork = simOverrides.work || (destinationCount > 1 ? destination?.name : null) || workSuburb || 'Work';
     const displayArrival = simOverrides.arrivalTime || kvPrefs?.journey?.arrivalTime || '09:00';
 
     // Calculate timing using display arrival (respects simulator override)

@@ -3229,37 +3229,56 @@
 
                 <!-- Configuration Tab -->
         <div id="tab-config" class="tab-content">
-            <!-- Journey Profiles Management -->
+            <!-- Destinations (multiple work locations) -->
             <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-radius: 12px;">
                 <div class="card-header" style="display: flex; align-items: center; gap: 12px;">
                     <svg width="22" height="22" style="color: #4fb28e;"><use href="#icon-list"/></svg>
-                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Journey Profiles</h2>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: 600;">Destinations</h2>
                 </div>
-                <p style="margin-bottom: 20px; opacity: 0.9; font-size: 14px; line-height: 1.5;">
-                    Create multiple journey profiles for different routes, schedules, or scenarios.
+                <p style="margin-bottom: 16px; opacity: 0.9; font-size: 14px; line-height: 1.5;">
+                    Add more places your household commutes to from home, such as a partner's work or a second office.
+                    Displays show the next destination due today automatically. To pin a display to one destination, add
+                    <code>?dest=ID</code> to its link (for example <code>/ipad?dest=work</code>). On the iPad, tap the screen to choose or rotate.
                 </p>
 
-                <!-- Active Profile Display -->
-                <div id="active-profile-display" style="padding: 16px; background: rgba(34, 197, 94, 0.1); border-radius: 12px; margin-bottom: 20px;">
-                    <div style="font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-                        <svg width="18" height="18" style="color: #22c55e;"><use href="#icon-check"/></svg>
-                        <span>Active: <span id="active-profile-name">Default Journey</span></span>
-                    </div>
-                    <div style="font-size: 13px; opacity: 0.9;">
-                        <span id="active-profile-schedule">Active all days</span>
-                    </div>
-                </div>
-
-                <!-- Profile List -->
-                <div id="profiles-list" style="display: grid; gap: 12px; margin-bottom: 20px;">
+                <div id="destinations-list" style="display: grid; gap: 12px; margin-bottom: 16px;">
                     <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center; opacity: 0.6;">
-                        Loading profiles...
+                        Loading destinations...
                     </div>
                 </div>
 
-                <button class="btn btn-primary" onclick="showCreateProfileModal()" style="display: flex; align-items: center; gap: 8px;">
+                <form id="destination-form" onsubmit="saveDestination(event)" style="display: none; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 16px;">
+                    <input type="hidden" id="dest-id">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                        <label style="display: grid; gap: 6px; font-size: 13px;">Name
+                            <input id="dest-name" type="text" maxlength="40" required placeholder="Alex's work" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15,23,42,0.6); color: inherit;">
+                        </label>
+                        <label id="dest-address-field" style="display: grid; gap: 6px; font-size: 13px;">Address
+                            <input id="dest-address" type="text" placeholder="1 Example St, Richmond VIC 3121" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15,23,42,0.6); color: inherit;">
+                        </label>
+                        <label id="dest-arrival-field" style="display: grid; gap: 6px; font-size: 13px;">Arrive by
+                            <input id="dest-arrival" type="time" value="09:00" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); background: rgba(15,23,42,0.6); color: inherit;">
+                        </label>
+                    </div>
+                    <div id="dest-extra-fields">
+                        <div style="font-size: 13px; margin-bottom: 6px;">Commute days</div>
+                        <div id="dest-days" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; font-size: 13px;"></div>
+                        <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 12px;">
+                            <input id="dest-coffee" type="checkbox"> Include a coffee stop on the way
+                        </label>
+                    </div>
+                    <p id="dest-primary-note" style="display: none; font-size: 12px; opacity: 0.8; margin: 0 0 12px;">
+                        This is your main work destination. Change its address, arrival time and days in the Setup Wizard.
+                    </p>
+                    <div style="display: flex; gap: 8px;">
+                        <button type="submit" id="dest-save-btn" class="btn btn-primary">Save destination</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideDestinationForm()">Cancel</button>
+                    </div>
+                </form>
+
+                <button id="add-destination-btn" class="btn btn-primary" onclick="showDestinationForm()" style="display: flex; align-items: center; gap: 8px;">
                     <svg width="16" height="16"><use href="#icon-route"/></svg>
-                    Create New Profile
+                    Add Destination
                 </button>
             </div>
 
@@ -5251,226 +5270,141 @@
 
         // ==================== END INLINE VALIDATION HELPERS ====================
 
-        // ==================== JOURNEY PROFILES MANAGEMENT (Task #6) ====================
+        // ==================== DESTINATIONS (multiple work locations) ====================
+        // Backed by /api/destinations (handlers/destinations.js)
 
-        let profiles = [];
+        let destinations = [];
+        const DEST_DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-        // Load all profiles
-        async function loadProfiles() {
+        async function loadDestinations() {
             try {
-                const response = await authFetch(BASE_URL + '/api/profiles');
+                const response = await authFetch(BASE_URL + '/api/destinations');
                 const data = await response.json();
-
                 if (data.success) {
-                    profiles = data.profiles;
-                    renderProfiles();
-                    updateActiveProfileDisplay();
+                    destinations = data.destinations;
+                    renderDestinations();
                 }
             } catch (error) {
             }
         }
 
-        // Render profiles list
-        function renderProfiles() {
-            const container = document.getElementById('profiles-list');
+        function formatDestinationDays(days) {
+            const key = (days || []).join(',');
+            if (key === '1,2,3,4,5') return 'Weekdays';
+            if (key === '0,1,2,3,4,5,6') return 'Every day';
+            return (days || []).map(d => DEST_DAY_NAMES[d]).join(', ');
+        }
+
+        function renderDestinations() {
+            const container = document.getElementById('destinations-list');
             if (!container) return;
 
-            if (profiles.length === 0) {
+            if (destinations.length === 0) {
                 container.innerHTML = `
                     <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center; opacity: 0.6;">
-                        Default journey active. Create additional profiles for different routes or schedules.
+                        Complete the Setup Wizard first; your work address becomes the main destination.
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = profiles.map(profile => {
-                const isActive = profile.isActive;
-                const scheduleText = getScheduleText(profile.schedule);
-                // Sanitize user-provided data (Section 17.1)
-                const safeName = sanitize(profile.name);
-                const safeId = sanitize(profile.id);
-                const safeSchedule = sanitize(scheduleText);
-
-                return `
-                    <div class="profile-card" style="padding: 16px; background: ${isActive ? 'rgba(102, 126, 234, 0.15)' : 'rgba(255,255,255,0.05)'}; border-radius: 10px; border: 1px solid ${isActive ? 'rgba(79, 178, 142, 0.3)' : 'rgba(255,255,255,0.08)'};">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
-                            <div style="flex: 1;">
-                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                                    <span style="font-weight: 600; font-size: 15px;">${safeName}</span>
-                                    ${isActive ? '<span style="background: rgba(102, 126, 234, 0.3); color: #4fb28e; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">ACTIVE</span>' : ''}
-                                </div>
-                                <div style="font-size: 13px; opacity: 0.8;">
-                                    <svg class="icon-sm"><use href="#icon-calendar"/></svg> ${safeSchedule}
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 8px;">
-                                ${!isActive ? `<button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="activateProfile('${safeId}')">Activate</button>` : ''}
-                                ${profile.id !== 'default' ? `
-                                    <button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;" onclick="deleteProfileConfirm('${safeId}')">Delete</button>
-                                ` : ''}
-                            </div>
+            // Sanitize user-provided data (Section 17.1)
+            container.innerHTML = destinations.map(d => `
+                <div style="padding: 14px 16px; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="font-weight: 600; font-size: 15px;">${sanitize(d.name)}</span>
+                            ${d.primary ? '<span style="background: rgba(102, 126, 234, 0.3); color: #4fb28e; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600;">MAIN</span>' : ''}
+                            <code style="font-size: 11px; opacity: 0.7;">?dest=${sanitize(d.id)}</code>
+                        </div>
+                        <div style="font-size: 13px; opacity: 0.8;">${sanitize(d.address || '')}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+                            Arrive ${sanitize(d.arrivalTime || '')} &middot; ${sanitize(formatDestinationDays(d.commuteDays))}${d.coffeeEnabled ? ' &middot; coffee' : ''}
                         </div>
                     </div>
-                `;
-            }).join('');
-        }
-
-        // Update active profile display
-        function updateActiveProfileDisplay() {
-            const activeProfile = profiles.find(p => p.isActive);
-            if (!activeProfile) return;
-
-            const nameEl = document.getElementById('active-profile-name');
-            const scheduleEl = document.getElementById('active-profile-schedule');
-
-            if (nameEl) nameEl.textContent = activeProfile.name;
-            if (scheduleEl) scheduleEl.textContent = getScheduleText(activeProfile.schedule);
-        }
-
-        // Get schedule text description
-        function getScheduleText(schedule) {
-            if (schedule.type === 'all') return 'Active all days';
-            if (schedule.type === 'weekdays') return 'Weekdays only';
-            if (schedule.type === 'weekends') return 'Weekends only';
-            if (schedule.type === 'custom') {
-                const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                const days = schedule.days.map(d => dayNames[d]).join(', ');
-                return `Custom: ${days}`;
-            }
-            return 'Custom schedule';
-        }
-
-        // Show create profile modal
-        function showCreateProfileModal() {
-            const modal = document.createElement('div');
-            modal.className = 'confirm-modal-overlay';
-            modal.innerHTML = `
-                <div class="confirm-modal" style="max-width: 600px;">
-                    <h3>Create Journey Profile</h3>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 6px; font-weight: 500;">Profile Name</label>
-                        <input type="text" id="profile-name" placeholder="e.g., Home to Gym" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white;">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 6px; font-weight: 500;">Schedule</label>
-                        <select id="profile-schedule-type" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white;">
-                            <option value="all">All days</option>
-                            <option value="weekdays">Weekdays only</option>
-                            <option value="weekends">Weekends only</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 6px; font-weight: 500;">Effective Until (Optional)</label>
-                        <input type="date" id="profile-until" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white;">
-                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">Leave empty for permanent profile</div>
-                    </div>
-                    <div class="confirm-modal-buttons">
-                        <button class="confirm-btn confirm-btn-cancel" onclick="this.closest('.confirm-modal-overlay').remove()">
-                            Cancel
-                        </button>
-                        <button class="confirm-btn confirm-btn-confirm" onclick="createProfile()">
-                            Create Profile
-                        </button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="showDestinationForm('${sanitize(d.id)}')">${d.primary ? 'Rename' : 'Edit'}</button>
+                        ${d.primary ? '' : `<button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;" onclick="deleteDestination('${sanitize(d.id)}')">Delete</button>`}
                     </div>
                 </div>
-            `;
-
-            document.body.appendChild(modal);
+            `).join('');
         }
 
-        // Create profile
-        async function createProfile() {
-            const name = document.getElementById('profile-name').value.trim();
-            const scheduleType = document.getElementById('profile-schedule-type').value;
-            const effectiveUntil = document.getElementById('profile-until').value || null;
+        function showDestinationForm(id) {
+            const d = destinations.find(x => x.id === id) || null;
+            const isPrimary = !!(d && d.primary);
+            document.getElementById('dest-id').value = d ? d.id : '';
+            document.getElementById('dest-name').value = d ? d.name : '';
+            document.getElementById('dest-address').value = d ? d.address : '';
+            document.getElementById('dest-arrival').value = d ? d.arrivalTime : '09:00';
+            document.getElementById('dest-coffee').checked = !!(d && d.coffeeEnabled && !isPrimary);
+            const days = d ? d.commuteDays : [1, 2, 3, 4, 5];
+            document.getElementById('dest-days').innerHTML = DEST_DAY_NAMES.map((name, i) => `
+                <label style="display: flex; align-items: center; gap: 4px;">
+                    <input type="checkbox" value="${i}" ${days.includes(i) ? 'checked' : ''}> ${name}
+                </label>
+            `).join('');
+            // The main destination is renamed here; the rest is set in the Setup Wizard
+            [['dest-address-field', 'grid'], ['dest-arrival-field', 'grid'], ['dest-extra-fields', 'block']].forEach(([el, display]) => {
+                document.getElementById(el).style.display = isPrimary ? 'none' : display;
+            });
+            document.getElementById('dest-address').required = !isPrimary;
+            document.getElementById('dest-primary-note').style.display = isPrimary ? '' : 'none';
+            document.getElementById('destination-form').style.display = 'block';
+            document.getElementById('add-destination-btn').style.display = 'none';
+            document.getElementById('dest-name').focus();
+        }
 
-            if (!name) {
-                showError('Validation Error', 'Please enter a profile name');
-                return;
-            }
+        function hideDestinationForm() {
+            document.getElementById('destination-form').style.display = 'none';
+            document.getElementById('add-destination-btn').style.display = 'flex';
+        }
 
-            let days = [0, 1, 2, 3, 4, 5, 6];
-            if (scheduleType === 'weekdays') {
-                days = [1, 2, 3, 4, 5];
-            } else if (scheduleType === 'weekends') {
-                days = [0, 6];
-            }
-
+        async function saveDestination(event) {
+            event.preventDefault();
+            const id = document.getElementById('dest-id').value;
+            const body = {
+                name: document.getElementById('dest-name').value.trim(),
+                address: document.getElementById('dest-address').value.trim(),
+                arrivalTime: document.getElementById('dest-arrival').value,
+                commuteDays: Array.from(document.querySelectorAll('#dest-days input:checked')).map(el => Number(el.value)),
+                coffeeEnabled: document.getElementById('dest-coffee').checked
+            };
+            const saveBtn = document.getElementById('dest-save-btn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving...';
             try {
-                const response = await authFetch(BASE_URL + '/api/profiles', {
-                    method: 'POST',
+                const url = BASE_URL + '/api/destinations' + (id ? `?id=${encodeURIComponent(id)}` : '');
+                const response = await authFetch(url, {
+                    method: id ? 'PUT' : 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name,
-                        schedule: {
-                            type: scheduleType,
-                            days,
-                            effectiveUntil
-                        }
-                    })
+                    body: JSON.stringify(body)
                 });
-
                 const data = await response.json();
-
                 if (data.success) {
-                    showSuccess('Profile Created', data.message);
-                    document.querySelector('.confirm-modal-overlay').remove();
-                    loadProfiles();
+                    showSuccess('Destination Saved', `${data.destination.name} is ready. Pin a display with ?dest=${data.destination.id}`);
+                    hideDestinationForm();
+                    loadDestinations();
                 } else {
-                    showError('Create Failed', data.error);
+                    showError('Could Not Save', data.error);
                 }
             } catch (error) {
                 showError('Network Error', error.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save destination';
             }
         }
 
-        // Activate profile
-        async function activateProfile(profileId) {
+        async function deleteDestination(id) {
+            const d = destinations.find(x => x.id === id);
+            if (!d || !confirm(`Delete the destination "${d.name}"?`)) return;
             try {
-                const response = await authFetch(BASE_URL + `/api/profiles/${profileId}/activate`, {
-                    method: 'PUT'
-                });
-
+                const response = await authFetch(BASE_URL + `/api/destinations?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
                 const data = await response.json();
-
                 if (data.success) {
-                    showSuccess('Profile Activated', data.message);
-                    loadProfiles();
-                    loadAllData();
-                } else {
-                    showError('Activation Failed', data.error);
-                }
-            } catch (error) {
-                showError('Network Error', error.message);
-            }
-        }
-
-        // Delete profile with confirmation
-        function deleteProfileConfirm(profileId) {
-            const profile = profiles.find(p => p.id === profileId);
-            if (!profile) return;
-
-            showConfirm(
-                'Delete Profile?',
-                `Are you sure you want to delete "${profile.name}"? This action cannot be undone.`,
-                () => deleteProfile(profileId),
-                { danger: true, confirmText: 'Delete' }
-            );
-        }
-
-        // Delete profile
-        async function deleteProfile(profileId) {
-            try {
-                const response = await authFetch(BASE_URL + `/api/profiles/${profileId}`, {
-                    method: 'DELETE'
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    showSuccess('Profile Deleted', data.message);
-                    loadProfiles();
+                    showSuccess('Destination Deleted', `${d.name} was removed.`);
+                    loadDestinations();
                 } else {
                     showError('Delete Failed', data.error);
                 }
@@ -5479,7 +5413,8 @@
             }
         }
 
-        // ==================== END JOURNEY PROFILES MANAGEMENT ====================
+        // ==================== END DESTINATIONS ====================
+
 
         document.addEventListener('DOMContentLoaded', async () => {
             updateClock();
@@ -5504,8 +5439,8 @@
             // Check if this is first visit and show onboarding
             try { checkFirstVisit(); } catch (e) { console.error('[Admin] checkFirstVisit failed:', e); }
 
-            // Load profiles when on Config tab
-            try { loadProfiles(); } catch (e) { console.error('[Admin] loadProfiles failed:', e); }
+            // Load destinations for the Config tab
+            try { loadDestinations(); } catch (e) { console.error('[Admin] loadDestinations failed:', e); }
 
             // Load CommuteCompute settings and e-ink preview
             try { loadCommuteComputeSettings(); } catch (e) { console.error('[Admin] loadCommuteComputeSettings failed:', e); }

@@ -15,6 +15,8 @@
       interval=<seconds>     refresh period, 30-900 (default 60)
       night=auto|on|off      invert colours (auto = 9pm-6am local)
       demo=1                 render a random demo journey (no API keys needed)
+      dest=auto|rotate|<id>  destination to show (see /api/destinations):
+                             auto = next one due today, rotate = take turns
 -->
 <head>
     <meta charset="UTF-8">
@@ -114,6 +116,7 @@
         #panel .seg button:last-child { margin-right: 0; }
         #panel .seg-3 button { width: 32%; }
         #panel .seg-4 button { width: 23.5%; }
+        #panel .seg-wrap button { display: inline-block; margin: 0 6px 6px 0; padding: 9px 12px; }
         #panel button {
             -webkit-appearance: none;
             appearance: none;
@@ -139,6 +142,10 @@
     <div id="panel" role="dialog" aria-label="Display settings">
         <h2>Commute Compute</h2>
         <div class="meta" id="panel-meta">Not loaded yet</div>
+        <div class="row" id="dest-row" style="display: none;">
+            <div class="label">Destination</div>
+            <div class="seg-wrap" id="dest-buttons"></div>
+        </div>
         <div class="row">
             <div class="label">Night mode</div>
             <div class="seg seg-3">
@@ -210,7 +217,7 @@
 
     var params = queryParams();
     var settings = {};
-    var keys = ['token', 'interval', 'night', 'demo'];
+    var keys = ['token', 'interval', 'night', 'demo', 'dest'];
     for (var k = 0; k < keys.length; k++) {
         var key = keys[k];
         if (params.hasOwnProperty(key)) {
@@ -248,11 +255,59 @@
         return { w: Math.round(w * dpr), h: Math.round(h * dpr) };
     }
 
+    // ---------------------------------------------------------------
+    // Destinations (partner's work, second office...). 'auto' lets the
+    // server pick the next one due today; 'rotate' takes turns.
+    // ---------------------------------------------------------------
+    var destinations = [];
+    var rotateIndex = 0;
+
+    function destinationMode() { return settings.dest || 'auto'; }
+
+    function currentDestination() {
+        var mode = destinationMode();
+        if (mode === 'rotate') {
+            return destinations.length ? destinations[rotateIndex % destinations.length].id : 'auto';
+        }
+        return mode;
+    }
+
+    function loadDestinations() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/destinations', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4 || xhr.status !== 200) return;
+            try {
+                destinations = JSON.parse(xhr.responseText).destinations || [];
+            } catch (e) { destinations = []; }
+            renderDestinationButtons();
+        };
+        xhr.send();
+    }
+
+    function renderDestinationButtons() {
+        var row = document.getElementById('dest-row');
+        var box = document.getElementById('dest-buttons');
+        row.style.display = destinations.length > 1 ? '' : 'none';
+        box.innerHTML = '';
+        var options = [{ id: 'auto', name: 'Auto' }, { id: 'rotate', name: 'Rotate' }].concat(destinations);
+        for (var i = 0; i < options.length; i++) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.setAttribute('data-dest', options[i].id);
+            b.textContent = options[i].name;  // names are user text: never innerHTML
+            box.appendChild(b);
+        }
+        updatePanel();
+    }
+
     function imageUrl() {
         var size = targetSize();
         var url = '/api/screen?format=png&w=' + size.w + '&h=' + size.h;
         if (settings.token) url += '&token=' + encodeURIComponent(settings.token);
         if (settings.demo === '1' || settings.demo === 'true') url += '&random=1';
+        var dest = currentDestination();
+        if (dest && dest !== 'auto') url += '&dest=' + encodeURIComponent(dest);
         // Cache-buster: iOS Safari caches images aggressively
         return url + '&_=' + new Date().getTime();
     }
@@ -316,7 +371,11 @@
         clearTimeout(timer);
         // Back off quickly-but-gently after failures (max 5 min)
         var secs = ok ? intervalSeconds() : Math.min(300, 15 * Math.pow(2, Math.min(failures - 1, 4)));
-        timer = setTimeout(refresh, secs * 1000);
+        timer = setTimeout(function () {
+            // Rotate moves to the next destination on each scheduled refresh
+            if (ok && destinationMode() === 'rotate') rotateIndex++;
+            refresh();
+        }, secs * 1000);
     }
 
     // ---------------------------------------------------------------
@@ -345,6 +404,7 @@
 
         var night = settings.night || 'auto';
         var interval = '' + intervalSeconds();
+        var destMode = destinationMode();
         var buttons = panel.getElementsByTagName('button');
         for (var i = 0; i < buttons.length; i++) {
             var b = buttons[i];
@@ -352,6 +412,8 @@
             var iv = b.getAttribute('data-interval');
             if (n) b.className = n === night ? 'active' : '';
             if (iv) b.className = iv === interval ? 'active' : '';
+            var dm = b.getAttribute('data-dest');
+            if (dm) b.className = dm === destMode ? 'active' : '';
         }
 
         var standalone = window.navigator.standalone === true ||
@@ -362,7 +424,7 @@
         document.getElementById('panel-hint').innerHTML = hints.join('<br>');
     }
 
-    function openPanel() { updatePanel(); panel.className = 'on'; }
+    function openPanel() { loadDestinations(); updatePanel(); panel.className = 'on'; }
     function closePanel() { panel.className = ''; }
 
     panel.addEventListener('click', function (e) {
@@ -370,7 +432,14 @@
         var t = e.target;
         var n = t.getAttribute && t.getAttribute('data-night');
         var iv = t.getAttribute && t.getAttribute('data-interval');
-        if (n) {
+        var dm = t.getAttribute && t.getAttribute('data-dest');
+        if (dm) {
+            settings.dest = dm;
+            store('dest', dm === 'auto' ? null : dm);
+            rotateIndex = 0;
+            updatePanel();
+            refresh();
+        } else if (n) {
             settings.night = n;
             store('night', n);
             document.body.className = nightMode() ? 'night' : '';
@@ -419,6 +488,7 @@
     document.addEventListener('gesturestart', function (e) { e.preventDefault(); }, false);
 
     requestWakeLock();
+    loadDestinations();
     refresh();
 })();
 </script>

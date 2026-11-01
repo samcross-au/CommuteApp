@@ -30,6 +30,7 @@ export const ROUTES = [
   ['cafe-details', () => import('./cafe-details.js')],
   ['commutecompute', () => import('./commutecompute.js')],
   ['debug-api-key', () => import('./debug-api-key.js')],
+  ['destinations', () => import('./destinations.js')],
   ['device-status', () => import('./device-status.js')],
   ['fullscreen', () => import('./fullscreen.js')],
   ['health', () => import('./health.js')],
