@@ -5,7 +5,8 @@ services:
     plan: free
     region: oregon
     buildCommand: npm install --no-audit --no-fund
-    startCommand: node src/server.js
+    # Portable server: same routes as the Vercel deployment
+    startCommand: node src/portable-server.js
     healthCheckPath: /api/status
     # Health check configuration (Render Free tier)
     # Checks every 60 seconds, restarts on 3 consecutive failures
@@ -13,6 +14,14 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # Admin / Setup Wizard auth token (any long random string)
+      - key: CC_ADMIN_TOKEN
+        sync: false
+      # Redis — reuse your Vercel Upstash database to keep your settings
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
       - key: ODATA_API_KEY
         sync: false
       - key: GOOGLE_PLACES_API_KEY

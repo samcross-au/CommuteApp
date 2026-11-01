@@ -418,6 +418,8 @@ This makes Commute Compute&#8482; one of the first commuter tools to fully suppo
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/samcross-au/CommuteCompute)
 
+> **Not tied to Vercel.** `npm run serve` runs the same deployment on any Node host (Render, Docker, Cloud Run, a home server), and your settings move with your Redis database. See [Moving Off Vercel](docs/setup/SWITCHING-HOSTS.md).
+
 > **Deploys are manual.** `vercel.json` sets `"git": { "deploymentEnabled": false }`, so pushing to GitHub does not deploy. After pushing changes (or if the first import does not produce a live site), open the project in the Vercel dashboard and choose **Deployments → Redeploy**, or run `vercel --prod` from the repository folder.
 
 ### 2. Add Redis

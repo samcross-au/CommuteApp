@@ -80,6 +80,7 @@ iPads that can no longer update past iOS 9, 10 or 12.
 | Address bar still visible | Open the kiosk from the home-screen icon, not from Safari. |
 | 401/403 errors after enabling device auth | Add `?token=YOUR_TOKEN` to the link and re-add it to the home screen. |
 
-> **Self-hosted note:** the kiosk relies on the `/api/screen` PNG renderer in
-> `api/commutecompute.js`, which is what Vercel (and other serverless hosts)
-> serve. The legacy Express server's `/api/screen` returns TRMNL markup instead.
+> **Not on Vercel?** Run the portable server (`npm run serve`, also the default
+> for Docker and Render) and the kiosk works the same way. The older standalone
+> server (`npm start`) returns TRMNL markup from `/api/screen` and won't work.
+> See [Moving Off Vercel](../setup/SWITCHING-HOSTS.md).

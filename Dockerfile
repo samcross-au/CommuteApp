@@ -32,10 +32,14 @@ RUN addgroup -g 1001 -S nodejs && \
 USER nodejs
 
 # Environment defaults (can be overridden)
+# Set CC_ADMIN_TOKEN (admin/Setup Wizard auth) and Redis at runtime:
+# UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN, or REDIS_URL
 ENV NODE_ENV=production \
     PORT=3000 \
+    CC_ADMIN_TOKEN="" \
     UPSTASH_REDIS_REST_URL="" \
     UPSTASH_REDIS_REST_TOKEN=""
 
-# Start application
-CMD ["node", "src/server.js"]
+# Start application — portable server serves the same routes as Vercel
+# (public/, api/ functions, vercel.json rules). Legacy: node src/server.js
+CMD ["node", "src/portable-server.js"]

@@ -6985,7 +6985,9 @@ export default app;
 const HOST = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
 
 // Start server and capture instance for graceful shutdown (only for local/Render)
-const server = app.listen(PORT, async () => {
+// CC_EMBEDDED: set by src/portable-server.js, which serves this app at /api
+// itself and already owns PORT
+const server = process.env.CC_EMBEDDED ? null : app.listen(PORT, async () => {
 
   // Initialize persistent storage
   await loadDevices();
@@ -7011,8 +7013,8 @@ const server = app.listen(PORT, async () => {
   });
 });
 
-// Setup graceful shutdown with cleanup
-safeguards.setupGracefulShutdown(server, async () => {
+// Setup graceful shutdown with cleanup (not when embedded: no listener to close)
+if (server) safeguards.setupGracefulShutdown(server, async () => {
 
   // Save any pending data
   try {

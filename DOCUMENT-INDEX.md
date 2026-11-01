@@ -75,6 +75,7 @@
 | File | Description |
 |------|-------------|
 | `docs/hardware/DEVICE-COMPATIBILITY.md` | Supported device list |
+| `docs/hardware/IPAD-KIOSK.md` | iPad and browser kiosk display setup |
 
 ### docs/setup/
 
@@ -82,6 +83,7 @@
 |------|-------------|
 | `docs/setup/SETUP-WIZARD-ARCHITECTURE.md` | Setup wizard architecture |
 | `docs/setup/TROUBLESHOOTING-SETUP.md` | Setup troubleshooting guide |
+| `docs/setup/SWITCHING-HOSTS.md` | Moving off Vercel with the portable server |
 
 ### docs/testing/
 

@@ -28,7 +28,14 @@ services:
       - GOOGLE_PLACES_API_KEY=${GOOGLE_PLACES_API_KEY:-}
       - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN:-}
 
-      # For self-hosted Docker deployments, use REDIS_URL with your own Redis instance.
+      # Admin / Setup Wizard auth token (any long random string)
+      - CC_ADMIN_TOKEN=${CC_ADMIN_TOKEN:-}
+
+      # Redis: either Upstash REST (reuse your Vercel database to keep settings)...
+      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL:-}
+      - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN:-}
+
+      # ...or, for self-hosted Docker deployments, REDIS_URL with your own Redis instance.
       # For Vercel deployments, the app uses UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN
       # (configured automatically via the Vercel Marketplace Redis integration).
       - REDIS_URL=${REDIS_URL:-}
@@ -70,7 +77,7 @@ networks:
 # 1. Copy .env.example to .env
 # 2. Edit .env with your API keys (all optional)
 # 3. Run: docker-compose up -d
-# 4. Access: http://localhost:3000/admin
+# 4. Access: http://localhost:3000/ (Setup Wizard) or http://localhost:3000/ipad
 #
 # Commands:
 # - Start: docker-compose up -d
