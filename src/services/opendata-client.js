@@ -74,7 +74,7 @@ const MELBOURNE_LAT = -37.8136;
 const MELBOURNE_LON = 144.9631;
 
 // Melbourne Metro line names (GTFS route ID suffix → line name)
-// Exported for train line code passthrough in api/screen.js
+// Exported for train line code passthrough in handlers/screen.js
 export const METRO_LINE_NAMES = {
   'SHM': 'Sandringham', 'SAM': 'Sandringham', 'FKN': 'Frankston', 'PKM': 'Pakenham',
   'CBE': 'Cranbourne', 'BEG': 'Belgrave', 'LIL': 'Lilydale', 'GWY': 'Glen Waverley',

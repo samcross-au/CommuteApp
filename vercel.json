@@ -5,46 +5,8 @@
   },
   "functions": {
     "api/index.js": {
-      "includeFiles": "public/**,src/**,data/**,config/**,fonts/**"
-    },
-    "api/commutecompute.js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/livedash.js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/zones.js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/zonedata.js": {
-      "includeFiles": "src/**,config/**"
-    },
-    "api/zone/[id].js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/fullscreen.js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/zones-tiered.js": {
-      "includeFiles": "src/**,config/**,fonts/**"
-    },
-    "api/health.js": {
-      "includeFiles": "src/**,config/**"
-    },
-    "api/status.js": {
-      "includeFiles": "src/**,config/**"
-    },
-    "api/version.js": {
-      "includeFiles": "config/**"
-    },
-    "api/admin/setup-complete.js": {
-      "includeFiles": "src/**,config/**"
-    },
-    "api/admin/preferences.js": {
-      "includeFiles": "src/**,config/**"
-    },
-    "api/admin/generate-webhook.js": {
-      "includeFiles": "src/**,config/**"
+      "includeFiles": "handlers/**,public/**,src/**,data/**,config/**,fonts/**",
+      "maxDuration": 60
     }
   },
   "redirects": [
@@ -67,31 +29,15 @@
   "rewrites": [
     {
       "source": "/health",
-      "destination": "/api/health"
+      "destination": "/api?__ccroute=health"
     },
     {
       "source": "/ipad",
       "destination": "/ipad.html"
     },
     {
-      "source": "/api/screen",
-      "destination": "/api/commutecompute"
-    },
-    {
-      "source": "/api/livedash",
-      "destination": "/api/livedash"
-    },
-    {
-      "source": "/api/zones",
-      "destination": "/api/zones"
-    },
-    {
-      "source": "/api/zonedata",
-      "destination": "/api/zonedata"
-    },
-    {
-      "source": "/api/zone/:id",
-      "destination": "/api/zone/[id]"
+      "source": "/api/(.*)",
+      "destination": "/api?__ccroute=$1"
     }
   ],
   "headers": [

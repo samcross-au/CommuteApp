@@ -24,15 +24,15 @@ echo ""
 echo "--- 1. File Existence ---"
 
 if [ ! -f "$PROJECT_ROOT/api/screen.js" ]; then
-  pass "api/screen.js is DELETED"
+  pass "handlers/screen.js is DELETED"
 else
-  fail "api/screen.js still exists -- must be deleted"
+  fail "handlers/screen.js still exists -- must be deleted"
 fi
 
 if [ -f "$PROJECT_ROOT/api/commutecompute.js" ]; then
-  pass "api/commutecompute.js EXISTS"
+  pass "handlers/commutecompute.js EXISTS"
 else
-  fail "api/commutecompute.js is MISSING"
+  fail "handlers/commutecompute.js is MISSING"
 fi
 
 # ---- 2. Line count check (must be > 2000) ----
@@ -41,9 +41,9 @@ echo "--- 2. Line Count ---"
 
 LINE_COUNT=$(wc -l < "$PROJECT_ROOT/api/commutecompute.js" | tr -d ' ')
 if [ "$LINE_COUNT" -gt 2000 ]; then
-  pass "api/commutecompute.js has $LINE_COUNT lines (> 2000)"
+  pass "handlers/commutecompute.js has $LINE_COUNT lines (> 2000)"
 else
-  fail "api/commutecompute.js has only $LINE_COUNT lines (expected > 2000)"
+  fail "handlers/commutecompute.js has only $LINE_COUNT lines (expected > 2000)"
 fi
 
 # ---- 3. Key function presence ----
@@ -136,16 +136,16 @@ fi
 echo ""
 echo "--- 8. vercel.json Configuration ---"
 
-if grep -q '"api/commutecompute.js"' "$PROJECT_ROOT/vercel.json"; then
-  pass "vercel.json has api/commutecompute.js function entry"
+if grep -q '"handlers/commutecompute.js"' "$PROJECT_ROOT/vercel.json"; then
+  pass "vercel.json has handlers/commutecompute.js function entry"
 else
-  fail "vercel.json MISSING api/commutecompute.js function entry"
+  fail "vercel.json MISSING handlers/commutecompute.js function entry"
 fi
 
-if grep -q '"api/screen.js"' "$PROJECT_ROOT/vercel.json"; then
-  fail "vercel.json still has api/screen.js function entry"
+if grep -q '"handlers/screen.js"' "$PROJECT_ROOT/vercel.json"; then
+  fail "vercel.json still has handlers/screen.js function entry"
 else
-  pass "vercel.json api/screen.js function entry removed"
+  pass "vercel.json handlers/screen.js function entry removed"
 fi
 
 # Check the rewrite rule for backward compat

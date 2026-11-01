@@ -49,12 +49,12 @@ The Setup Wizard configures Commute Compute without requiring any server-side st
 |------|---------|------|
 | `public/setup-wizard.html` | New streamlined wizard | 59KB |
 | `public/admin.html` | Full admin panel with wizard | 319KB |
-| `api/admin/setup-complete.js` | Validate setup data | - |
-| `api/admin/generate-webhook.js` | Generate config token URL | - |
-| `api/address-search.js` | Geocoding (Google/OSM) | - |
-| `api/cafe-details.js` | One-time cafe data fetch | - |
-| `api/save-transit-key.js` | Transit API key validation | - |
-| `api/save-google-key.js` | Google API key validation | - |
+| `handlers/admin/setup-complete.js` | Validate setup data | - |
+| `handlers/admin/generate-webhook.js` | Generate config token URL | - |
+| `handlers/address-search.js` | Geocoding (Google/OSM) | - |
+| `handlers/cafe-details.js` | One-time cafe data fetch | - |
+| `handlers/save-transit-key.js` | Transit API key validation | - |
+| `handlers/save-google-key.js` | Google API key validation | - |
 
 ---
 

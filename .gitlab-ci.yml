@@ -18,7 +18,7 @@ lint-job:
     - npm ci --prefer-offline
   script:
     - echo "Running syntax checks on all JavaScript files..."
-    - find api/ src/ -name '*.js' -exec node --check {} +
+    - find api/ handlers/ src/ -name '*.js' -exec node --check {} +
     - node --check tests/*.js
     - echo "All JavaScript files pass syntax validation."
     - echo "Running ESLint no-undef checks..."

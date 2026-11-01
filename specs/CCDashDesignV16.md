@@ -20,11 +20,11 @@
 ---
 
 > **UNLOCKED** — V16.0 specification under active development (2026-03-02).
-> Unified Engine: api/screen.js merged into api/commutecompute.js. GTFS coordinate-based stop detection,
+> Unified Engine: handlers/screen.js merged into handlers/commutecompute.js. GTFS coordinate-based stop detection,
 > 5 Intelligence Engines, Metro Tunnel compliance, strictly-live GTFS-RT data, and full transit pipeline.
 >
 > **V16.0 Changes from V15 (current):**
-> - **Unified Engine:** api/screen.js merged into api/commutecompute.js — single endpoint for admin JSON, e-ink PNG/BMP, and debug diagnostics
+> - **Unified Engine:** handlers/screen.js merged into handlers/commutecompute.js — single endpoint for admin JSON, e-ink PNG/BMP, and debug diagnostics
 > - **GTFS coordinate-based stop detection:** findNearestStops() searches 226 metro stations, 1637 tram stops, 4151 bus stops by proximity
 > - **Engine alighting intelligence:** coordinate-based destination resolution, no hardcoded Flinders Street Station fallback
 > - **Shared haversine utility:** single source of truth replacing 3 duplicate implementations

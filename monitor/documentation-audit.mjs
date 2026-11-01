@@ -68,7 +68,7 @@ const DOC_SPEC = {
 
   // API documentation
   apiDocs: [
-    'api/index.js',
+    'handlers/index.js',
   ],
 };
 

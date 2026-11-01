@@ -764,10 +764,10 @@ function auditReadme() {
 }
 
 // ---------------------------------------------------------------------------
-// (e) api/version.js
+// (e) handlers/version.js
 // ---------------------------------------------------------------------------
 function auditVersionEndpoint() {
-  const REL = 'api/version.js';
+  const REL = 'handlers/version.js';
   const content = readFile(REL);
   if (!content) { log('SKIP: ' + REL + ' not found'); report.summary.skipped++; return; }
 

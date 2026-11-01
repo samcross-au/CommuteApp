@@ -17,7 +17,7 @@ ever want to move, `src/portable-server.js` runs the same deployment on any Node
 host. It serves exactly what Vercel serves, from the same files:
 
 - `public/` as static files (Setup Wizard, Admin Panel, `/ipad`, `/flasher/`)
-- every function in `api/`, at the same URL (`api/zone/[id].js` → `/api/zone/:id`)
+- the API router (`api/index.js`), which serves every endpoint in `handlers/` at the same URL (`handlers/zone/[id].js` → `/api/zone/:id`)
 - the redirects, rewrites and security headers in `vercel.json`
 
 Your settings live in Redis, not on Vercel, so if you point the new host at the

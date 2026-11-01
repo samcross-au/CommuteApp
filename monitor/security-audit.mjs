@@ -666,7 +666,7 @@ const securityAudits = {
     try {
       // Check for .env files in public directories
       const envFiles = [];
-      const checkDirs = ['public', 'api', 'src'];
+      const checkDirs = ['public', 'api', 'handlers', 'src'];
 
       for (const dir of checkDirs) {
         const fullDir = path.join(PROJECT_ROOT, dir);
@@ -691,7 +691,7 @@ const securityAudits = {
       }
 
       // Check config token system is implemented
-      const apiFiles = findFiles(['js'], path.join(PROJECT_ROOT, 'api'));
+      const apiFiles = findFiles(['js'], path.join(PROJECT_ROOT, 'handlers'));
       let tokenSystemFound = false;
 
       for (const file of apiFiles) {
@@ -872,7 +872,7 @@ const securityAudits = {
       }
 
       // Check for input validation patterns in code
-      const apiFiles = findFiles(['js'], path.join(PROJECT_ROOT, 'api'));
+      const apiFiles = findFiles(['js'], path.join(PROJECT_ROOT, 'handlers'));
       let hasValidation = false;
 
       for (const file of apiFiles) {

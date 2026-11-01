@@ -5,11 +5,11 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
 // Validate the commutecompute endpoint handler can be imported
-import handler from '../api/commutecompute.js';
+import handler from '../handlers/commutecompute.js';
 
 describe('/api/commutecompute smoke test', () => {
   it('handler should be a default-exported function', () => {
     assert.equal(typeof handler, 'function',
-      'api/commutecompute.js must export a default handler function');
+      'handlers/commutecompute.js must export a default handler function');
   });
 });

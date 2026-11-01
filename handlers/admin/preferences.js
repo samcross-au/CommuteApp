@@ -11,12 +11,12 @@ import { getPreferences, setPreferences, getUserState, setUserState, getTransitA
 import { requireAuth, setAdminCorsHeaders } from '../../src/utils/auth-middleware.js';
 import crypto from 'node:crypto';
 
-// v5.9.9 (EE1): address hash helper duplicated from api/commutecompute.js's
+// v5.9.9 (EE1): address hash helper duplicated from handlers/commutecompute.js's
 // private `_addressHash` — same algorithm (SHA1 of the lowercased, trimmed,
 // whitespace-normalised address, first 12 hex chars). The duplication is
 // intentional: importing a private helper from a sibling hot-path serverless
 // handler would couple the admin endpoint to commute compute loader internals.
-// When the inline helper in api/commutecompute.js is modified in a future
+// When the inline helper in handlers/commutecompute.js is modified in a future
 // cycle, this duplicate MUST be updated in lock-step. See DEVELOPMENT-RULES.md
 // §23.16 for the full invariant and the rationale behind the direct-entry
 // escape hatch that relies on this shared hash format.

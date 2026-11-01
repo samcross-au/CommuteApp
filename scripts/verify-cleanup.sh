@@ -4,7 +4,7 @@
 # Checks:
 # 1. Files in api/ and src/ with zero importers (orphan detection)
 # 2. All API endpoint files pass node --check (syntax validation)
-# 3. api/screen.js does NOT exist (merged into api/commutecompute.js)
+# 3. handlers/screen.js does NOT exist (merged into handlers/commutecompute.js)
 # 4. Deprecated files with deprecation comments
 # 5. Admin panel API call pattern compatibility
 #
@@ -34,7 +34,7 @@ echo ""
 # ─────────────────────────────────────────────────
 echo "--- Section 1: API Endpoint Syntax (node --check) ---"
 api_errors=0
-for f in api/*.js api/admin/*.js api/device/*.js api/pair/*.js api/zone/*.js; do
+for f in handlers/*.js handlers/admin/*.js handlers/device/*.js handlers/pair/*.js handlers/zone/*.js; do
   [ -f "$f" ] || continue
   if node --check "$f" 2>/dev/null; then
     pass "$f syntax OK"
@@ -46,13 +46,13 @@ done
 echo ""
 
 # ─────────────────────────────────────────────────
-# 2. api/screen.js must NOT exist (merged)
+# 2. handlers/screen.js must NOT exist (merged)
 # ─────────────────────────────────────────────────
-echo "--- Section 2: api/screen.js Removal ---"
-if [ -f "api/screen.js" ]; then
-  fail "api/screen.js still exists — should be merged into api/commutecompute.js"
+echo "--- Section 2: handlers/screen.js Removal ---"
+if [ -f "handlers/screen.js" ]; then
+  fail "handlers/screen.js still exists — should be merged into handlers/commutecompute.js"
 else
-  pass "api/screen.js does not exist (correctly merged)"
+  pass "handlers/screen.js does not exist (correctly merged)"
 fi
 
 # Verify /api/screen rewrite in vercel.json
@@ -188,7 +188,7 @@ if [ -f "$admin_file" ]; then
   fi
 
   # Verify POST -> JSON, GET -> PNG routing is compatible
-  echo "  INFO: api/commutecompute.js format logic: POST defaults to JSON, GET defaults to PNG"
+  echo "  INFO: handlers/commutecompute.js format logic: POST defaults to JSON, GET defaults to PNG"
   echo "  INFO: Admin panel POST calls -> JSON (correct)"
   echo "  INFO: Admin panel GET /api/screen -> rewrite -> /api/commutecompute GET -> PNG (correct)"
 else

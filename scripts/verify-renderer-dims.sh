@@ -20,7 +20,7 @@
 set -e
 
 RENDERER="src/services/ccdash-renderer.js"
-ENDPOINT="api/commutecompute.js"
+ENDPOINT="handlers/commutecompute.js"
 PASS=0
 FAIL=0
 

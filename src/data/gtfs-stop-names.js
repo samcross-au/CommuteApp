@@ -2,7 +2,7 @@
  * GTFS Stop Names — Shared Module
  *
  * Central mapping of GTFS stop IDs to official Transport Victoria stop names.
- * Used by api/screen.js (e-ink renderer) and api/commutecompute.js (admin API).
+ * Used by handlers/screen.js (e-ink renderer) and handlers/commutecompute.js (admin API).
  *
  * Per DEVELOPMENT-RULES Section 23.1.1 - Actual stop names for display.
  *
@@ -71,7 +71,7 @@ export function getStopNameById(stopId) {
 /**
  * v5.8.2 (C4-gate): Look up coordinates for a stop ID across all three
  * Victorian GTFS datasets. Returns { lat, lon } or null if unknown. Used by
- * the override distance gate in api/commutecompute.js to reject station
+ * the override distance gate in handlers/commutecompute.js to reject station
  * overrides whose resolved stop is too far from the current home address.
  */
 export function getStopCoordsById(stopId) {

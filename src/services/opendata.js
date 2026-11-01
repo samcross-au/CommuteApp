@@ -6,7 +6,7 @@
 /**
  * @deprecated 2026-03-02 — LEGACY FILE. Superseded by opendata-client.js.
  * Only importer: data-scraper.js (non-production, used by src/server.js standalone mode).
- * All production API endpoints use opendata-client.js via api/commutecompute.js.
+ * All production API endpoints use opendata-client.js via handlers/commutecompute.js.
  * Pending founder approval for deletion.
  *
  * opendata.js

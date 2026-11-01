@@ -56,7 +56,7 @@ export default {
         1. Check Vercel dashboard for deployment status
         2. Review Vercel function logs for errors
         3. Redeploy if necessary: vercel --prod
-        4. Check for syntax errors in api/health.js
+        4. Check for syntax errors in handlers/health.js
       `
     },
 
@@ -73,7 +73,7 @@ export default {
         2. Missing dependencies
 
         RESOLUTION:
-        1. Check api/status.js for errors
+        1. Check handlers/status.js for errors
         2. Verify all imports are available
         3. Check Vercel function logs
       `
@@ -92,7 +92,7 @@ export default {
         2. Memory limit exceeded during status check
 
         RESOLUTION:
-        1. Check api/system-status.js
+        1. Check handlers/system-status.js
         2. Review memory usage in Vercel dashboard
         3. Simplify status checks if memory constrained
       `
@@ -111,7 +111,7 @@ export default {
 
         RESOLUTION:
         1. Verify package.json exists and is valid JSON
-        2. Check api/version.js implementation
+        2. Check handlers/version.js implementation
       `
     },
 
@@ -179,7 +179,7 @@ export default {
         2. Priority calculation failure
 
         RESOLUTION:
-        1. Check api/zones-tiered.js
+        1. Check handlers/zones-tiered.js
         2. Review zone-renderer-tiered.js
         3. Verify tier priority logic
       `
@@ -199,7 +199,7 @@ export default {
         2. JSON serialization failure
 
         RESOLUTION:
-        1. Check api/zonedata.js
+        1. Check handlers/zonedata.js
         2. Verify zone metadata structure
       `
     },
@@ -218,7 +218,7 @@ export default {
         2. PNG encoding error
 
         RESOLUTION:
-        1. Check api/fullscreen.js
+        1. Check handlers/fullscreen.js
         2. Review canvas memory usage
       `
     },
@@ -237,7 +237,7 @@ export default {
         2. Resolution mismatch
 
         RESOLUTION:
-        1. Check api/livedash.js
+        1. Check handlers/livedash.js
         2. Review src/services/livedash.js
         3. Verify device-specific rendering paths
       `
@@ -280,7 +280,7 @@ export default {
         2. Invalid place ID format
 
         RESOLUTION:
-        1. Check api/cafe-details.js
+        1. Check handlers/cafe-details.js
         2. Verify Google Places API key
         3. Test with valid place ID
       `
@@ -298,7 +298,7 @@ export default {
         1. Static data load failure
 
         RESOLUTION:
-        1. Check api/attributions.js
+        1. Check handlers/attributions.js
         2. Verify ATTRIBUTION.md exists
       `
     },
@@ -315,7 +315,7 @@ export default {
         1. Route configuration error
 
         RESOLUTION:
-        1. Check api/index.js
+        1. Check handlers/index.js
         2. Verify vercel.json rewrites
       `
     },

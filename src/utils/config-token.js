@@ -47,7 +47,7 @@ export function decodeConfigToken(token) {
     // Expand back to full config structure
     // Supports all minified fields from encodeConfigToken plus
     // extended fields (t=arrivalTime, c=coffeeEnabled, cf=cafe, m=apiMode)
-    // used by api/livedash.js and api/device/[token].js
+    // used by handlers/livedash.js and handlers/device/[token].js
     return {
       addresses: minified.a || {},
       journey: {

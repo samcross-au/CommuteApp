@@ -42,12 +42,12 @@ Comprehensive troubleshooting guide for all monitored endpoints, pages, and data
 
 2. **Verify function exists**
    ```bash
-   ls -la api/health.js
+   ls -la handlers/health.js
    ```
 
 3. **Check for syntax errors**
    ```bash
-   node -c api/health.js
+   node -c handlers/health.js
    ```
 
 4. **Redeploy if needed**
@@ -90,7 +90,7 @@ Comprehensive troubleshooting guide for all monitored endpoints, pages, and data
    ```json
    {
      "functions": {
-       "api/commutecompute.js": {
+       "handlers/commutecompute.js": {
          "memory": 1024
        }
      }

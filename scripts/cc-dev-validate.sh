@@ -175,7 +175,7 @@ DASHBOARD_ADVISORY="confidence_text"
 
 for field in $DASHBOARD_FIELDS; do
     # Check if field is set in commutecompute.js
-    if grep -q "$field" api/commutecompute.js 2>/dev/null; then
+    if grep -q "$field" handlers/commutecompute.js 2>/dev/null; then
         # Check if field is consumed by renderer OR admin panel
         RENDERER_HIT=$(grep -c "$field" src/services/ccdash-renderer.js 2>/dev/null | head -1 || echo 0)
         ADMIN_HIT=$(grep -c "$field" public/admin.html 2>/dev/null | head -1 || echo 0)
@@ -192,7 +192,7 @@ done
 
 # Advisory fields — warn if not consumed (not critical)
 for field in $DASHBOARD_ADVISORY; do
-    if grep -q "$field" api/commutecompute.js 2>/dev/null; then
+    if grep -q "$field" handlers/commutecompute.js 2>/dev/null; then
         RENDERER_HIT=$(grep -c "$field" src/services/ccdash-renderer.js 2>/dev/null | head -1 || echo 0)
         ADMIN_HIT=$(grep -c "$field" public/admin.html 2>/dev/null | head -1 || echo 0)
         TOTAL=$(( ${RENDERER_HIT:-0} + ${ADMIN_HIT:-0} ))
@@ -207,7 +207,7 @@ done
 # Check commutecompute.js also provides key fields to admin
 CC_FIELDS="isLive dataSource _liveDataDiag hasAnyLiveData"
 for field in $CC_FIELDS; do
-    if grep -q "$field" api/commutecompute.js 2>/dev/null; then
+    if grep -q "$field" handlers/commutecompute.js 2>/dev/null; then
         pass "commutecompute.js provides '$field' field"
     else
         fail "commutecompute.js missing '$field' field (admin panel needs it)"
@@ -222,16 +222,16 @@ echo ""
 info "CHECK 3: GTFS-RT source string consistency"
 
 # Check for incorrect source === 'live' pattern (but NOT apiMode === 'live' which is correct)
-BAD_LIVE=$(grep -rn "source === 'live'\|dataSource === 'live'\|dataMode === 'Live'" api/commutecompute.js api/commutecompute.js public/admin.html src/services/ccdash-renderer.js 2>/dev/null | grep -v 'apiMode' | grep -v '// ' | wc -l | tr -d ' ')
+BAD_LIVE=$(grep -rn "source === 'live'\|dataSource === 'live'\|dataMode === 'Live'" handlers/commutecompute.js handlers/commutecompute.js public/admin.html src/services/ccdash-renderer.js 2>/dev/null | grep -v 'apiMode' | grep -v '// ' | wc -l | tr -d ' ')
 if [ "$BAD_LIVE" -gt 0 ]; then
     fail "Found $BAD_LIVE instances of incorrect 'live' source checks (should be 'gtfs-rt')"
-    grep -rn "source === 'live'\|dataSource === 'live'\|dataMode === 'Live'" api/commutecompute.js api/commutecompute.js public/admin.html src/services/ccdash-renderer.js 2>/dev/null | grep -v 'apiMode' | grep -v '// ' | head -5
+    grep -rn "source === 'live'\|dataSource === 'live'\|dataMode === 'Live'" handlers/commutecompute.js handlers/commutecompute.js public/admin.html src/services/ccdash-renderer.js 2>/dev/null | grep -v 'apiMode' | grep -v '// ' | head -5
 else
     pass "No incorrect source === 'live' patterns found"
 fi
 
 # Check that correct source strings are used
-CORRECT_SOURCES=$(grep -rn "gtfs-rt" api/commutecompute.js api/commutecompute.js public/admin.html 2>/dev/null | wc -l | tr -d ' ')
+CORRECT_SOURCES=$(grep -rn "gtfs-rt" handlers/commutecompute.js handlers/commutecompute.js public/admin.html 2>/dev/null | wc -l | tr -d ' ')
 if [ "$CORRECT_SOURCES" -gt 0 ]; then
     pass "Found $CORRECT_SOURCES references to correct GTFS-RT source strings"
 else
@@ -239,7 +239,7 @@ else
 fi
 
 # Check isLive truthfulness — must use .isLive === true, not just !!data
-BAD_ISLIVE=$(grep -rn "isLive.*!!liveData\|isLive.*!!.*source\|isLive:.*!!dep" api/commutecompute.js api/commutecompute.js 2>/dev/null | wc -l | tr -d ' ')
+BAD_ISLIVE=$(grep -rn "isLive.*!!liveData\|isLive.*!!.*source\|isLive:.*!!dep" handlers/commutecompute.js handlers/commutecompute.js 2>/dev/null | wc -l | tr -d ' ')
 if [ "$BAD_ISLIVE" -gt 0 ]; then
     fail "Found $BAD_ISLIVE non-truthful isLive assignments (must use .isLive === true)"
 else
@@ -253,19 +253,19 @@ echo ""
 # =========================================================================
 info "CHECK 4: apiMode pipeline completeness"
 
-if grep -q "apiMode" api/admin/preferences.js 2>/dev/null; then
+if grep -q "apiMode" handlers/admin/preferences.js 2>/dev/null; then
     pass "preferences.js handles apiMode field"
 else
     fail "preferences.js missing apiMode handler"
 fi
 
-if grep -q "apiMode" api/commutecompute.js 2>/dev/null; then
+if grep -q "apiMode" handlers/commutecompute.js 2>/dev/null; then
     pass "commutecompute.js reads apiMode preference"
 else
     fail "commutecompute.js does not read apiMode preference"
 fi
 
-if grep -q "apiMode" api/commutecompute.js 2>/dev/null; then
+if grep -q "apiMode" handlers/commutecompute.js 2>/dev/null; then
     pass "commutecompute.js reads apiMode preference"
 else
     fail "commutecompute.js does not read apiMode preference"
@@ -392,7 +392,7 @@ echo ""
 # =========================================================================
 info "CHECK 8: API endpoint parity"
 
-ENDPOINTS="api/commutecompute.js api/version.js api/admin/preferences.js api/admin/setup-complete.js api/admin/resolve-stops.js api/status.js api/livedash.js api/zones.js api/zonedata.js"
+ENDPOINTS="handlers/commutecompute.js handlers/version.js handlers/admin/preferences.js handlers/admin/setup-complete.js handlers/admin/resolve-stops.js handlers/status.js handlers/livedash.js handlers/zones.js handlers/zonedata.js"
 for ep in $ENDPOINTS; do
     if [ -f "$ep" ]; then
         pass "Endpoint $ep exists"
@@ -457,7 +457,7 @@ echo ""
 info "CHECK 11: Live data pipeline resilience"
 
 # Check Promise.all has error resilience (per-call .catch() OR fetchWithRetry wrapper)
-CC_CATCH=$(grep -c "getDepartures.*\.catch\|fetchWithRetry.*getDepartures" api/commutecompute.js 2>/dev/null | head -1 || echo 0)
+CC_CATCH=$(grep -c "getDepartures.*\.catch\|fetchWithRetry.*getDepartures" handlers/commutecompute.js 2>/dev/null | head -1 || echo 0)
 if [ "${CC_CATCH:-0}" -ge 3 ]; then
     pass "commutecompute.js: $CC_CATCH getDepartures calls have error resilience"
 else
@@ -465,7 +465,7 @@ else
 fi
 
 # Check commutecompute.js has error resilience
-CC_CATCH=$(grep -c "getDepartures.*\.catch\|fetchWithRetry.*getDepartures" api/commutecompute.js 2>/dev/null | head -1 || echo 0)
+CC_CATCH=$(grep -c "getDepartures.*\.catch\|fetchWithRetry.*getDepartures" handlers/commutecompute.js 2>/dev/null | head -1 || echo 0)
 if [ "${CC_CATCH:-0}" -ge 3 ]; then
     pass "commutecompute.js: $CC_CATCH getDepartures calls have error resilience"
 else
@@ -473,13 +473,13 @@ else
 fi
 
 # Check diagnostic data is surfaced
-if grep -q "_liveDataDiag" api/commutecompute.js 2>/dev/null; then
+if grep -q "_liveDataDiag" handlers/commutecompute.js 2>/dev/null; then
     pass "commutecompute.js provides _liveDataDiag diagnostic object"
 else
     fail "commutecompute.js missing _liveDataDiag — admin panel cannot diagnose live data issues"
 fi
 
-if grep -q "_liveDataDiag" api/commutecompute.js 2>/dev/null; then
+if grep -q "_liveDataDiag" handlers/commutecompute.js 2>/dev/null; then
     pass "commutecompute.js provides _liveDataDiag diagnostic object"
 else
     fail "commutecompute.js missing _liveDataDiag diagnostic object"
@@ -549,8 +549,8 @@ echo ""
 info "CHECK 14: Semantic consistency (dataSource pipeline)"
 
 # Verify commutecompute.js sets dataSource to 'gtfs-rt' (may be via ternary)
-if grep -q "gtfs-rt" api/commutecompute.js 2>/dev/null; then
-    if grep -q "dataSource.*gtfs-rt" api/commutecompute.js 2>/dev/null; then
+if grep -q "gtfs-rt" handlers/commutecompute.js 2>/dev/null; then
+    if grep -q "dataSource.*gtfs-rt" handlers/commutecompute.js 2>/dev/null; then
         pass "commutecompute.js sets dataSource to 'gtfs-rt' (correct)"
     else
         pass "commutecompute.js references 'gtfs-rt' source strings"
@@ -618,7 +618,7 @@ echo ""
 section "State-Gating and Privacy Checks"
 
 # 15.1: VIC-specific City Loop/Metro Tunnel logic must be state-gated
-UNGATED_CITYLOOP=$(grep -n 'CITY_LOOP_STATIONS\|filterCityLoopPreference\|requiresCityLoop\|requiresMetroTunnel' api/commutecompute.js 2>/dev/null | grep -v 'state\|VIC\|// ' | grep -v 'const CITY_LOOP\|const METRO_TUNNEL' | wc -l | tr -d ' ')
+UNGATED_CITYLOOP=$(grep -n 'CITY_LOOP_STATIONS\|filterCityLoopPreference\|requiresCityLoop\|requiresMetroTunnel' handlers/commutecompute.js 2>/dev/null | grep -v 'state\|VIC\|// ' | grep -v 'const CITY_LOOP\|const METRO_TUNNEL' | wc -l | tr -d ' ')
 if [ "$UNGATED_CITYLOOP" -lt 3 ]; then
     pass "City Loop/Metro Tunnel references appear state-gated"
 else

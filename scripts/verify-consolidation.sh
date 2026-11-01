@@ -33,9 +33,9 @@ echo ""
 # --- 1. Syntax checks ---
 echo "--- 1. Syntax Checks ---"
 for file in \
-  api/fullscreen.js \
-  api/livedash.js \
-  "api/device/[token].js" \
+  handlers/fullscreen.js \
+  handlers/livedash.js \
+  "handlers/device/[token].js" \
   src/utils/config-token.js; do
   if node --check "$file" 2>/dev/null; then
     pass "$file syntax OK"
@@ -48,7 +48,7 @@ echo ""
 # --- 2. No duplicate utility function definitions ---
 echo "--- 2. Duplicate Utility Function Check ---"
 DUPLICATE_FUNCS="getMelbourneTime|formatTime|formatDateParts|fetchWithRetry"
-for file in api/fullscreen.js api/livedash.js; do
+for file in handlers/fullscreen.js handlers/livedash.js; do
   FOUND=$(grep -cE "^function ($DUPLICATE_FUNCS)" "$file" 2>/dev/null || true)
   if [ "$FOUND" -gt 0 ]; then
     fail "$file still has $FOUND duplicate utility function definition(s)"
@@ -60,7 +60,7 @@ echo ""
 
 # --- 3. No local decodeConfigToken in consolidated files ---
 echo "--- 3. Local decodeConfigToken Check ---"
-for file in api/livedash.js "api/device/[token].js"; do
+for file in handlers/livedash.js "handlers/device/[token].js"; do
   # Check for function definition (not import)
   FOUND=$(grep -c "^function decodeConfigToken" "$file" 2>/dev/null || true)
   if [ "$FOUND" -gt 0 ]; then
@@ -93,18 +93,18 @@ check_import() {
 
 # fullscreen.js imports
 # Only imports @napi-rs/canvas (npm package, skip)
-pass "api/fullscreen.js: @napi-rs/canvas (npm package, skip)"
+pass "handlers/fullscreen.js: @napi-rs/canvas (npm package, skip)"
 
 # livedash.js imports
-check_import "api/livedash.js" "../src/services/livedash.js"
-check_import "api/livedash.js" "../src/data/kv-preferences.js"
-check_import "api/livedash.js" "../src/utils/config-token.js"
+check_import "handlers/livedash.js" "../src/services/livedash.js"
+check_import "handlers/livedash.js" "../src/data/kv-preferences.js"
+check_import "handlers/livedash.js" "../src/utils/config-token.js"
 
 # device/[token].js imports
-check_import "api/device/[token].js" "../../src/services/livedash.js"
-check_import "api/device/[token].js" "../../src/data/kv-preferences.js"
-check_import "api/device/[token].js" "../../src/services/ccdash-renderer.js"
-check_import "api/device/[token].js" "../../src/utils/config-token.js"
+check_import "handlers/device/[token].js" "../../src/services/livedash.js"
+check_import "handlers/device/[token].js" "../../src/data/kv-preferences.js"
+check_import "handlers/device/[token].js" "../../src/services/ccdash-renderer.js"
+check_import "handlers/device/[token].js" "../../src/utils/config-token.js"
 echo ""
 
 # --- 5. Shared config-token.js field coverage ---
@@ -123,10 +123,10 @@ echo ""
 echo "--- 6. Unused Import Check (fullscreen.js) ---"
 for module in opendata-client commute-compute ccdash-renderer preferences-manager kv-preferences time-format; do
   # Only match actual import statements, not comments
-  if grep -E "^import .+$module" api/fullscreen.js 2>/dev/null | grep -qv "^[[:space:]]*//" ; then
-    fail "api/fullscreen.js still imports unused module: $module"
+  if grep -E "^import .+$module" handlers/fullscreen.js 2>/dev/null | grep -qv "^[[:space:]]*//" ; then
+    fail "handlers/fullscreen.js still imports unused module: $module"
   else
-    pass "api/fullscreen.js does not import unused $module"
+    pass "handlers/fullscreen.js does not import unused $module"
   fi
 done
 echo ""

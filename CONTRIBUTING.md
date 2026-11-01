@@ -50,6 +50,15 @@ Key requirements:
 - Add comments explaining WHY, not WHAT
 - Keep functions focused and small
 
+## Adding an API Endpoint
+
+Put new endpoint handlers in `handlers/` (for example `handlers/my-endpoint.js`
+for `/api/my-endpoint`) and add a line for it to `handlers/_manifest.js`. Do not
+add files to `api/`: Vercel's free Hobby plan allows only 12 serverless functions
+per deployment, so `api/index.js` is the single function and routes every
+`/api/...` request to the right handler. `npm test` fails if a handler is
+missing from the manifest or if `api/` grows past the limit.
+
 ## Pre-Commit Checklist
 
 Before submitting (from DEVELOPMENT-RULES.md Section 14):

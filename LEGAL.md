@@ -326,7 +326,7 @@ All source files contain appropriate trade mark attribution in their headers:
 |-----------|-------|----------------|
 | **CommuteCompute™** | 9 | `commute-compute.js`, `smart-journey-engine.js`, `smart-route-recommender.js`, `journey-planner.js`, `opendata-client.js`, `coffee-decision.js` — includes DepartureConfidence, LifestyleContext, SleepOptimiser, and AltTransit sub-engines |
 | **CCDash™** | 5 | `ccdash-renderer.js`, `zones.js`, `dashboard_template.cpp`, `journey-display/` module |
-| **CC LiveDash™** | 2 | `livedash.js`, `api/livedash.js` |
+| **CC LiveDash™** | 2 | `livedash.js`, `handlers/livedash.js` |
 | **CCFirm™** | 7 | `main.cpp`, `main-tiered.cpp`, `main-minimal.cpp`, and all firmware variants |
 
 ### Standard File Header Format

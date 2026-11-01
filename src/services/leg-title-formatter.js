@@ -2,7 +2,7 @@
  * Leg Title Formatter — Shared between API and renderer
  *
  * v5.9.0 (T11): Previously the leg title was built twice — once in
- * api/commutecompute.js::buildLegTitle and again in ccdash-renderer.js::
+ * handlers/commutecompute.js::buildLegTitle and again in ccdash-renderer.js::
  * getLegTitle — with subtly different logic. This module is the single
  * source of truth for every journey leg's display title.
  *

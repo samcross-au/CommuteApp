@@ -29,10 +29,10 @@ echo "1. Syntax Verification (node --check)"
 echo "───────────────────────────────────────"
 
 ZONE_FILES=(
-  "api/zones.js"
-  "api/zones-tiered.js"
-  "api/zonedata.js"
-  "api/zone/[id].js"
+  "handlers/zones.js"
+  "handlers/zones-tiered.js"
+  "handlers/zonedata.js"
+  "handlers/zone/[id].js"
 )
 
 for f in "${ZONE_FILES[@]}"; do
@@ -58,10 +58,10 @@ for f in "${ZONE_FILES[@]}"; do
 done
 
 # Check config-token.js import in zone/[id].js
-if grep -q "from.*src/utils/config-token.js" "api/zone/[id].js"; then
-  pass "api/zone/[id].js imports from config-token.js"
+if grep -q "from.*src/utils/config-token.js" "handlers/zone/[id].js"; then
+  pass "handlers/zone/[id].js imports from config-token.js"
 else
-  warn "api/zone/[id].js does not import from config-token.js (may use local decodeConfigToken)"
+  warn "handlers/zone/[id].js does not import from config-token.js (may use local decodeConfigToken)"
 fi
 echo ""
 
@@ -92,7 +92,7 @@ for f in "${ZONE_FILES[@]}"; do
 done
 
 # Check formatTime is NOT defined locally in zones-tiered.js and zone/[id].js
-for f in "api/zones-tiered.js" "api/zone/[id].js"; do
+for f in "handlers/zones-tiered.js" "handlers/zone/[id].js"; do
   if grep -q "^function formatTime\b" "$f"; then
     fail "$f still has local formatTime()"
   else
@@ -102,7 +102,7 @@ for f in "api/zones-tiered.js" "api/zone/[id].js"; do
 done
 
 # Check formatTime12h is NOT defined locally in zones.js and zonedata.js
-for f in "api/zones.js" "api/zonedata.js"; do
+for f in "handlers/zones.js" "handlers/zonedata.js"; do
   if grep -q "^function formatTime12h" "$f"; then
     fail "$f still has local formatTime12h()"
   else
@@ -112,7 +112,7 @@ for f in "api/zones.js" "api/zonedata.js"; do
 done
 
 # Check getAmPm is NOT defined locally in zones.js and zonedata.js
-for f in "api/zones.js" "api/zonedata.js"; do
+for f in "handlers/zones.js" "handlers/zonedata.js"; do
   if grep -q "^function getAmPm" "$f"; then
     fail "$f still has local getAmPm()"
   else
@@ -122,10 +122,10 @@ for f in "api/zones.js" "api/zonedata.js"; do
 done
 
 # Check decodeConfigToken is NOT defined locally in zone/[id].js (imported from config-token.js)
-if grep -q "^function decodeConfigToken" "api/zone/[id].js"; then
-  fail "api/zone/[id].js still has local decodeConfigToken()"
+if grep -q "^function decodeConfigToken" "handlers/zone/[id].js"; then
+  fail "handlers/zone/[id].js still has local decodeConfigToken()"
 else
-  pass "api/zone/[id].js: decodeConfigToken() eliminated (imported from config-token.js)"
+  pass "handlers/zone/[id].js: decodeConfigToken() eliminated (imported from config-token.js)"
   ELIMINATED=$((ELIMINATED + 1))
 fi
 
@@ -152,45 +152,45 @@ echo "────────────────────────�
 
 # zones.js specific functions
 for fn in "buildLegTitle" "buildLegSubtitle" "buildJourneyLegs" "buildDemoData" "getEngine" "calculateTotalMinutes" "getStatusType"; do
-  if grep -q "function $fn" "api/zones.js"; then
-    pass "api/zones.js: $fn() preserved"
+  if grep -q "function $fn" "handlers/zones.js"; then
+    pass "handlers/zones.js: $fn() preserved"
   else
-    fail "api/zones.js: $fn() MISSING"
+    fail "handlers/zones.js: $fn() MISSING"
   fi
 done
 
 # zones-tiered.js specific functions
 for fn in "buildLegTitle" "buildLegSubtitle" "buildJourneyLegs" "getEngine"; do
-  if grep -q "function $fn" "api/zones-tiered.js"; then
-    pass "api/zones-tiered.js: $fn() preserved"
+  if grep -q "function $fn" "handlers/zones-tiered.js"; then
+    pass "handlers/zones-tiered.js: $fn() preserved"
   else
-    fail "api/zones-tiered.js: $fn() MISSING"
+    fail "handlers/zones-tiered.js: $fn() MISSING"
   fi
 done
 
 # zonedata.js specific functions
 for fn in "decodeConfigToken" "formatDepartTime" "formatCoffeeSubtitle" "buildJourneyLegs" "calculateTotalMinutes" "calculateLeaveInMinutes" "formatDisplayAddress"; do
-  if grep -q "function $fn" "api/zonedata.js"; then
-    pass "api/zonedata.js: $fn() preserved"
+  if grep -q "function $fn" "handlers/zonedata.js"; then
+    pass "handlers/zonedata.js: $fn() preserved"
   else
-    fail "api/zonedata.js: $fn() MISSING"
+    fail "handlers/zonedata.js: $fn() MISSING"
   fi
 done
 
 # zone/[id].js specific functions
 for fn in "generateETag" "renderEmptyZone" "renderDividerZone" "getEngine" "buildLegTitle" "buildLegSubtitle" "buildJourneyLegs" "buildDemoData"; do
-  if grep -q "function $fn" "api/zone/[id].js"; then
-    pass "api/zone/[id].js: $fn() preserved"
+  if grep -q "function $fn" "handlers/zone/[id].js"; then
+    pass "handlers/zone/[id].js: $fn() preserved"
   else
-    fail "api/zone/[id].js: $fn() MISSING"
+    fail "handlers/zone/[id].js: $fn() MISSING"
   fi
 done
 
 # zone/[id].js COMPOSITE_ZONES constant
-if grep -q "COMPOSITE_ZONES" "api/zone/[id].js"; then
-  pass "api/zone/[id].js: COMPOSITE_ZONES constant preserved"
+if grep -q "COMPOSITE_ZONES" "handlers/zone/[id].js"; then
+  pass "handlers/zone/[id].js: COMPOSITE_ZONES constant preserved"
 else
-  fail "api/zone/[id].js: COMPOSITE_ZONES constant MISSING"
+  fail "handlers/zone/[id].js: COMPOSITE_ZONES constant MISSING"
 fi
 echo ""
 
@@ -220,7 +220,7 @@ for f in "${ZONE_FILES[@]}"; do
 done
 
 # Copyright headers
-for f in "api/zones.js" "api/zones-tiered.js" "api/zonedata.js" "api/zone/[id].js"; do
+for f in "handlers/zones.js" "handlers/zones-tiered.js" "handlers/zonedata.js" "handlers/zone/[id].js"; do
   if grep -q "Copyright (c) 2026 Angus Bergman" "$f"; then
     pass "$f: copyright header present"
   else

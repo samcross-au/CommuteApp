@@ -236,7 +236,7 @@ else
 fi
 
 subsection "1.1b.6 Headway constants architecture present"
-if grep -q "DEFAULT_HEADWAYS\|getDefaultHeadway" api/commutecompute.js 2>/dev/null; then
+if grep -q "DEFAULT_HEADWAYS\|getDefaultHeadway" handlers/commutecompute.js 2>/dev/null; then
     pass "DEFAULT_HEADWAYS and getDefaultHeadway() present in commutecompute.js"
 else
     fail "Missing DEFAULT_HEADWAYS constant or getDefaultHeadway() function"
@@ -319,7 +319,7 @@ section "ESLINT: VARIABLE USE-BEFORE-DEFINE (TDZ PREVENTION)"
 
 subsection "no-use-before-define on critical rendering files"
 if command -v npx >/dev/null 2>&1; then
-    ESLINT_OUTPUT=$(ESLINT_USE_FLAT_CONFIG=false npx eslint --no-eslintrc --rule '{"no-use-before-define": ["error", {"variables": true, "functions": false, "classes": false}]}' --env es2020 --env node --parser-options=ecmaVersion:2020,sourceType:module src/services/ccdash-renderer.js api/commutecompute.js 2>&1 || true)
+    ESLINT_OUTPUT=$(ESLINT_USE_FLAT_CONFIG=false npx eslint --no-eslintrc --rule '{"no-use-before-define": ["error", {"variables": true, "functions": false, "classes": false}]}' --env es2020 --env node --parser-options=ecmaVersion:2020,sourceType:module src/services/ccdash-renderer.js handlers/commutecompute.js 2>&1 || true)
     if echo "$ESLINT_OUTPUT" | grep -q "error.*no-use-before-define"; then
         fail "Variables used before definition (temporal dead zone risk):"
         echo "$ESLINT_OUTPUT" | grep "no-use-before-define" | head -5
@@ -510,11 +510,11 @@ if [ "$DATA_TOTAL" -gt 0 ]; then
     fi
 fi
 
-subsection "20.4 License headers - api/*.js"
+subsection "20.4 License headers - handlers/*.js"
 API_TOTAL=0
 API_LICENSED=0
 API_MISSING=""
-for f in api/*.js; do
+for f in handlers/*.js; do
     [ -f "$f" ] || continue
     ((API_TOTAL++))
     if grep -q "AGPL-3.0\|Angus Bergman" "$f" 2>/dev/null; then
@@ -524,7 +524,7 @@ for f in api/*.js; do
     fi
 done
 # Also check api subdirectories
-for f in api/admin/*.js api/device/*.js api/pair/*.js api/zone/*.js; do
+for f in handlers/admin/*.js handlers/device/*.js handlers/pair/*.js handlers/zone/*.js; do
     [ -f "$f" ] || continue
     ((API_TOTAL++))
     if grep -q "AGPL-3.0\|Angus Bergman" "$f" 2>/dev/null; then
@@ -547,7 +547,7 @@ subsection "20.4 SPDX licence identifiers"
 SPDX_TOTAL=0
 SPDX_FOUND=0
 SPDX_MISSING=""
-for f in src/engines/*.js src/services/*.js src/data/*.js api/*.js api/admin/*.js api/device/*.js api/pair/*.js api/zone/*.js; do
+for f in src/engines/*.js src/services/*.js src/data/*.js handlers/*.js handlers/admin/*.js handlers/device/*.js handlers/pair/*.js handlers/zone/*.js; do
     [ -f "$f" ] || continue
     ((SPDX_TOTAL++))
     if grep -q "SPDX-License-Identifier" "$f" 2>/dev/null; then
@@ -569,7 +569,7 @@ subsection "20.4 Dual licence text in headers"
 # Headers should reference dual licensing: "Dual-licensed under AGPL-3.0 and commercial terms"
 DUAL_TOTAL=0
 DUAL_FOUND=0
-for f in src/engines/*.js src/services/*.js src/data/*.js api/*.js api/admin/*.js api/device/*.js api/pair/*.js api/zone/*.js; do
+for f in src/engines/*.js src/services/*.js src/data/*.js handlers/*.js handlers/admin/*.js handlers/device/*.js handlers/pair/*.js handlers/zone/*.js; do
     [ -f "$f" ] || continue
     ((DUAL_TOTAL++))
     if grep -qi "dual.licen\|commercial terms\|Dual License" "$f" 2>/dev/null; then
@@ -736,39 +736,39 @@ group_header "GROUP 3: PER-ENDPOINT VERIFICATION"
 
 # All API endpoints
 API_ENDPOINTS=(
-    "api/health.js"
-    "api/version.js"
-    "api/status.js"
-    "api/commutecompute.js"
-    "api/device-status.js"
-    "api/livedash.js"
-    "api/zones.js"
-    "api/zonedata.js"
-    "api/routes.js"
-    "api/profiles.js"
-    "api/save-transit-key.js"
-    "api/save-google-key.js"
-    "api/validate-transit-key.js"
-    "api/validate-google-key.js"
-    "api/sync-config.js"
-    "api/cafe-details.js"
-    "api/address-search.js"
-    "api/attributions.js"
-    "api/fullscreen.js"
-    "api/kv-status.js"
-    "api/system-status.js"
-    "api/landing.js"
-    "api/index.js"
-    "api/zones-tiered.js"
-    "api/debug-api-key.js"
-    "api/admin/preferences.js"
-    "api/admin/setup-complete.js"
-    "api/admin/reset.js"
-    "api/admin/resolve-stops.js"
-    "api/admin/generate-webhook.js"
-    "api/device/[token].js"
-    "api/pair/[code].js"
-    "api/zone/[id].js"
+    "handlers/health.js"
+    "handlers/version.js"
+    "handlers/status.js"
+    "handlers/commutecompute.js"
+    "handlers/device-status.js"
+    "handlers/livedash.js"
+    "handlers/zones.js"
+    "handlers/zonedata.js"
+    "handlers/routes.js"
+    "handlers/profiles.js"
+    "handlers/save-transit-key.js"
+    "handlers/save-google-key.js"
+    "handlers/validate-transit-key.js"
+    "handlers/validate-google-key.js"
+    "handlers/sync-config.js"
+    "handlers/cafe-details.js"
+    "handlers/address-search.js"
+    "handlers/attributions.js"
+    "handlers/fullscreen.js"
+    "handlers/kv-status.js"
+    "handlers/system-status.js"
+    "handlers/landing.js"
+    "handlers/index.js"
+    "handlers/zones-tiered.js"
+    "handlers/debug-api-key.js"
+    "handlers/admin/preferences.js"
+    "handlers/admin/setup-complete.js"
+    "handlers/admin/reset.js"
+    "handlers/admin/resolve-stops.js"
+    "handlers/admin/generate-webhook.js"
+    "handlers/device/[token].js"
+    "handlers/pair/[code].js"
+    "handlers/zone/[id].js"
 )
 
 EP_TOTAL=0
@@ -851,25 +851,25 @@ group_header "GROUP 4: DATA FLOW VERIFICATION"
 section "4.1 CONFIG TOKEN FLOW"
 
 subsection "sync-config.js POST handler"
-if [ -f "api/sync-config.js" ]; then
-    if grep -q "POST\|req\.method" api/sync-config.js 2>/dev/null; then
+if [ -f "handlers/sync-config.js" ]; then
+    if grep -q "POST\|req\.method" handlers/sync-config.js 2>/dev/null; then
         pass "sync-config.js handles POST requests"
     else
         fail "sync-config.js: POST handler not found"
     fi
 else
-    skip "api/sync-config.js not found"
+    skip "handlers/sync-config.js not found"
 fi
 
 subsection "pair/[code].js KV storage"
-if [ -f "api/pair/[code].js" ]; then
-    if grep -q "kv\.\|KV\.\|preferences\|getPreferences\|setPreferences" "api/pair/[code].js" 2>/dev/null; then
+if [ -f "handlers/pair/[code].js" ]; then
+    if grep -q "kv\.\|KV\.\|preferences\|getPreferences\|setPreferences" "handlers/pair/[code].js" 2>/dev/null; then
         pass "pair/[code].js uses KV storage"
     else
         warn "pair/[code].js: KV storage usage not confirmed"
     fi
 else
-    skip "api/pair/[code].js not found"
+    skip "handlers/pair/[code].js not found"
 fi
 
 subsection "kv-preferences.js required functions"
@@ -895,13 +895,13 @@ fi
 section "4.2 SCREEN RENDERING PIPELINE"
 
 subsection "commutecompute.js imports"
-if [ -f "api/commutecompute.js" ]; then
+if [ -f "handlers/commutecompute.js" ]; then
     SCREEN_IMPORTS_PASS=0
     SCREEN_IMPORTS_TOTAL=0
 
     for import_mod in "ccdash-renderer" "opendata-client" "commute-compute"; do
         ((SCREEN_IMPORTS_TOTAL++))
-        if grep -q "$import_mod" api/commutecompute.js 2>/dev/null; then
+        if grep -q "$import_mod" handlers/commutecompute.js 2>/dev/null; then
             ((SCREEN_IMPORTS_PASS++))
         else
             fail "commutecompute.js: Missing import from $import_mod"
@@ -910,7 +910,7 @@ if [ -f "api/commutecompute.js" ]; then
 
     for engine in "departure-confidence" "lifestyle-context" "sleep-optimiser" "alt-transit"; do
         ((SCREEN_IMPORTS_TOTAL++))
-        if grep -q "$engine" api/commutecompute.js 2>/dev/null; then
+        if grep -q "$engine" handlers/commutecompute.js 2>/dev/null; then
             ((SCREEN_IMPORTS_PASS++))
         else
             fail "commutecompute.js: Missing V15.0 engine import: $engine"
@@ -921,19 +921,19 @@ if [ -f "api/commutecompute.js" ]; then
         pass "commutecompute.js imports all required modules ($SCREEN_IMPORTS_PASS/$SCREEN_IMPORTS_TOTAL)"
     fi
 else
-    skip "api/commutecompute.js not found"
+    skip "handlers/commutecompute.js not found"
 fi
 
 # ---------- 4.3 Admin Data Flow ----------
 section "4.3 ADMIN DATA FLOW"
 
 subsection "commutecompute.js analytics fields"
-if [ -f "api/commutecompute.js" ]; then
+if [ -f "handlers/commutecompute.js" ]; then
     CC_FIELDS_PASS=0
     CC_FIELDS_TOTAL=0
     for field in "confidence_score" "confidence_resilience" "lifestyle_display"; do
         ((CC_FIELDS_TOTAL++))
-        if grep -q "$field" api/commutecompute.js 2>/dev/null; then
+        if grep -q "$field" handlers/commutecompute.js 2>/dev/null; then
             ((CC_FIELDS_PASS++))
         else
             fail "commutecompute.js: Missing analytics field $field"
@@ -943,7 +943,7 @@ if [ -f "api/commutecompute.js" ]; then
         pass "commutecompute.js exports all V15.0 analytics fields ($CC_FIELDS_PASS/$CC_FIELDS_TOTAL)"
     fi
 else
-    skip "api/commutecompute.js not found"
+    skip "handlers/commutecompute.js not found"
 fi
 
 subsection "admin.html API fetches"
@@ -1063,33 +1063,33 @@ group_header "GROUP 5: CACHING VERIFICATION"
 section "5.1 API ENDPOINT CACHE HEADERS"
 
 subsection "version.js cache (max-age=300)"
-if [ -f "api/version.js" ]; then
-    if grep -q "max-age=300\|max-age.*300" api/version.js 2>/dev/null; then
+if [ -f "handlers/version.js" ]; then
+    if grep -q "max-age=300\|max-age.*300" handlers/version.js 2>/dev/null; then
         pass "version.js has max-age=300 (5-min cache)"
     else
         warn "version.js: max-age=300 not found"
     fi
 else
-    skip "api/version.js not found"
+    skip "handlers/version.js not found"
 fi
 
 subsection "commutecompute.js cache headers"
-if [ -f "api/commutecompute.js" ]; then
-    if grep -q "Cache-Control\|cache-control\|max-age" api/commutecompute.js 2>/dev/null; then
+if [ -f "handlers/commutecompute.js" ]; then
+    if grep -q "Cache-Control\|cache-control\|max-age" handlers/commutecompute.js 2>/dev/null; then
         pass "commutecompute.js has cache headers set"
     else
         warn "commutecompute.js: Cache headers not found"
     fi
 else
-    skip "api/commutecompute.js not found"
+    skip "handlers/commutecompute.js not found"
 fi
 
 subsection "Mutation endpoints: no-cache/no-store"
 MUTATION_ENDPOINTS=(
-    "api/save-transit-key.js"
-    "api/save-google-key.js"
-    "api/sync-config.js"
-    "api/admin/reset.js"
+    "handlers/save-transit-key.js"
+    "handlers/save-google-key.js"
+    "handlers/sync-config.js"
+    "handlers/admin/reset.js"
 )
 MUTATION_PASS=0
 MUTATION_TOTAL=0
@@ -1111,10 +1111,10 @@ fi
 
 subsection "Real-time endpoints: no-cache"
 REALTIME_ENDPOINTS=(
-    "api/commutecompute.js"
-    "api/routes.js"
-    "api/livedash.js"
-    "api/device-status.js"
+    "handlers/commutecompute.js"
+    "handlers/routes.js"
+    "handlers/livedash.js"
+    "handlers/device-status.js"
 )
 RT_PASS=0
 RT_TOTAL=0
@@ -1185,7 +1185,7 @@ section "6.1 VERSION SOURCE OF TRUTH (VERSION.json)"
 
 # --------------------------------------------------------------------------
 # Read ALL authoritative versions from VERSION.json using node -e
-# VERSION.json is the single source of truth; api/version.js must match it.
+# VERSION.json is the single source of truth; handlers/version.js must match it.
 # --------------------------------------------------------------------------
 VJ_SYSTEM_VERSION=""
 VJ_ENGINE_VERSION=""
@@ -1217,7 +1217,7 @@ else
     fail "VERSION.json not found — cannot determine authoritative versions"
 fi
 
-# Also read api/version.js for cross-check
+# Also read handlers/version.js for cross-check
 SYSTEM_VERSION=""
 ENGINE_VERSION=""
 RENDERER_VERSION=""
@@ -1225,60 +1225,60 @@ ADMIN_VERSION=""
 FIRMWARE_VERSION=""
 SPEC_VERSION=""
 
-if [ -f "api/version.js" ]; then
-    SYSTEM_VERSION=$(grep -o "version: '[^']*'" api/version.js 2>/dev/null | head -1 | sed "s/version: '//;s/'//" || true)
-    ENGINE_VERSION=$(grep -A2 "commutecompute:" api/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
-    RENDERER_VERSION=$(grep -A2 "renderer:" api/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
-    ADMIN_VERSION=$(grep -A2 "admin:" api/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
-    FIRMWARE_VERSION=$(grep -A2 "firmware:" api/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
-    SPEC_VERSION=$(grep -o "CCDashDesignV[0-9.]*" api/version.js 2>/dev/null | head -1 || true)
-    pass "api/version.js loaded: System=$SYSTEM_VERSION Engine=$ENGINE_VERSION Renderer=$RENDERER_VERSION"
+if [ -f "handlers/version.js" ]; then
+    SYSTEM_VERSION=$(grep -o "version: '[^']*'" handlers/version.js 2>/dev/null | head -1 | sed "s/version: '//;s/'//" || true)
+    ENGINE_VERSION=$(grep -A2 "commutecompute:" handlers/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
+    RENDERER_VERSION=$(grep -A2 "renderer:" handlers/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
+    ADMIN_VERSION=$(grep -A2 "admin:" handlers/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
+    FIRMWARE_VERSION=$(grep -A2 "firmware:" handlers/version.js 2>/dev/null | grep "version:" | head -1 | sed "s/.*version: '//;s/'.*//" || true)
+    SPEC_VERSION=$(grep -o "CCDashDesignV[0-9.]*" handlers/version.js 2>/dev/null | head -1 || true)
+    pass "handlers/version.js loaded: System=$SYSTEM_VERSION Engine=$ENGINE_VERSION Renderer=$RENDERER_VERSION"
 else
-    fail "api/version.js not found — cannot check endpoint versions"
+    fail "handlers/version.js not found — cannot check endpoint versions"
 fi
 
 # --------------------------------------------------------------------------
-# 6.1a: api/version.js must match VERSION.json
+# 6.1a: handlers/version.js must match VERSION.json
 # --------------------------------------------------------------------------
-subsection "api/version.js vs VERSION.json cross-check"
+subsection "handlers/version.js vs VERSION.json cross-check"
 if [ -n "$VJ_SYSTEM_VERSION" ] && [ -n "$SYSTEM_VERSION" ]; then
     SV_CLEAN=$(echo "$SYSTEM_VERSION" | sed 's/^v//')
     if [ "$SV_CLEAN" = "$VJ_SYSTEM_VERSION" ]; then
-        pass "api/version.js system version ($SYSTEM_VERSION) matches VERSION.json ($VJ_SYSTEM_VERSION)"
+        pass "handlers/version.js system version ($SYSTEM_VERSION) matches VERSION.json ($VJ_SYSTEM_VERSION)"
     else
-        fail "api/version.js system version ($SYSTEM_VERSION) does NOT match VERSION.json ($VJ_SYSTEM_VERSION)"
+        fail "handlers/version.js system version ($SYSTEM_VERSION) does NOT match VERSION.json ($VJ_SYSTEM_VERSION)"
     fi
 
     EV_CLEAN=$(echo "$ENGINE_VERSION" | sed 's/^v//')
     if [ "$EV_CLEAN" = "$VJ_ENGINE_VERSION" ]; then
-        pass "api/version.js engine version ($ENGINE_VERSION) matches VERSION.json ($VJ_ENGINE_VERSION)"
+        pass "handlers/version.js engine version ($ENGINE_VERSION) matches VERSION.json ($VJ_ENGINE_VERSION)"
     else
-        fail "api/version.js engine version ($ENGINE_VERSION) does NOT match VERSION.json ($VJ_ENGINE_VERSION)"
+        fail "handlers/version.js engine version ($ENGINE_VERSION) does NOT match VERSION.json ($VJ_ENGINE_VERSION)"
     fi
 
     RV_CLEAN=$(echo "$RENDERER_VERSION" | sed 's/^v//')
     if [ "$RV_CLEAN" = "$VJ_RENDERER_VERSION" ]; then
-        pass "api/version.js renderer version ($RENDERER_VERSION) matches VERSION.json ($VJ_RENDERER_VERSION)"
+        pass "handlers/version.js renderer version ($RENDERER_VERSION) matches VERSION.json ($VJ_RENDERER_VERSION)"
     else
-        fail "api/version.js renderer version ($RENDERER_VERSION) does NOT match VERSION.json ($VJ_RENDERER_VERSION)"
+        fail "handlers/version.js renderer version ($RENDERER_VERSION) does NOT match VERSION.json ($VJ_RENDERER_VERSION)"
     fi
 
     if [ -n "$SPEC_VERSION" ] && [ -n "$VJ_SPEC_VERSION" ]; then
         if [ "$SPEC_VERSION" = "$VJ_SPEC_VERSION" ]; then
-            pass "api/version.js spec version ($SPEC_VERSION) matches VERSION.json ($VJ_SPEC_VERSION)"
+            pass "handlers/version.js spec version ($SPEC_VERSION) matches VERSION.json ($VJ_SPEC_VERSION)"
         else
-            fail "api/version.js spec version ($SPEC_VERSION) does NOT match VERSION.json ($VJ_SPEC_VERSION)"
+            fail "handlers/version.js spec version ($SPEC_VERSION) does NOT match VERSION.json ($VJ_SPEC_VERSION)"
         fi
     fi
 
     FW_CLEAN=$(echo "$FIRMWARE_VERSION" | sed 's/^CC-FW-//')
     if [ "$FW_CLEAN" = "$VJ_FIRMWARE_VERSION" ]; then
-        pass "api/version.js firmware version ($FIRMWARE_VERSION) matches VERSION.json ($VJ_FIRMWARE_VERSION)"
+        pass "handlers/version.js firmware version ($FIRMWARE_VERSION) matches VERSION.json ($VJ_FIRMWARE_VERSION)"
     else
-        fail "api/version.js firmware version ($FIRMWARE_VERSION) does NOT match VERSION.json ($VJ_FIRMWARE_VERSION)"
+        fail "handlers/version.js firmware version ($FIRMWARE_VERSION) does NOT match VERSION.json ($VJ_FIRMWARE_VERSION)"
     fi
 else
-    warn "Cannot cross-check api/version.js vs VERSION.json — one or both missing"
+    warn "Cannot cross-check handlers/version.js vs VERSION.json — one or both missing"
 fi
 
 # --------------------------------------------------------------------------
@@ -2413,20 +2413,20 @@ if [ -f "src/services/opendata-client.js" ]; then
 fi
 
 subsection "23.10 GTFS-RT source completeness (gtfs-rt-broad)"
-if [ -f "api/commutecompute.js" ]; then
-    BROAD_CHECKS=$(grep -c "gtfs-rt-broad" api/commutecompute.js 2>/dev/null || echo "0")
+if [ -f "handlers/commutecompute.js" ]; then
+    BROAD_CHECKS=$(grep -c "gtfs-rt-broad" handlers/commutecompute.js 2>/dev/null || echo "0")
     if [ "$BROAD_CHECKS" -ge 3 ]; then
         pass "gtfs-rt-broad included in all hasLive*Data checks ($BROAD_CHECKS occurrences)"
     else
         fail "gtfs-rt-broad missing from hasLive*Data checks (found $BROAD_CHECKS, need >= 3)"
     fi
 else
-    skip "api/commutecompute.js not found"
+    skip "handlers/commutecompute.js not found"
 fi
 
 subsection "23.11 Stop ID maps use 3-letter station codes"
 STOP_ID_FAIL=0
-for file in api/admin/setup-complete.js api/admin/resolve-stops.js; do
+for file in handlers/admin/setup-complete.js handlers/admin/resolve-stops.js; do
     if [ -f "$file" ]; then
         NUMERIC_TRAIN=$(grep "train:" "$file" 2>/dev/null | grep -E "train: '[0-9]+'" | head -3 || true)
         if [ -n "$NUMERIC_TRAIN" ]; then
@@ -2440,10 +2440,10 @@ for file in api/admin/setup-complete.js api/admin/resolve-stops.js; do
 done
 
 subsection "23.12 Transit leg subtitle includes destination"
-if [ -f "api/commutecompute.js" ]; then
-    DEST_REF=$(grep -n "leg.destination" api/commutecompute.js 2>/dev/null | grep -i "subtitle\|buildLeg" || true)
+if [ -f "handlers/commutecompute.js" ]; then
+    DEST_REF=$(grep -n "leg.destination" handlers/commutecompute.js 2>/dev/null | grep -i "subtitle\|buildLeg" || true)
     if [ -z "$DEST_REF" ]; then
-        DEST_IN_BUILDLEG=$(grep -A50 "function buildLegSubtitle" api/commutecompute.js 2>/dev/null | grep "destination" || true)
+        DEST_IN_BUILDLEG=$(grep -A50 "function buildLegSubtitle" handlers/commutecompute.js 2>/dev/null | grep "destination" || true)
         if [ -n "$DEST_IN_BUILDLEG" ]; then
             pass "buildLegSubtitle references leg.destination for transit legs"
         else
@@ -2453,7 +2453,7 @@ if [ -f "api/commutecompute.js" ]; then
         pass "Transit leg subtitle references destination stop name"
     fi
 else
-    skip "api/commutecompute.js not found"
+    skip "handlers/commutecompute.js not found"
 fi
 
 subsection "12.7 DepartureConfidence context and resilienceDetail"
@@ -2572,24 +2572,24 @@ if [ -f "public/attribution.html" ]; then
     fi
 fi
 
-subsection "api/version.js exists"
-if [ -f "api/version.js" ]; then
-    pass "api/version.js exists for dynamic versioning"
+subsection "handlers/version.js exists"
+if [ -f "handlers/version.js" ]; then
+    pass "handlers/version.js exists for dynamic versioning"
 
     # Check version.js exposes copyright and licence info
-    if grep -q "AGPL-3.0" api/version.js 2>/dev/null; then
-        pass "api/version.js includes AGPL-3.0 licence in response"
+    if grep -q "AGPL-3.0" handlers/version.js 2>/dev/null; then
+        pass "handlers/version.js includes AGPL-3.0 licence in response"
     else
-        warn "api/version.js may not expose AGPL-3.0 licence in API response"
+        warn "handlers/version.js may not expose AGPL-3.0 licence in API response"
     fi
 
-    if grep -q "Angus Bergman" api/version.js 2>/dev/null; then
-        pass "api/version.js includes copyright holder in response"
+    if grep -q "Angus Bergman" handlers/version.js 2>/dev/null; then
+        pass "handlers/version.js includes copyright holder in response"
     else
-        warn "api/version.js may not expose copyright holder in API response"
+        warn "handlers/version.js may not expose copyright holder in API response"
     fi
 else
-    fail "api/version.js not found"
+    fail "handlers/version.js not found"
 fi
 
 subsection "Canvas fillText maxWidth:0 safety"
@@ -2651,7 +2651,7 @@ fi
 
 # 25.5: Metro Tunnel filtering in commutecompute.js
 section "Metro Tunnel departure filtering in commutecompute.js"
-if grep -q "requiresCityLoop\|requiresMetroTunnel" api/commutecompute.js 2>/dev/null; then
+if grep -q "requiresCityLoop\|requiresMetroTunnel" handlers/commutecompute.js 2>/dev/null; then
     pass "City Loop / Metro Tunnel filtering present in commutecompute.js"
 else
     fail "Missing Metro Tunnel vs City Loop filtering in commutecompute.js (Section 25.5)"
@@ -2682,10 +2682,10 @@ section "Admin endpoints auth on all methods"
 # Check for the dangerous pattern: auth only checked inside if (req.method !== 'GET') block
 # This skips auth for GET requests, exposing data
 # Pattern: lines with req.method !== 'GET' followed within 2 lines by requireAuth
-# NOTE: api/profiles.js uses tiered auth — unauthenticated GET returns names/IDs only,
+# NOTE: handlers/profiles.js uses tiered auth — unauthenticated GET returns names/IDs only,
 # authenticated GET returns full profile data with personal addresses. This is safe.
 ADMIN_SKIP_AUTH=""
-for f in api/admin/preferences.js api/admin/reset.js; do
+for f in handlers/admin/preferences.js handlers/admin/reset.js; do
     if [ -f "$f" ]; then
         MATCH=$(grep -n "req\.method !== 'GET'" "$f" 2>/dev/null | while read -r line; do
             LINENUM=$(echo "$line" | cut -d: -f1)
@@ -2708,11 +2708,11 @@ fi
 
 # 26.1b: Profiles endpoint uses tiered auth (unauthenticated GET = names only, full data requires auth)
 section "Profiles endpoint tiered auth model"
-if [ -f "api/profiles.js" ]; then
-    if grep -q "requireAuth" api/profiles.js 2>/dev/null; then
-        if grep -q "isAuthenticated" api/profiles.js 2>/dev/null; then
+if [ -f "handlers/profiles.js" ]; then
+    if grep -q "requireAuth" handlers/profiles.js 2>/dev/null; then
+        if grep -q "isAuthenticated" handlers/profiles.js 2>/dev/null; then
             pass "Profiles endpoint uses tiered auth (names-only for unauthenticated GET, full data with auth)"
-        elif grep -q "req\.method !== 'GET'" api/profiles.js 2>/dev/null; then
+        elif grep -q "req\.method !== 'GET'" handlers/profiles.js 2>/dev/null; then
             fail "Profiles GET returns full data without auth — must use tiered model (Section 26.1)"
         else
             pass "Profiles endpoint has auth check"
@@ -2740,7 +2740,7 @@ fi
 # 26.3: Setup endpoints use isFirstTimeSetup
 section "Setup endpoints use first-time-setup guard"
 
-SETUP_ENDPOINTS="api/save-transit-key.js api/save-google-key.js api/admin/setup-complete.js api/sync-config.js api/admin/generate-webhook.js"
+SETUP_ENDPOINTS="handlers/save-transit-key.js handlers/save-google-key.js handlers/admin/setup-complete.js handlers/sync-config.js handlers/admin/generate-webhook.js"
 SETUP_GUARD_COUNT=0
 SETUP_TOTAL=0
 for f in $SETUP_ENDPOINTS; do
@@ -2761,7 +2761,7 @@ fi
 # 26.4: No wildcard CORS on admin/state-mutating endpoints
 section "No wildcard CORS on admin endpoints"
 
-WILDCARD_CORS=$(grep -rn "CC_ALLOWED_ORIGIN || '\*'" api/admin/ api/save-transit-key.js api/save-google-key.js api/sync-config.js api/profiles.js 2>/dev/null | grep -v "node_modules" || true)
+WILDCARD_CORS=$(grep -rn "CC_ALLOWED_ORIGIN || '\*'" api/admin/ handlers/save-transit-key.js handlers/save-google-key.js handlers/sync-config.js handlers/profiles.js 2>/dev/null | grep -v "node_modules" || true)
 if [ -z "$WILDCARD_CORS" ]; then
     pass "No wildcard CORS fallback on admin/state-mutating endpoints"
 else
@@ -2773,7 +2773,7 @@ section "Admin endpoints use setAdminCorsHeaders"
 
 ADMIN_CORS_COUNT=0
 ADMIN_CORS_TOTAL=0
-ADMIN_CORS_FILES="api/admin/preferences.js api/admin/setup-complete.js api/admin/generate-webhook.js api/admin/reset.js api/save-transit-key.js api/save-google-key.js api/sync-config.js api/profiles.js"
+ADMIN_CORS_FILES="handlers/admin/preferences.js handlers/admin/setup-complete.js handlers/admin/generate-webhook.js handlers/admin/reset.js handlers/save-transit-key.js handlers/save-google-key.js handlers/sync-config.js handlers/profiles.js"
 for f in $ADMIN_CORS_FILES; do
     if [ -f "$f" ]; then
         ADMIN_CORS_TOTAL=$((ADMIN_CORS_TOTAL + 1))
@@ -2793,7 +2793,7 @@ fi
 section "Zone APIs KV-first config check"
 
 ZONE_KV_OK=0
-for f in api/zones.js api/zones-tiered.js; do
+for f in handlers/zones.js handlers/zones-tiered.js; do
     if [ -f "$f" ]; then
         if grep -q "getTransitApiKey" "$f" 2>/dev/null; then
             ZONE_KV_OK=$((ZONE_KV_OK + 1))

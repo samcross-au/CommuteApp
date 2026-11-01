@@ -40,7 +40,7 @@ Complete mapping of each trade mark to its constituent files in the codebase.
 | File | Type | Purpose |
 |------|------|---------|
 | `src/engines/commute-compute.js` | Core | Main journey recommendation engine |
-| `api/commutecompute.js` | API | REST endpoint for CommuteCompute |
+| `handlers/commutecompute.js` | API | REST endpoint for CommuteCompute |
 | `src/services/smart-journey-integration.js` | Service | Integration layer |
 | `src/services/smart-route-recommender.js` | Service | Route scoring and selection |
 | `tests/test-commute-compute.js` | Test | Unit tests |
@@ -59,11 +59,11 @@ Complete mapping of each trade mark to its constituent files in the codebase.
 | File | Type | Purpose |
 |------|------|---------|
 | `src/services/ccdash-renderer.js` | Core | Consolidated renderer (v2.1) -- single source of truth |
-| `api/zones.js` | API | Zone-based partial refresh endpoint |
-| `api/zones-tiered.js` | API | Tiered refresh intervals (1/2/5 min) |
-| `api/zone/[id].js` | API | Individual zone BMP endpoint |
-| `api/zonedata.js` | API | All zones with metadata |
-| `api/commutecompute.js` | API | Unified endpoint (JSON/PNG/BMP) |
+| `handlers/zones.js` | API | Zone-based partial refresh endpoint |
+| `handlers/zones-tiered.js` | API | Tiered refresh intervals (1/2/5 min) |
+| `handlers/zone/[id].js` | API | Individual zone BMP endpoint |
+| `handlers/zonedata.js` | API | All zones with metadata |
+| `handlers/commutecompute.js` | API | Unified endpoint (JSON/PNG/BMP) |
 | `specs/CCDashDesignV16.md` | Spec | Dashboard specification V16.0 (UNLOCKED) |
 
 ### CC LiveDash(TM) -- Multi-Device Preview Renderer
@@ -71,7 +71,7 @@ Complete mapping of each trade mark to its constituent files in the codebase.
 | File | Type | Purpose |
 |------|------|---------|
 | `src/services/livedash.js` | Core | Multi-device renderer service |
-| `api/livedash.js` | API | Device-aware render endpoint |
+| `handlers/livedash.js` | API | Device-aware render endpoint |
 
 ### CCFirm(TM) -- Custom Firmware Family
 
@@ -1024,7 +1024,7 @@ All API keys entered via admin panel are validated:
 │                     VERCEL DEPLOYMENT                        │
 │                                                              │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
-│  │ api/zones.js │  │api/livedash  │  │api/commute-  │       │
+│  │ handlers/zones.js │  │api/livedash  │  │api/commute-  │       │
 │  │  (Function)  │  │  .js         │  │ compute.js   │       │
 │  │              │  │  (Function)  │  │  (Function)  │       │
 │  └──────────────┘  └──────────────┘  └──────────────┘       │

@@ -1246,7 +1246,7 @@ screen /dev/cu.usbmodem* 115200          # macOS
 
 ### 5.7 Dual Subtitle Pipeline
 
-`buildLegSubtitle()` in `api/commutecompute.js` sets `leg.subtitle` for JSON API consumers (admin dashboard). `getLegSubtitle()` in `src/services/ccdash-renderer.js` generates departure-focused subtitles independently for e-ink BMP rendering. Both must be kept consistent when modifying subtitle content. The commutecompute.js subtitle includes origin/destination stop names; the renderer subtitle includes line names, routing, and departure times. Changes to one pipeline must be assessed for impact on the other.
+`buildLegSubtitle()` in `handlers/commutecompute.js` sets `leg.subtitle` for JSON API consumers (admin dashboard). `getLegSubtitle()` in `src/services/ccdash-renderer.js` generates departure-focused subtitles independently for e-ink BMP rendering. Both must be kept consistent when modifying subtitle content. The commutecompute.js subtitle includes origin/destination stop names; the renderer subtitle includes line names, routing, and departure times. Changes to one pipeline must be assessed for impact on the other.
 
 ---
 
@@ -1415,8 +1415,8 @@ if (isWalkLeg) { /* ... */ }  // Works
 
 Two adjacent walk legs MUST NEVER appear in journey leg arrays or dashboard display, under any circumstances. This applies to ALL output paths:
 
-- `api/commutecompute.js` `buildJourneyLegs()` output
-- `api/commutecompute.js` `buildCCDashLegs()` output
+- `handlers/commutecompute.js` `buildJourneyLegs()` output
+- `handlers/commutecompute.js` `buildCCDashLegs()` output
 - `src/services/ccdash-renderer.js` rendering input
 
 **Enforcement:** After ALL filtering operations (cafe removal, transit unavailability, arrival window exclusion, coffee skip), a final `mergeConsecutiveWalkLegs()` pass MUST run.
@@ -1628,7 +1628,7 @@ ctx.font = 'bold 16px Inter';
 ```json
 {
   "functions": {
-    "api/commutecompute.js": {
+    "handlers/commutecompute.js": {
       "includeFiles": "src/**,fonts/**"
     }
   }
@@ -1883,7 +1883,7 @@ if (farFromDeparture) {
 
 ### 12.6 Non-Commute Day Behaviour (CRITICAL)
 
-On non-commute days (`isCommuteDay === false`), the system MUST suppress: coffee messaging (GET A COFFEE, NO TIME FOR COFFEE, CAFE CLOSED, CAFE STATUS), LATE/EARLY/ON TIME status messaging, and DepartureConfidence™ scoring. Journey legs, departure times, weather, and alerts MUST continue to display normally. The `isCommuteDay` guard must be applied at both the API response level (`api/commutecompute.js`) and the renderer level (`src/services/ccdash-renderer.js`).
+On non-commute days (`isCommuteDay === false`), the system MUST suppress: coffee messaging (GET A COFFEE, NO TIME FOR COFFEE, CAFE CLOSED, CAFE STATUS), LATE/EARLY/ON TIME status messaging, and DepartureConfidence™ scoring. Journey legs, departure times, weather, and alerts MUST continue to display normally. The `isCommuteDay` guard must be applied at both the API response level (`handlers/commutecompute.js`) and the renderer level (`src/services/ccdash-renderer.js`).
 
 **Suppressed on non-commute days:**
 - All coffee rendering flags: `hasCoffee`, `cafeClosed`, `coffeeSkipped`, `showCafeBusynessOnly`
@@ -4516,15 +4516,15 @@ for (const route of alternatives) {
 
 ### 23.11 GTFS-RT Source Completeness
 
-**[CRITICAL]:** All three GTFS-RT sources (`gtfs-rt`, `gtfs-rt-route`, `gtfs-rt-broad`) MUST be included in live data detection. The `hasAnyLiveData` check in `api/commutecompute.js` must cover all tiers of the three-tier matching fallback. Missing any tier causes that mode's live data to be discarded as non-live, triggering incorrect "No Live Data" state.
+**[CRITICAL]:** All three GTFS-RT sources (`gtfs-rt`, `gtfs-rt-route`, `gtfs-rt-broad`) MUST be included in live data detection. The `hasAnyLiveData` check in `handlers/commutecompute.js` must cover all tiers of the three-tier matching fallback. Missing any tier causes that mode's live data to be discarded as non-live, triggering incorrect "No Live Data" state.
 
 ### 23.11 Stop ID Map Consistency
 
-**[CRITICAL]:** All stop ID maps (`src/data/gtfs-stop-names.js`, `api/admin/setup-complete.js`, `api/admin/resolve-stops.js`) MUST use 3-letter GTFS station codes for trains and verified GTFS stop IDs for trams. The canonical source is `src/data/gtfs-stop-names.js`. New stop ID maps MUST NOT use raw numeric platform IDs (which change between GTFS versions). Metro Tunnel stations use their assigned 3-letter codes (ARN, PKV, STL, THL, AZC), not numeric platform IDs.
+**[CRITICAL]:** All stop ID maps (`src/data/gtfs-stop-names.js`, `handlers/admin/setup-complete.js`, `handlers/admin/resolve-stops.js`) MUST use 3-letter GTFS station codes for trains and verified GTFS stop IDs for trams. The canonical source is `src/data/gtfs-stop-names.js`. New stop ID maps MUST NOT use raw numeric platform IDs (which change between GTFS versions). Metro Tunnel stations use their assigned 3-letter codes (ARN, PKV, STL, THL, AZC), not numeric platform IDs.
 
 ### 23.12 Transit Leg Subtitle Completeness
 
-Transit leg subtitles MUST include both the origin (boarding) stop name and the destination (alighting) stop name when available. Format: `OriginStop → DestStop`. Generic fallback names ("Station", "Tram Stop", "Bus Stop") MUST be filtered using the existing `isGenericName()` check. The destination name comes from `leg.destination?.name`, populated by the automated stop resolution in `api/commutecompute.js`.
+Transit leg subtitles MUST include both the origin (boarding) stop name and the destination (alighting) stop name when available. Format: `OriginStop → DestStop`. Generic fallback names ("Station", "Tram Stop", "Bus Stop") MUST be filtered using the existing `isGenericName()` check. The destination name comes from `leg.destination?.name`, populated by the automated stop resolution in `handlers/commutecompute.js`.
 
 ### 23.13 No Hardcoded Timing Literals in Engine Route Templates (v5.9.0)
 
@@ -4554,7 +4554,7 @@ Transit leg subtitles MUST include both the origin (boarding) stop name and the 
 - Any hardcoded route patterns that assume a specific line, terminus, or CBD destination.
 - Suburb-derived fallback stop names (already prohibited by N2-guard in v5.8.2; reinforced here).
 
-**Enforcement:** The comprehensive compliance audit greps for `totalMinutes:\s*\d+` and `minutes:\s*\d+` patterns in `src/engines/*.js` and `api/commutecompute.js` and fails on any match outside the allowlist file (`src/engines/dynamic-routes.js`). Add new template shapes to `ROUTE_TEMPLATE_SHAPES` in that file — never add new literals.
+**Enforcement:** The comprehensive compliance audit greps for `totalMinutes:\s*\d+` and `minutes:\s*\d+` patterns in `src/engines/*.js` and `handlers/commutecompute.js` and fails on any match outside the allowlist file (`src/engines/dynamic-routes.js`). Add new template shapes to `ROUTE_TEMPLATE_SHAPES` in that file — never add new literals.
 
 ### 23.14 Journey Legs Always Populate — Non-Commute Days Are a Renderer Overlay (v5.9.1)
 
@@ -4601,7 +4601,7 @@ The fix in v5.9.2 is an architectural reordering of the cascade plus a new ident
 - Classifying `gtfs-rt-route` as a stop-level identity source. Route-level is a median-stop heuristic, not an identity match, and must not be added to any `STOP_LEVEL_SOURCES` set.
 - **Pre-filtering the coord-identity tier by a route number (v5.9.4 Z1 — MANDATORY):** `processCoordIdentityMatch` MUST NOT `continue`-skip feed trip entities whose `routeId` does not match a caller-supplied `targetRouteNumber`. The whole purpose of the identity tier is to DISCOVER which route is physically at the user's stop from the live feed. Filtering by a pre-guessed route defeats the tier completely — whenever the upstream route guess is wrong (e.g. due to a previously-poisoned KV value or a stale engine plan), the tier returns zero matches and the cascade falls through to lower-confidence tiers, perpetuating the wrong-route state. If a caller supplies `targetRouteNumber`, it MUST be used ONLY as a nearest-distance TIE-BREAK preference, never as an exclusion. This rule was added after v5.9.3 live verification showed the coord-identity tier returning `feedStopIdsResolved: []` in the presence of successful stop-level matches — the tier had been filtered out by a wrong upstream route preference.
 
-**KV write-once + stop-level gate (v5.9.3 Y3 + v5.9.4 Z2 — MANDATORY):** Frequency-detection and feed-majority KV writes in the engine's tram route selection cascade (`api/commutecompute.js::commuteCompute`) MUST be gated on BOTH of these conditions simultaneously:
+**KV write-once + stop-level gate (v5.9.3 Y3 + v5.9.4 Z2 — MANDATORY):** Frequency-detection and feed-majority KV writes in the engine's tram route selection cascade (`handlers/commutecompute.js::commuteCompute`) MUST be gated on BOTH of these conditions simultaneously:
 1. `preferredTramRoute` is currently empty (the write-once constraint), AND
 2. The selected route is backed by at least one stop-level-confident tram entry — `bestIsStopLevel === true` in the frequency-detect branch, or `selectedIsStopLevel === true` (derived from `STOP_LEVEL_SOURCES.has(t.source)`) in the feed-majority fallback branch.
 
@@ -4610,14 +4610,14 @@ Coord-tier (`gtfs-rt-coord`) and route-level (`gtfs-rt-route`) cascade wins MAY 
 This strengthened rule was added in v5.9.4 after the v5.9.3 live deploy exhibited cold-start KV poisoning: the first request immediately after deploy found the tram feed with no stop-level match for the user's stop, the cascade fell through to the route-level heuristic tier, frequency detection selected a non-stop-level route, and the naive v5.9.3 write-once guard (checking only `!preferredTramRoute`) persisted the wrong value to the empty KV. Subsequent requests then read back the poisoned value and the system oscillated between the correct route (when stop-level succeeded) and the poisoned route (when it fell to coord-tier).
 
 The stored KV value legitimately changes only via:
-- The v5.8.2 C4-clear block in `api/admin/preferences.js` on home/work address change.
+- The v5.8.2 C4-clear block in `handlers/admin/preferences.js` on home/work address change.
 - Explicit admin override through `setStationOverrides`.
 - A factory reset / setup wizard flow.
 - A one-off v5.9.4 Z3 migration wipe (consumed after first post-deploy request).
 
-Any future introduction of an unconditional or under-gated `setPreferredTramRoute` call in the cascade is a regression. **Test coverage**: `tests/test-tram-cascade-selection.js` exercises the gate across eight scenarios including cold-start with stop-level, cold-start with route-level only, write-once protection, admin override precedence, and stop-level-vs-route-level frequency-detection preference. Any change to the inline cascade in `api/commutecompute.js` MUST update the pure-function replica `selectTramRoute` in the test file in lock-step and re-run the suite.
+Any future introduction of an unconditional or under-gated `setPreferredTramRoute` call in the cascade is a regression. **Test coverage**: `tests/test-tram-cascade-selection.js` exercises the gate across eight scenarios including cold-start with stop-level, cold-start with route-level only, write-once protection, admin override precedence, and stop-level-vs-route-level frequency-detection preference. Any change to the inline cascade in `handlers/commutecompute.js` MUST update the pure-function replica `selectTramRoute` in the test file in lock-step and re-run the suite.
 
-**Required diagnostic fields in `_liveDataDiag`** (exposed by `api/commutecompute.js`):
+**Required diagnostic fields in `_liveDataDiag`** (exposed by `handlers/commutecompute.js`):
 - `tramRouteSelectionConfidence`: one of `exact-stop-id`, `lenient-scan`, `coord-identity`, `route-level`, `coord-proximity-only`. Derived from the `source` field of the live trams array — any other value is a regression.
 - `tramMatchTier`: the `matchMethod` returned by `getDepartures._feedInfo`, indicating which cascade tier actually matched.
 - `tramFeedStopIdsResolved`: array of feed stop IDs that resolved to static coordinates within `TRAM_COORD_IDENTITY_RADIUS_METRES` of the target. Empirical observation (not hardcoded mapping), useful for cross-reference against TramTracker / Transport Victoria.
@@ -4669,9 +4669,9 @@ The v5.9.3 Y6 rule wording ("both responses MUST have identity tier") was too st
 4. The tram alighting stop MUST be re-selected via `findNearestTramStopNearCoords(overrideLat, overrideLon)` when a train-side override is active. The boarding stop (nearest tram stop to HOME) stays unchanged; only the alighting stop re-derives. Route membership is not enforced in the helper because `VIC_TRAM_STOPS_WITH_COORDS` does not store per-stop route metadata — the downstream GTFS-RT cascade re-verifies route membership at runtime.
 5. Walk legs following a train leg (where the user walks FROM the train station to a destination) MUST recompute duration from the override coordinates to the leg's stored destination coordinates.
 
-Violation pattern: patching `leg.stationName` on the leg object without updating the adjacent walk-leg durations or the tram alighting stop — this produces correct titles but wrong durations and wrong route geometry. The v5.9.5 deploy exhibited this violation during the station-override live test; v5.9.6 BB1 closed it by extending the existing post-engine override block in `api/commutecompute.js` to perform the full coordinate cascade. Regression tests in `tests/test-tram-cascade-selection.js` cover the `lookupMetroStationCoords` and `findNearestTramStopNearCoords` helpers.
+Violation pattern: patching `leg.stationName` on the leg object without updating the adjacent walk-leg durations or the tram alighting stop — this produces correct titles but wrong durations and wrong route geometry. The v5.9.5 deploy exhibited this violation during the station-override live test; v5.9.6 BB1 closed it by extending the existing post-engine override block in `handlers/commutecompute.js` to perform the full coordinate cascade. Regression tests in `tests/test-tram-cascade-selection.js` cover the `lookupMetroStationCoords` and `findNearestTramStopNearCoords` helpers.
 
-**Train cascade stop-level gate (v5.9.6 BB3 — MANDATORY, symmetric with v5.9.4 Z2):** The train cascade in `api/commutecompute.js` (around line 3385-3430 after the v5.9.6 BB3 edit) MUST apply the same stop-level confidence gate as the v5.9.4 Z2 tram gate. A `setPreferredTrainLine` / `setPreferredTrainStation` KV write is permitted only when BOTH conditions hold:
+**Train cascade stop-level gate (v5.9.6 BB3 — MANDATORY, symmetric with v5.9.4 Z2):** The train cascade in `handlers/commutecompute.js` (around line 3385-3430 after the v5.9.6 BB3 edit) MUST apply the same stop-level confidence gate as the v5.9.4 Z2 tram gate. A `setPreferredTrainLine` / `setPreferredTrainStation` KV write is permitted only when BOTH conditions hold:
 
 1. `preferredTrainLine` is currently empty (write-once constraint), AND
 2. The dominant live line has at least one departure with a `source` value in `TRAIN_STOP_LEVEL_SOURCES = { 'gtfs-rt', 'gtfs-rt-scan', 'gtfs-rt-coord-identity' }`.
@@ -4682,7 +4682,7 @@ Historical context: v5.9.4 Z2 added this gate for trams only. v5.9.6 BB3 extends
 
 **`nextDepartures` truthfulness invariant (v5.9.6 BB2 — MANDATORY):** The `nextDepartures` catchable list on a journey leg MUST contain ONLY departures derived from the raw GTFS-RT feed (via `processGtfsRtDepartures`, `processAllTripsStopSearch`, `processRouteLevelDepartures`, `processCoordIdentityMatch`, or the broad fallback). Headway-based projection into the future is **PROHIBITED** — if the live feed has fewer than N catchable departures after the user's arrival at the stop, the subtitle MUST show fewer entries, NOT fabricate additional ones via headway extrapolation.
 
-The subtitle " LIVE" suffix applies only when `baseLeg.isLive` is true AND all entries displayed come from the live feed. After v5.9.6 BB2 removed the two headway-extrapolation paths in `api/commutecompute.js` (the pre-projection block around line 735 and the tier-2 padding block around line 1068), the `isLive` flag is truthful by construction because the list is populated only from real feed entries.
+The subtitle " LIVE" suffix applies only when `baseLeg.isLive` is true AND all entries displayed come from the live feed. After v5.9.6 BB2 removed the two headway-extrapolation paths in `handlers/commutecompute.js` (the pre-projection block around line 735 and the tier-2 padding block around line 1068), the `isLive` flag is truthful by construction because the list is populated only from real feed entries.
 
 If after the projection-removal a leg has zero catchable departures, the existing timetable-fallback path (`isTimetableEstimate: true` → subtitle "Scheduled ~Xmin") correctly handles the no-live-data case per §23.6. v5.9.6 BB2 does not change the timetable-fallback path; it only closes the pre-v5.9.6 loophole that let projected entries bypass it and masquerade as LIVE.
 
@@ -4702,7 +4702,7 @@ Historical context: v5.9.5 live verification showed a train leg with subtitle "N
 
 **Background:** Pre-v5.9.8 code paths wrote `locations.home.lat/lon` blindly from whatever the Setup Wizard, admin panel, or address auto-complete last supplied. Any drift between the stored coord and what a fresh geocode of the stored address would resolve — from Setup Wizard write vs. later admin panel edit, geocoder vendor drift between configuration and read, manual pin drag, a geocoder-tier fallback (Google Places → Nominatim) producing a slightly different lat/lon, or a stale coord surviving an address change — poisoned every downstream consumer simultaneously. The nearest-stop finder picked the wrong boarding station because its input was off by 100+ m; the tram cascade's coord-identity tier (40 m radius per §13.3) compared feed stops against a target that was outside the radius of the correct boarding stop; walk-leg distances were computed from the wrong origin. A single corrupt coord produced a fully-consistent-but-wrong journey response, with no error path because every downstream consumer silently trusted the input.
 
-**Required invariant (v5.9.8 DD1 — MANDATORY):** At the request boundary in `api/commutecompute.js::getEngine`, before building the engine-level `preferences` object, the stored home record MUST be passed through `ensureFreshHomeCoords(kvPrefs, diag)`:
+**Required invariant (v5.9.8 DD1 — MANDATORY):** At the request boundary in `handlers/commutecompute.js::getEngine`, before building the engine-level `preferences` object, the stored home record MUST be passed through `ensureFreshHomeCoords(kvPrefs, diag)`:
 
 1. If `locations.home.address` is absent, short-circuit with source `'no-address'` — nothing to verify against.
 2. If `locations.home._addressHash` equals the short hash of the canonicalised address AND a coord is present, trust the stored coord (fast-path source `'cached-hash-match'`).
@@ -4717,14 +4717,14 @@ Historical context: v5.9.5 live verification showed a train leg with subtitle "N
 
 **Required telemetry (v5.9.8 DD1 — MANDATORY):** `_liveDataDiag.homeCoordFreshness` MUST be present on every response that reached engine initialisation. Possible `source` values: `'cached-hash-match'`, `'memory-cache'`, `'cached-drift-ok'`, `'geocode-first'`, `'geocode-drift-corrected'`, `'geocode-rejected-too-far'`, `'geocode-empty'`, `'geocode-failed'`, `'no-address'`, `'not-run'`. The field is the primary evidence a post-deploy verification pass reads to confirm DD1 executed; a missing field or `source === 'not-run'` indicates regression.
 
-**Tram stop coord override hardening (v5.9.8 DD2 — MANDATORY, companion to §23.15):** The tram stop coord override block in `api/commutecompute.js` that replaces `tramApiOptions.lat/lon` with the locked tram stop's dataset coord MUST emit `_liveDataDiag.tramStopCoordOverride` with `{ attempted, tramStopId, resolved, fallbackUsed, resolvedLat, resolvedLon }`. When the exact-id dataset lookup fails, the block MUST NOT silently leave `tramApiOptions.lat/lon` at the (possibly drift-corrected) home coord; instead it MUST attempt `findNearestTramStopNearCoords` around the home coord and use the nearest tram stop's coord as the cascade target (`fallbackUsed: 'nearest-stop-helper'`). Only if that also fails may it preserve the home coord as a last resort (`fallbackUsed: 'home-coords-last-resort'`), and the telemetry MUST explicitly reflect that — `fallbackUsed === null` means "we tried and succeeded", anything else means "diagnose why".
+**Tram stop coord override hardening (v5.9.8 DD2 — MANDATORY, companion to §23.15):** The tram stop coord override block in `handlers/commutecompute.js` that replaces `tramApiOptions.lat/lon` with the locked tram stop's dataset coord MUST emit `_liveDataDiag.tramStopCoordOverride` with `{ attempted, tramStopId, resolved, fallbackUsed, resolvedLat, resolvedLon }`. When the exact-id dataset lookup fails, the block MUST NOT silently leave `tramApiOptions.lat/lon` at the (possibly drift-corrected) home coord; instead it MUST attempt `findNearestTramStopNearCoords` around the home coord and use the nearest tram stop's coord as the cascade target (`fallbackUsed: 'nearest-stop-helper'`). Only if that also fails may it preserve the home coord as a last resort (`fallbackUsed: 'home-coords-last-resort'`), and the telemetry MUST explicitly reflect that — `fallbackUsed === null` means "we tried and succeeded", anything else means "diagnose why".
 
 **Violation patterns:**
 - Any new code path that reads `locations.home.lat/lon` or `cache.homeCoords` without first going through `ensureFreshHomeCoords` at the request boundary. The boundary check is the ONLY authorised entry point.
 - Any new tram cascade call site that sets `tramApiOptions.lat/lon` from home coords without subsequently overriding via the DD2 hardened block.
 - Any diagnostic field that exposes `homeCoords` or nearest-stop candidates without ALSO exposing `homeCoordFreshness` — observability without the freshness verdict is a debugging trap.
 
-**Regression tests:** `tests/test-tram-cascade-selection.js` contains pure-function replicas of both `ensureFreshHomeCoords` (seven tests covering the fast path, drift correction, sanity guards, timeout fallback, and empty-result fallback) and the DD2 tram stop coord override hardening (five tests covering success, nearest-helper fallback, last-resort fallback, no-home-coords, and no-tram-stop-id cases). When the inline code in `api/commutecompute.js` changes, the replicas MUST be updated in lock-step.
+**Regression tests:** `tests/test-tram-cascade-selection.js` contains pure-function replicas of both `ensureFreshHomeCoords` (seven tests covering the fast path, drift correction, sanity guards, timeout fallback, and empty-result fallback) and the DD2 tram stop coord override hardening (five tests covering success, nearest-helper fallback, last-resort fallback, no-home-coords, and no-tram-stop-id cases). When the inline code in `handlers/commutecompute.js` changes, the replicas MUST be updated in lock-step.
 
 **Serverless geocoding limitation and direct-entry escape hatch (v5.9.9 EE1 — MANDATORY):** The v5.9.8 DD1 home coord freshness invariant relies on runtime geocoding of `locations.home.address` via `src/services/geocoding-service.js::GeocodingService`. On the Vercel serverless production environment, all five geocoder tiers (Google Places, Mapbox, HERE, LocationIQ, Nominatim) have been observed to fail simultaneously: the commercial tiers because no API keys are configured in the Zero-Config environment (§24.1 self-hosted distribution model), and Nominatim either because of IP-range rate-limiting or blocking applied to the serverless provider's outbound IPs, because the 5 s serverless cold-start timeout is tighter than the Nominatim handshake window, or because the User-Agent triggers an abuse filter. DD1 correctly falls back to the stored coord on failure (the request never aborts — that part of DD1 is sound), but a stored coord that was itself corrupt cannot be repaired by a geocoder that is non-operative.
 
@@ -4735,7 +4735,7 @@ v5.9.9 EE1 closes this gap by adding a direct-entry escape hatch to `/api/admin/
 **Violation patterns:**
 - Any new serverless code path that relies on runtime geocoding without a direct-entry fallback. Runtime geocoding MUST be treated as best-effort, never as the sole repair mechanism for a corrupt stored coord.
 - Any admin or Setup Wizard flow that writes `locations.*.lat/lon` without also writing the `_addressHash` — this breaks the DD1 fast path and forces a geocoder call on the very next read.
-- Any future change to `_addressHash` in `api/commutecompute.js` that is not mirrored into `_addressHashForCanonical` in `api/admin/preferences.js` — the two implementations MUST produce identical hashes for the same canonicalised address or the write/read round-trip silently misses the fast path.
+- Any future change to `_addressHash` in `handlers/commutecompute.js` that is not mirrored into `_addressHashForCanonical` in `handlers/admin/preferences.js` — the two implementations MUST produce identical hashes for the same canonicalised address or the write/read round-trip silently misses the fast path.
 - Any diagnostic tooling that classifies `source: 'memory-cache-failed'` as a blocking regression without first checking the failure count trajectory and the environment's geocoder availability.
 
 **Regression tests (EE4):** `tests/test-tram-cascade-selection.js` adds a pure-function replica of the EE1 direct-entry branch (five tests covering valid direct coord bypass, missing lat fallback, invalid numeric fallback, out-of-range fallback, and the round-trip where EE1's written hash triggers DD1's fast path on the subsequent read). Same lock-step update requirement as the other replicas in the file.

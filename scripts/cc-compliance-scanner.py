@@ -630,7 +630,7 @@ def check_no_hardcoded_secrets(repo_root: Path, results: AuditResults):
     """
     print("\n--- No Hardcoded Secrets ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS | {".html"},
-                             subdirs=["src", "api", "public"])
+                             subdirs=["src", "api", "handlers", "public"])
     secret_patterns = [
         (r'["\'](?:sk|pk|rk)_(?:live|test)_[a-zA-Z0-9]{20,}["\']', "Stripe-like key"),
         (r'["\']AIza[0-9A-Za-z_-]{35}["\']', "Google API key"),
@@ -755,7 +755,7 @@ def check_xss_sanitisation(repo_root: Path, results: AuditResults):
     """
     print("\n--- XSS Sanitisation (Section 17) ---")
     html_files = get_files(repo_root, {".html"}, subdirs=["public"])
-    js_files = get_files(repo_root, SOURCE_EXTENSIONS, subdirs=["src", "api"])
+    js_files = get_files(repo_root, SOURCE_EXTENSIONS, subdirs=["src", "api", "handlers"])
 
     # Check for dangerous patterns
     dangerous_patterns = [
@@ -838,7 +838,7 @@ def check_spdx_headers(repo_root: Path, results: AuditResults):
     """
     print("\n--- SPDX Licence Headers ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     missing = []
     for fpath in source_files:
@@ -867,7 +867,7 @@ def check_copyright_year(repo_root: Path, results: AuditResults):
     """
     print("\n--- Copyright Year 2026 ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     wrong_year = []
     for fpath in source_files:
@@ -968,7 +968,7 @@ def check_forbidden_ptv_terms(repo_root: Path, results: AuditResults):
     """
     print("\n--- Forbidden PTV Terms (Section 1) ---")
     scan_files = get_files(repo_root, SOURCE_EXTENSIONS | {".html"},
-                           subdirs=["src", "api", "public"])
+                           subdirs=["src", "api", "handlers", "public"])
 
     violations = []
     for fpath in scan_files:
@@ -1001,7 +1001,7 @@ def check_trmnl_references(repo_root: Path, results: AuditResults):
     """
     print("\n--- TRMNL Server References (Section 2) ---")
     scan_files = get_files(repo_root, SOURCE_EXTENSIONS | {".html"},
-                           subdirs=["src", "api", "public", "firmware"])
+                           subdirs=["src", "api", "handlers", "public", "firmware"])
 
     violations = []
     for fpath in scan_files:
@@ -1546,7 +1546,7 @@ def check_ghost_dependencies(repo_root: Path, results: AuditResults):
         if suspect in deps:
             # Verify it's actually imported somewhere
             source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                                     subdirs=["src", "api"])
+                                     subdirs=["src", "api", "handlers"])
             imported = False
             for fpath in source_files:
                 fc = read_file_safe(fpath)
@@ -1797,7 +1797,7 @@ def check_time_format(repo_root: Path, results: AuditResults):
     """
     print("\n--- 12-Hour Time Format (h23 hourCycle) ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     h23_found = False
     h12_wrong = False
@@ -1827,7 +1827,7 @@ def check_timezone_usage(repo_root: Path, results: AuditResults):
     """
     print("\n--- Timezone Correctness ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     violations = []
     for fpath in source_files:
@@ -1897,7 +1897,7 @@ def check_transport_vic_api_references(repo_root: Path, results: AuditResults):
     """
     print("\n--- Transport Victoria API References ---")
     source_files = get_files(repo_root, SOURCE_EXTENSIONS | DOC_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     old_urls = []
     new_url_found = False
@@ -1973,7 +1973,7 @@ def check_redis_terminology(repo_root: Path, results: AuditResults):
     print("\n--- Redis Terminology ---")
     doc_files = get_files(repo_root, DOC_EXTENSIONS)
     source_files = get_files(repo_root, SOURCE_EXTENSIONS,
-                             subdirs=["src", "api"])
+                             subdirs=["src", "api", "handlers"])
 
     violations = []
     for fpath in doc_files + source_files:
@@ -2227,7 +2227,7 @@ def check_docker_node_version(repo_root: Path, results: AuditResults):
 
 def check_vercel_function_configs(repo_root: Path, results: AuditResults):
     """
-    K.2: Verify all api/*.js endpoints have includeFiles in vercel.json.
+    K.2: Verify all handlers/*.js endpoints have includeFiles in vercel.json.
     Missing configs can cause serverless function failures due to missing
     bundled dependencies.
     """

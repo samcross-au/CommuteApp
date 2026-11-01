@@ -143,8 +143,8 @@ def read_file_safe(filepath: Path) -> Optional[str]:
 def check_stale_endpoint_references(repo_root: Path, results: AuditResults):
     """
     Detect stale /api/screen references in documentation files.
-    Pattern 18 (Endpoint Unification): api/screen.js DELETED.
-    api/commutecompute.js is THE single unified endpoint.
+    Pattern 18 (Endpoint Unification): handlers/screen.js DELETED.
+    handlers/commutecompute.js is THE single unified endpoint.
     vercel.json rewrites /api/screen -> /api/commutecompute for firmware.
 
     Context-aware: firmware docs describing what the device sends
@@ -394,7 +394,7 @@ def check_prohibited_terms_contextaware(repo_root: Path, results: AuditResults):
 
 def check_format_default_ternary(repo_root: Path, results: AuditResults):
     """
-    Verify the format-default ternary in api/commutecompute.js is intact.
+    Verify the format-default ternary in handlers/commutecompute.js is intact.
     Pattern 16 (CRITICAL): POST=json (admin panel), GET=png (firmware).
     The exact pattern must be:
         req.query?.format || (req.method === 'POST' ? 'json' : 'png')
@@ -402,14 +402,14 @@ def check_format_default_ternary(repo_root: Path, results: AuditResults):
     """
     print("\n--- Format-Default Ternary (Pattern 16, P0) ---")
 
-    endpoint = repo_root / "api" / "commutecompute.js"
+    endpoint = repo_root / "handlers" / "commutecompute.js"
     if not endpoint.exists():
-        results.fail_check("api/commutecompute.js not found -- unified endpoint missing")
+        results.fail_check("handlers/commutecompute.js not found -- unified endpoint missing")
         return
 
     content = read_file_safe(endpoint)
     if content is None:
-        results.fail_check("Cannot read api/commutecompute.js")
+        results.fail_check("Cannot read handlers/commutecompute.js")
         return
 
     # Exact expected pattern
@@ -424,7 +424,7 @@ def check_format_default_ternary(repo_root: Path, results: AuditResults):
         results.pass_check("Format-default ternary intact (POST=json, GET=png)")
     else:
         results.fail_check(
-            "Format-default ternary MISSING or ALTERED in api/commutecompute.js -- "
+            "Format-default ternary MISSING or ALTERED in handlers/commutecompute.js -- "
             "this will brick all firmware devices. "
             f"Expected: {EXPECTED}"
         )

@@ -103,7 +103,7 @@ done
 # ============================================================================
 section "M2: API ENDPOINT COVERAGE"
 
-subsection "M2.1 Every api/*.js (top-level) is in comprehensive-compliance-audit.sh G3"
+subsection "M2.1 Every handlers/*.js (top-level) is in comprehensive-compliance-audit.sh G3"
 
 DISK_API_TOP=$(find api -maxdepth 1 -name '*.js' 2>/dev/null | sort)
 AUDIT_API=$(grep -o '"api/[^"]*\.js"' "$AUDIT_SCRIPT" 2>/dev/null | tr -d '"' | grep -v '\$' | grep -v ' ' | sort -u)
@@ -472,17 +472,17 @@ done
 # ============================================================================
 section "M9: DELETED FILE REFERENCE SWEEP"
 
-subsection "M9.1 No audit script references api/screen.js as existing"
+subsection "M9.1 No audit script references handlers/screen.js as existing"
 
-# api/screen.js was deleted and merged into api/commutecompute.js
+# handlers/screen.js was deleted and merged into handlers/commutecompute.js
 SCREEN_REFS=$(grep -n 'api/screen\.js' scripts/*.sh scripts/*.js scripts/*.py 2>/dev/null | \
     grep -v 'deleted\|DELETED\|merged\|rewrite\|backward\|compat\|removed\|gone\|KNOWN_DELETED\|DELETED_FILES' | \
     head -10 || true)
 if [ -n "$SCREEN_REFS" ]; then
-    warn "Scripts still reference api/screen.js (may be intentional for checking its absence):"
+    warn "Scripts still reference handlers/screen.js (may be intentional for checking its absence):"
     echo "$SCREEN_REFS" | head -5
 else
-    pass "No live references to deleted api/screen.js in audit scripts"
+    pass "No live references to deleted handlers/screen.js in audit scripts"
 fi
 
 subsection "M9.2 No references to removed terminology"

@@ -104,12 +104,12 @@ echo "--------------------------------------------"
 
 # Endpoint files to check (NOT commutecompute.js — separate agent)
 declare -a ENDPOINTS=(
-  "api/fullscreen.js"
-  "api/livedash.js"
-  "api/zones.js"
-  "api/zones-tiered.js"
-  "api/zonedata.js"
-  "api/zone/[id].js"
+  "handlers/fullscreen.js"
+  "handlers/livedash.js"
+  "handlers/zones.js"
+  "handlers/zones-tiered.js"
+  "handlers/zonedata.js"
+  "handlers/zone/[id].js"
 )
 
 # Functions that should NOT be locally defined in endpoints
@@ -144,10 +144,10 @@ echo "--------------------------------------------"
 
 # Check that endpoints that use time functions import from shared module
 declare -a TIME_USERS=(
-  "api/zones.js"
-  "api/zones-tiered.js"
-  "api/zonedata.js"
-  "api/zone/[id].js"
+  "handlers/zones.js"
+  "handlers/zones-tiered.js"
+  "handlers/zonedata.js"
+  "handlers/zone/[id].js"
 )
 
 for endpoint in "${TIME_USERS[@]}"; do
@@ -164,17 +164,17 @@ for endpoint in "${TIME_USERS[@]}"; do
 done
 
 # Check livedash.js imports config-token
-if grep -q "from.*utils/config-token" "api/livedash.js" 2>/dev/null; then
-  pass "api/livedash.js imports from config-token.js"
+if grep -q "from.*utils/config-token" "handlers/livedash.js" 2>/dev/null; then
+  pass "handlers/livedash.js imports from config-token.js"
 else
-  fail "api/livedash.js missing import from config-token.js"
+  fail "handlers/livedash.js missing import from config-token.js"
 fi
 
 # Check zone/[id].js imports config-token
-if grep -q "from.*utils/config-token" "api/zone/[id].js" 2>/dev/null; then
-  pass "api/zone/[id].js imports from config-token.js"
+if grep -q "from.*utils/config-token" "handlers/zone/[id].js" 2>/dev/null; then
+  pass "handlers/zone/[id].js imports from config-token.js"
 else
-  fail "api/zone/[id].js missing import from config-token.js"
+  fail "handlers/zone/[id].js missing import from config-token.js"
 fi
 
 echo ""

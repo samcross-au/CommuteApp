@@ -4,7 +4,7 @@
  * Single source of truth for ALL dashboard output — admin JSON preview,
  * TRMNL display PNG/BMP, and debug/diagnostic data.
  *
- * Merges former api/screen.js (e-ink pipeline) and api/commutecompute.js
+ * Merges former handlers/screen.js (e-ink pipeline) and handlers/commutecompute.js
  * (admin JSON) into one endpoint. No divergence between admin and e-ink.
  *
  * Data Flow (per DEVELOPMENT-RULES.md v3):
@@ -2843,7 +2843,7 @@ export default async function handler(req, res) {
     // than 5 km from the current home coordinates is almost certainly stale
     // from a previous address. Ignore it and fall through to auto-detection.
     // This is defence-in-depth against C4 override trap even when the KV clear
-    // in api/admin/preferences.js hasn't propagated yet. Unknown stop IDs pass
+    // in handlers/admin/preferences.js hasn't propagated yet. Unknown stop IDs pass
     // through the gate (default-allow) to avoid blocking legitimate overrides
     // that use stop IDs outside our 6014-stop dataset.
     const OVERRIDE_MAX_KM = 5;
@@ -3701,7 +3701,7 @@ export default async function handler(req, res) {
           // must not permanently corrupt the stored state.
           //
           // The stored KV value legitimately changes only via:
-          //   - v5.8.2 C4-clear in api/admin/preferences.js on address change
+          //   - v5.8.2 C4-clear in handlers/admin/preferences.js on address change
           //   - v5.9.1 U4 one-off migration wipe (consumed)
           //   - Explicit admin override via setStationOverrides
           //
@@ -3998,7 +3998,7 @@ export default async function handler(req, res) {
     const trainDirLeg = journeyLegs.find(l => l.type === 'train' || l.type === 'vline');
     const tramDirLeg  = journeyLegs.find(l => l.type === 'tram');
     const busDirLeg   = journeyLegs.find(l => l.type === 'bus');
-    // Mirrors api/commutecompute.js:460-462 — keep in sync.
+    // Mirrors handlers/commutecompute.js:460-462 — keep in sync.
     const cityStationsForFilter = ['flinders', 'parliament', 'melbourne central', 'flagstaff',
       'southern cross', 'town hall', 'state library', 'parkville', 'arden', 'anzac', 'city'];
     const deriveCitybound = (leg) => {

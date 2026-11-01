@@ -80,8 +80,8 @@ echo ""
 
 # Known deleted files — docs must NOT reference these as if they exist
 DELETED_FILES=(
-    "api/screen.js"
-    "api/calculate-journey.js"
+    "handlers/screen.js"
+    "handlers/calculate-journey.js"
 )
 
 # ============================================================================
@@ -95,7 +95,7 @@ subsection "D1.1 Backtick-quoted file paths in .md files exist on disk"
 TOTAL_PATH_REFS=0
 BROKEN_PATH_REFS=0
 for md_file in $MD_FILES; do
-    # Match patterns like `api/foo.js`, `src/bar/baz.js`, `public/page.html`
+    # Match patterns like `handlers/foo.js`, `src/bar/baz.js`, `public/page.html`
     PATHS=$(grep -oE '`(api|src|public|scripts|monitor|firmware|docs|specs|config|data|tests|tools)/[a-zA-Z0-9/_\[\].-]+`' "$md_file" 2>/dev/null | tr -d '`' | sort -u)
     for ref_path in $PATHS; do
         ((TOTAL_PATH_REFS++))
@@ -419,7 +419,7 @@ if [ -f "vercel.json" ]; then
     " 2>/dev/null)
 
     for dest in $REWRITE_DESTS; do
-        # Convert /api/commutecompute to api/commutecompute.js
+        # Convert /api/commutecompute to handlers/commutecompute.js
         FILE_PATH=$(echo "$dest" | sed 's|^/||' | sed 's|\[|\[|g').js
         # Handle dynamic routes
         FILE_PATH=$(echo "$FILE_PATH" | sed 's|:id|\[id\]|g')

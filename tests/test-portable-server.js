@@ -13,7 +13,17 @@
 import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { createApp, apiRoutePath, compileSource, listApiFiles } from '../src/portable-server.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { createApp, apiRoutePath, compileSource, fillDestination, listApiFiles } from '../src/portable-server.js';
+import { ROUTES, resolveRoute } from '../handlers/_manifest.js';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+// Vercel Hobby (free) plan limit on serverless functions per deployment
+const HOBBY_FUNCTION_LIMIT = 12;
 
 describe('Portable server: route mapping', () => {
 
@@ -24,16 +34,41 @@ describe('Portable server: route mapping', () => {
     assert.equal(apiRoutePath('api/index.js'), '/api');
   });
 
-  it('should list static api files before dynamic ones', () => {
+  it('should stay within the Vercel Hobby function limit', () => {
     const files = listApiFiles();
-    assert.ok(files.includes('api/commutecompute.js'));
-    const firstDynamic = files.findIndex(f => f.includes('['));
-    assert.ok(firstDynamic > 0 && files.slice(firstDynamic).every(f => f.includes('[')));
+    assert.ok(files.length <= HOBBY_FUNCTION_LIMIT,
+      `api/ has ${files.length} functions; Hobby allows ${HOBBY_FUNCTION_LIMIT}. Add endpoints to handlers/ instead.`);
+    assert.deepEqual(files, ['api/index.js']);
+  });
+
+  it('should list every handler file in handlers/_manifest.js', () => {
+    const listed = new Set(ROUTES.map(([, load]) => /import\('\.\/(.+?)'\)/.exec(load.toString())[1]));
+    const walk = (dir) => fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }).flatMap((e) =>
+      e.isDirectory() ? walk(`${dir}/${e.name}`) : [`${dir}/${e.name}`]);
+    const files = walk('handlers')
+      .filter((f) => f.endsWith('.js') && !path.basename(f).startsWith('_'))
+      .map((f) => f.slice('handlers/'.length));
+    for (const f of files) assert.ok(listed.has(f), `handlers/${f} is not routed in handlers/_manifest.js`);
+  });
+
+  it('should resolve routes, with static routes beating dynamic ones', () => {
+    assert.equal(resolveRoute('health').pattern, 'health');
+    assert.equal(resolveRoute('screen').pattern, 'screen');
+    assert.deepEqual(resolveRoute('zone/header').params, { id: 'header' });
+    assert.equal(resolveRoute('').pattern, '');
+    assert.equal(resolveRoute('nope'), null);
+    assert.equal(resolveRoute('zone/a/b'), null);
+  });
+
+  it('should fill $n and :name destination params', () => {
+    assert.equal(fillDestination('/api?__ccroute=$1', { 1: 'zone/header' }), '/api?__ccroute=zone/header');
+    assert.equal(fillDestination('/x/:id', { id: '7' }), '/x/7');
   });
 
   it('should match vercel.json source patterns', () => {
-    assert.deepEqual(compileSource('/(.*)')('/anything/here'), {});
-    assert.deepEqual(compileSource('/api/zone/:id')('/api/zone/header'), { id: 'header' });
+    assert.deepEqual(compileSource('/(.*)')('/anything/here'), { 1: 'anything/here' });
+    assert.deepEqual(compileSource('/api/zone/:id')('/api/zone/header'), { id: 'header', 1: 'header' });
+    assert.deepEqual(compileSource('/api/(.*)')('/api/admin/preferences'), { 1: 'admin/preferences' });
     assert.equal(compileSource('/api/zone/:id')('/api/zone/a/b'), null);
     assert.deepEqual(compileSource('/setup')('/setup'), {});
     assert.equal(compileSource('/setup')('/setup-wizard.html'), null);
@@ -72,7 +107,7 @@ describe('Portable server: HTTP behaviour', () => {
     assert.match(await res.text(), /Commute Compute iPad Kiosk/);
   });
 
-  it('should run a rewritten function (/health -> api/health.js)', async () => {
+  it('should run a rewritten function (/health -> handlers/health.js)', async () => {
     const res = await fetch(`${base}/health`);
     assert.equal(res.status, 200);
     assert.match(res.headers.get('content-type'), /json/);
@@ -88,13 +123,13 @@ describe('Portable server: HTTP behaviour', () => {
   });
 
   it('should pass dynamic path segments to functions as query params', async () => {
-    // api/device/[token].js rejects a bad token only if it received one
+    // handlers/device/[token].js rejects a bad token only if it received one
     const res = await fetch(`${base}/api/device/not-a-real-token`);
     assert.deepEqual(await res.json(), { error: 'Invalid config token' });
   });
 
   it('should parse JSON request bodies', async () => {
-    // api/admin/preferences.js reads req.body; without CC_ADMIN_TOKEN it
+    // handlers/admin/preferences.js reads req.body; without CC_ADMIN_TOKEN it
     // refuses before touching storage, which is enough to prove routing
     const res = await fetch(`${base}/api/admin/preferences`, {
       method: 'POST',

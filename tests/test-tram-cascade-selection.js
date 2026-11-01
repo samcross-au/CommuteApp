@@ -10,10 +10,10 @@
  *       feed trip entity regardless of a caller-supplied route number)
  *   (2) processCoordIdentityMatch telemetry added in v5.9.4 Z4
  *       (sampleLookups + totalUniqueFeedStopIds)
- *   (3) The tram route selection gate in api/commutecompute.js that
+ *   (3) The tram route selection gate in handlers/commutecompute.js that
  *       decides whether to persist a frequency-detected route to KV.
  *       Replicated here as a pure function for direct testability — when
- *       the inline cascade in api/commutecompute.js::commuteCompute is
+ *       the inline cascade in handlers/commutecompute.js::commuteCompute is
  *       updated, this pure replica MUST be updated in lock-step.
  *
  * Background: v5.9.3 shipped a naive KV write-once guard that allowed a
@@ -82,9 +82,9 @@ const FAR_LAT = ANCHOR_LAT;
 const FAR_LON = ANCHOR_LON + (300 * 0.0000113);
 
 // ============================================================================
-// Pure-function replica of the api/commutecompute.js tram selection gate
+// Pure-function replica of the handlers/commutecompute.js tram selection gate
 // (v5.9.4 Z2 semantics). Keep in lock-step with the inline cascade at
-// api/commutecompute.js::commuteCompute lines ~3390-3495. When the
+// handlers/commutecompute.js::commuteCompute lines ~3390-3495. When the
 // inline cascade is modified, update this replica and re-run tests.
 // ============================================================================
 
@@ -753,7 +753,7 @@ const TRAIN_STOP_LEVEL_SOURCES = new Set([
 
 /**
  * Pure-function replica of the train line-selection cascade gate in
- * api/commutecompute.js::commuteCompute (around lines 3385-3430 after the
+ * handlers/commutecompute.js::commuteCompute (around lines 3385-3430 after the
  * v5.9.6 BB3 edit). Mirrors the logic exactly so any divergence between
  * the inline cascade and this replica should be caught by test failures.
  * Returns { selectedLine, kvWrite: {line, station} | null }.
@@ -884,7 +884,7 @@ describe('selectTrainLine — v5.9.6 BB3 train cascade stop-level gate', () => {
 // ============================================================================
 // v5.9.7 (CC1): Train leg nextDepartureTimesMs lossless reconstruction
 // Pure-function replica of the `else if (liveData.minutes !== undefined)`
-// fallback in api/commutecompute.js (around lines 787-805 after the v5.9.7
+// fallback in handlers/commutecompute.js (around lines 787-805 after the v5.9.7
 // CC1 edit). When the inline code changes, update this replica in
 // lock-step.
 // ============================================================================
@@ -961,7 +961,7 @@ describe('computeDepartMs — v5.9.7 CC1 (train leg ms lossless reconstruction)'
 // ============================================================================
 // v5.9.7 (CC2): nextDepartures catchability filter + allNextDeparturesMs
 // Pure-function replica of the nextDepartures / allNextDeparturesMs
-// construction block in api/commutecompute.js (around lines 1032-1105 after
+// construction block in handlers/commutecompute.js (around lines 1032-1105 after
 // the v5.9.7 CC2 edit). When the inline code changes, update this replica in
 // lock-step.
 // ============================================================================
@@ -1079,8 +1079,8 @@ describe('buildNextDepartures — v5.9.7 CC2 (catchability filter + telemetry)',
 // v5.9.8 (DD1 + DD4) — Home coordinate freshness invariant
 // ========================================================================
 //
-// Pure-function replicas of the api/commutecompute.js::ensureFreshHomeCoords
-// helper. When the inline code in api/commutecompute.js is updated, these
+// Pure-function replicas of the handlers/commutecompute.js::ensureFreshHomeCoords
+// helper. When the inline code in handlers/commutecompute.js is updated, these
 // replicas MUST be updated in lock-step — same pattern as the other pure
 // replicas in this file. Fixtures use arithmetic offsets from a synthetic
 // base coordinate with generic labels (STOP_A, SYNTH_HOME) per §1.1.
@@ -1314,7 +1314,7 @@ describe('ensureFreshHomeCoords — v5.9.8 (DD1 + DD4 home coord freshness invar
 
 /**
  * Pure-function replica of the v5.9.8 DD2 tram stop coord override block
- * in api/commutecompute.js. Returns both the resolved coord (to write
+ * in handlers/commutecompute.js. Returns both the resolved coord (to write
  * into tramApiOptions) and the diagnostic object (to surface on
  * _liveDataDiag.tramStopCoordOverride).
  */
@@ -1443,7 +1443,7 @@ describe('tramStopCoordOverride — v5.9.8 (DD2 tram stop coord override hardeni
 // ========================================================================
 //
 // Pure-function replica of the EE1 direct-coord branch in
-// api/admin/preferences.js::handlePost. When the inline handler is updated,
+// handlers/admin/preferences.js::handlePost. When the inline handler is updated,
 // this replica MUST be updated in lock-step. Fixtures use only generic
 // labels and synthetic arithmetic offsets per §1.1.
 

@@ -3,13 +3,13 @@
  *
  * Reproduces what Vercel serves for this project, from the same files:
  *   - public/ as static files
- *   - every api/**.js serverless function, at the same URL
- *     (api/zone/[id].js -> /api/zone/:id, path params merged into req.query)
+ *   - every api/**.js serverless function, at the same URL (today that is
+ *     just api/index.js, the router that dispatches to handlers/)
  *   - vercel.json headers, redirects and rewrites
  *
  * Use this to move off Vercel (Render, Docker, Cloud Run, a home server)
  * without behaviour changes. src/server.js is the older standalone Express
- * server; on Vercel it is only reachable at /api (via api/index.js).
+ * server; on Vercel it is only reachable at /api (via handlers/index.js).
  *
  * Run: npm run serve   (PORT defaults to 3000)
  *
@@ -68,7 +68,9 @@ export function listApiFiles(root = PROJECT_ROOT) {
  * '(.*)' as a wildcard, so routes can't simply be handed to app.all().
  *
  * @param {string} source
- * @returns {(pathname: string) => Object|null} params on match, else null
+ * @returns {(pathname: string) => Object|null} params on match, else null.
+ *   Named segments by name; every capture group also by number ('1', '2'...)
+ *   for $1-style destinations.
  */
 export function compileSource(source) {
   let pattern = '';
@@ -93,8 +95,21 @@ export function compileSource(source) {
   const re = new RegExp(`^${pattern}$`);
   return (pathname) => {
     const m = re.exec(pathname);
-    return m ? { ...m.groups } : null;
+    if (!m) return null;
+    const params = { ...m.groups };
+    for (let n = 1; n < m.length; n++) params[n] = m[n] ?? '';
+    return params;
   };
+}
+
+/**
+ * Substitute :name and $n params from a matched source into a destination.
+ */
+export function fillDestination(destination, params) {
+  return destination
+    .replace(/\$(\d+)/g, (m, n) => params[n] ?? '')
+    .replace(/:([A-Za-z_][A-Za-z0-9_]*)/g, (m, name) =>
+      params[name] !== undefined ? params[name] : m);
 }
 
 /**
@@ -107,14 +122,6 @@ function onSource(app, source, fn) {
     if (!params) return next();
     return fn(req, res, next, params);
   });
-}
-
-/**
- * Substitute :params from a matched source into a destination path.
- */
-function fillParams(destination, params) {
-  return destination.replace(/:([A-Za-z0-9_]+)/g, (m, name) =>
-    params[name] !== undefined ? encodeURIComponent(params[name]) : m);
 }
 
 function queryString(req) {
@@ -130,6 +137,10 @@ function queryString(req) {
  * @returns {Promise<import('express').Express>}
  */
 export async function createApp({ root = PROJECT_ROOT } = {}) {
+  // handlers/index.js imports src/server.js, which would otherwise start its
+  // own listener on PORT and collide with this server
+  process.env.CC_EMBEDDED = '1';
+
   const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
   const app = express();
   app.disable('x-powered-by');
@@ -147,7 +158,7 @@ export async function createApp({ root = PROJECT_ROOT } = {}) {
   for (const rule of vercelConfig.redirects || []) {
     onSource(app, rule.source, (req, res, next, params) => {
       const status = rule.statusCode || (rule.permanent ? 308 : 307);
-      res.redirect(status, fillParams(rule.destination, params) + queryString(req));
+      res.redirect(status, fillDestination(rule.destination, params) + queryString(req));
     });
   }
 
@@ -159,55 +170,56 @@ export async function createApp({ root = PROJECT_ROOT } = {}) {
   app.use(express.text({ limit: BODY_LIMIT }));
 
   const handlers = new Map();  // relFile -> handler, imported on first request
-  const loadHandler = async (relFile) => {
-    if (!handlers.has(relFile)) {
-      if (relFile === 'api/index.js') {
-        // api/index.js imports src/server.js, which would otherwise start
-        // its own listener on PORT and collide with this server
-        process.env.CC_EMBEDDED = '1';
-      }
-      const mod = await import(pathToFileURL(path.join(root, relFile)).href);
-      handlers.set(relFile, mod.default);
-    }
-    return handlers.get(relFile);
-  };
-
-  const invoke = (relFile) => async (req, res) => {
+  const invoke = async (relFile, req, res) => {
     try {
-      // Vercel exposes dynamic path segments as query params
-      Object.assign(req.query, req.params);
-      const handler = await loadHandler(relFile);
-      await handler(req, res);
+      if (!handlers.has(relFile)) {
+        const mod = await import(pathToFileURL(path.join(root, relFile)).href);
+        handlers.set(relFile, mod.default);
+      }
+      await handlers.get(relFile)(req, res);
     } catch (error) {
       console.error(`[portable-server] ${relFile}:`, error);
       if (!res.headersSent) res.status(500).json({ error: 'Function invocation failed' });
     }
   };
 
-  const apiFiles = listApiFiles(root);
-  for (const relFile of apiFiles) {
+  const functionRoutes = listApiFiles(root).flatMap((relFile) => {
     const route = apiRoutePath(relFile);
-    app.all(route, invoke(relFile));
-    if (relFile === 'api/index.js') app.all('/api/index', invoke(relFile));
-  }
+    const routes = [{ relFile, match: compileSource(route) }];
+    // Vercel serves api/x/index.js at both /api/x and /api/x/index
+    if (relFile.endsWith('/index.js')) {
+      routes.push({ relFile, match: compileSource('/' + relFile.replace(/\.js$/, '')) });
+    }
+    return routes;
+  });
+  const findFunction = (pathname) => {
+    for (const fn of functionRoutes) {
+      const params = fn.match(pathname);
+      if (params) return { fn, params };
+    }
+    return null;
+  };
+
+  app.use((req, res, next) => {
+    const found = findFunction(req.path);
+    if (!found) return next();
+    // Vercel exposes dynamic path segments as query params
+    for (const [k, v] of Object.entries(found.params)) if (!/^\d+$/.test(k)) req.query[k] = v;
+    return invoke(found.fn.relFile, req, res);
+  });
 
   // 4. Rewrites — only reached when no file or function matched
   for (const rule of vercelConfig.rewrites || []) {
-    const target = rule.destination;
-    // A destination naming a function file (e.g. /api/zone/[id]) runs it
-    // directly; anything else is re-routed as a URL (e.g. /ipad.html)
-    const fnFile = `${target.replace(/^\//, '')}.js`;
-    if (apiFiles.includes(fnFile)) {
-      onSource(app, rule.source, (req, res, next, params) => {
-        req.params = params;
-        return invoke(fnFile)(req, res);
-      });
-    } else if (target !== rule.source) {
-      onSource(app, rule.source, (req, res, next, params) => {
-        req.url = fillParams(target, params) + queryString(req);
-        next();
-      });
-    }
+    onSource(app, rule.source, (req, res, next, params) => {
+      const destination = fillDestination(rule.destination, params);
+      const [destPath, destQuery = ''] = destination.split('?');
+      // Destination query params merge with the request's, as on Vercel
+      for (const [k, v] of new URLSearchParams(destQuery)) req.query[k] = v;
+      const found = findFunction(destPath);
+      if (found) return invoke(found.fn.relFile, req, res);
+      req.url = destPath + queryString(req);
+      return next();
+    });
   }
   // Re-run static serving for URLs rewritten to files
   app.use(express.static(path.join(root, 'public')));

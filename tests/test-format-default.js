@@ -4,7 +4,7 @@
 /**
  * Format-Default Ternary Tests
  *
- * Verifies the critical format-default logic from api/commutecompute.js:
+ * Verifies the critical format-default logic from handlers/commutecompute.js:
  *   const format = req.query?.format || (req.method === 'POST' ? 'json' : 'png');
  *
  * This ternary determines the response format for every request:
@@ -21,7 +21,7 @@ import assert from 'node:assert/strict';
 
 /**
  * Replicates the format-default ternary exactly as it appears in
- * api/commutecompute.js (line ~2483). This must stay in sync with the
+ * handlers/commutecompute.js (line ~2483). This must stay in sync with the
  * source — any divergence means the test is no longer guarding the
  * production logic.
  */
